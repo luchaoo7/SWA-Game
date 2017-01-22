@@ -39,7 +39,7 @@ public class AssigmentTemplate extends Application
 	
 	Factory numberMaker = new Factory();
 	//amount of numbers in the arraylist
-	int i = 2;
+	int i = 10;
 	ArrayList<ParentNumber> collectionOfNumbers = new ArrayList<ParentNumber>();
 	
 	
@@ -50,16 +50,15 @@ public class AssigmentTemplate extends Application
 	
 	AnimationTimer timer = new AnimationTimer() 
 	{
-		//to determine what type of number to create
-//		int randomNumber = rand.nextInt(10) + 1;
-		//create number object
-//		ParentNumber objectNumber = numberMaker.createNumber(randomNumber, 100, 100);
 
-
+		//counter
+		int counter = 1;
+		int randomNumber = rand.nextInt(4);
 		@Override
 		public void handle(long now) 
 		{
-			operate = new Operator(1);
+			//generate a random number which identifies an operator
+			operate = new Operator(randomNumber);
 			//background colour
 			gc.setFill(Color.BLACK);
 			gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -70,41 +69,52 @@ public class AssigmentTemplate extends Application
 //			String stringNUumber = String.valueOf(number);
 			try 
 			{
-				Thread.sleep(750);
+				Thread.sleep(1000);
 			} 
 			catch (InterruptedException e) 
 			{
 				e.printStackTrace();
 			}
 			
-			for (int i = 0; i < collectionOfNumbers.size(); i++) 
+			ParentNumber singleNumber = collectionOfNumbers.get(0);
+			ParentNumber singleNumber2 = collectionOfNumbers.get(1);
+
+			//int number
+			int number = singleNumber.number;
+			int number2 = singleNumber2.number;
+
+			//assigning numbers in the array to left or right side of the operation 
+			//so user input can be checked against later
+			leftNumber = number;
+			rightNumber = number2;
+			
+
+			//convert the number to string
+			String stringNumber = String.valueOf(number);
+			String stringNumber2 = String.valueOf(number2);
+
+			gc.strokeText(stringNumber, singleNumber.rectangle.getX(), singleNumber.rectangle.getY());
+			gc.strokeText(stringNumber2, singleNumber2.rectangle.getX(), singleNumber2.rectangle.getY());
+			singleNumber.move();
+			singleNumber2.move();
+
+			
+			double locationOperator = (singleNumber.rectangle.getX() + singleNumber2.rectangle.getX()) / 2;
+			
+			gc.strokeText(operate.OPERATOR, locationOperator, 100);
+			
+			
+			if (counter % 5 == 0) 
 			{
-				ParentNumber singleNumber = collectionOfNumbers.get(i);
-
-				//int number
-				int number = singleNumber.number;
-
-				//assigning numbers in the array to left or right side of the operation 
-				//so user input can be checked against later
-				int checker = i+1;
-				if (checker % 2 != 0) 
-				{
-					leftNumber = number;
-				}
-				else 
-				{
-					rightNumber = number;
-				}
-				
-
-				//convert the number to string
-				String stringNumber = String.valueOf(number);
-
-				gc.strokeText(stringNumber, singleNumber.rectangle.getX(), singleNumber.rectangle.getY());
-				singleNumber.move();
+				collectionOfNumbers.remove(1);
+				collectionOfNumbers.remove(0);
+				randomNumber = rand.nextInt(4);
 			}
-				gc.strokeText(operate.ADDITION, 400, 100);
-
+			if (collectionOfNumbers.isEmpty()) {
+//				System.exit(0);
+			}
+			
+			counter++;
 		}
 	};
 	
@@ -144,18 +154,15 @@ public class AssigmentTemplate extends Application
 		for (int x = 1; x <= i; x++) 
 		{
 			int randomNumber = rand.nextInt(16) - 5;
+			//reset location the numbers to start at
+			int xlocation = x % 6;
+			if (xlocation == 0) {
+				xlocation = 6;
+			}
 			//System.out.println(randomNumber);
-			collectionOfNumbers.add(numberMaker.createNumber(randomNumber, 50 * x, 50));
+			collectionOfNumbers.add(numberMaker.createNumber(randomNumber, 50 * xlocation, 50));
 		}
 
-		
-		//create a number object
-//		myNumber = new SmallNumber(400, 100);
-		
-		//get the number generated with//in the object
-//		int number = myNumber.number;
-		//convert the number to string
-//		String stringNUumber = String.valueOf(number);
 
 		//set up graphic context
 		gc = canvas.getGraphicsContext2D();
@@ -163,11 +170,9 @@ public class AssigmentTemplate extends Application
 		//set the font
 		gc.setFont(new Font("Arial", 20));
 		//stroke the number and the location
-//		myNumber.move();
-//		gc.strokeText(stringNUumber, myNumber.rectangle.getX(), myNumber.rectangle.getY());
 		
-		timer.start();
 
+		timer.start();
 		stage.show();
 	}
 }
@@ -208,23 +213,23 @@ interface MarkerIF
 
 class Operator
 {
-	public String ADDITION = "";
+	public String OPERATOR = "";
 
 	public Operator(int operator) 
 	{
 		switch (operator) 
 		{
+		case 0:
+			OPERATOR = "+";
+			break;
 		case 1:
-			ADDITION = "+";
+			OPERATOR = "-";
 			break;
 		case 2:
-			ADDITION = "-";
+			OPERATOR = "/";
 			break;
 		case 3:
-			ADDITION = "/";
-			break;
-		case 4:
-			ADDITION = "*";
+			OPERATOR = "*";
 			break;
 		}
 	}
