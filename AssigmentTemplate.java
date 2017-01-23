@@ -67,6 +67,7 @@ public class AssigmentTemplate extends Application
 //			int number = objectNumber.number;
 			//convert the number to string
 //			String stringNUumber = String.valueOf(number);
+			//the programme stalls every second
 			try 
 			{
 				Thread.sleep(1000);
@@ -80,18 +81,16 @@ public class AssigmentTemplate extends Application
 			ParentNumber singleNumber2 = collectionOfNumbers.get(1);
 
 			//int number
-			int number = singleNumber.number;
-			int number2 = singleNumber2.number;
+			leftNumber = singleNumber.number;
+			rightNumber = singleNumber2.number;
 
 			//assigning numbers in the array to left or right side of the operation 
 			//so user input can be checked against later
-			leftNumber = number;
-			rightNumber = number2;
-			
 
 			//convert the number to string
-			String stringNumber = String.valueOf(number);
-			String stringNumber2 = String.valueOf(number2);
+			//so it can be drawn
+			String stringNumber = String.valueOf(leftNumber);
+			String stringNumber2 = String.valueOf(rightNumber);
 
 			gc.strokeText(stringNumber, singleNumber.rectangle.getX(), singleNumber.rectangle.getY());
 			gc.strokeText(stringNumber2, singleNumber2.rectangle.getX(), singleNumber2.rectangle.getY());
@@ -99,6 +98,7 @@ public class AssigmentTemplate extends Application
 			singleNumber2.move();
 
 			
+			//to place the operator in the middle of the two numbers 
 			double locationOperator = (singleNumber.rectangle.getX() + singleNumber2.rectangle.getX()) / 2;
 			
 			gc.strokeText(operate.OPERATOR, locationOperator, 100);
@@ -110,8 +110,9 @@ public class AssigmentTemplate extends Application
 				collectionOfNumbers.remove(0);
 				randomNumber = rand.nextInt(4);
 			}
+			System.out.println(collectionOfNumbers.size());
 			if (collectionOfNumbers.isEmpty()) {
-//				System.exit(0);
+				System.exit(0);
 			}
 			
 			counter++;
@@ -191,7 +192,7 @@ class Factory implements FactoryIF
 		{
 			return (new SmallNumber(x, y));
 		}
-		else if (amount >= 0 && amount < 5) 
+		else if (amount >= 0 && amount <= 5) 
 		{
 			return (new MediumNumber(x, y));
 		}
@@ -214,9 +215,14 @@ interface MarkerIF
 class Operator
 {
 	public String OPERATOR = "";
+	public int number;
 
 	public Operator(int operator) 
 	{
+		//store the passed number to identify 
+		//the operator user later
+		number = operator;
+
 		switch (operator) 
 		{
 		case 0:
