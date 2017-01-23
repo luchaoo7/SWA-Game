@@ -37,6 +37,7 @@ public class AssigmentTemplate extends Application
 	Pane ui, game;
 	//Button for ui controller
 	Button stop;
+	Button start;
 	//canvas added to game pane
 	Canvas canvas;
 	GraphicsContext gc;
@@ -65,6 +66,10 @@ public class AssigmentTemplate extends Application
 			if (event.getSource() == stop) 
 			{
 				timer.stop();
+			}
+			if (event.getSource() == start) 
+			{
+				timer.start();
 			}
 		}
 		
@@ -172,6 +177,14 @@ public class AssigmentTemplate extends Application
 		stop.setLayoutY(50);
 		stop.setOnAction(actionButton);
 		ui.getChildren().add(stop);
+		//set up start button
+		start = new Button();
+		start.setText("Start");
+		start.setLayoutX(100);
+		start.setLayoutY(50);
+		start.setOnAction(actionButton);
+		ui.getChildren().add(start);
+
 
 		
 		game = new Pane();
