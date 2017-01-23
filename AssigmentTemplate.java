@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.FlowPane;
@@ -28,10 +29,16 @@ public class AssigmentTemplate extends Application
 	TabPane root;
 	Tab tab1, tab2;
 	
+	//creating a flowpane for tab 1
 	FlowPane rootTab1;
+	//add ui and game to rootTab1
 	Pane ui, game;
+	//Button for ui controller
+	Button stop;
+	//canvas added to game pane
 	Canvas canvas;
 	GraphicsContext gc;
+
 	Random rand = new Random();
 	
 	SmallNumber myNumber;
@@ -143,6 +150,7 @@ public class AssigmentTemplate extends Application
 		ui.setPrefSize(200, 600);
 		ui.setStyle("-fx-background-color: #ffffc8; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
 		rootTab1.getChildren().add(ui);
+
 		
 		game = new Pane();
 		game.setPrefSize(600, 600);
@@ -173,7 +181,7 @@ public class AssigmentTemplate extends Application
 		//stroke the number and the location
 		
 
-		timer.start();
+//		timer.start();
 		stage.show();
 	}
 }
