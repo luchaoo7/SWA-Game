@@ -12,6 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -35,6 +36,7 @@ public class AssigmentTemplate extends Application
 	FlowPane rootTab1;
 	//add ui and game to rootTab1
 	Pane ui, game;
+	TextField textField;
 	//Button for ui controller
 	Button stop;
 	Button start;
@@ -57,6 +59,7 @@ public class AssigmentTemplate extends Application
 	int rightNumber;
 	
 	
+	//eventHandler to action the stop and start button
 	EventHandler<ActionEvent> actionButton = new EventHandler<ActionEvent>() 
 	{
 
@@ -137,7 +140,6 @@ public class AssigmentTemplate extends Application
 				collectionOfNumbers.remove(0);
 				randomNumber = rand.nextInt(4);
 			}
-			System.out.println(collectionOfNumbers.size());
 			if (collectionOfNumbers.isEmpty()) {
 				System.exit(0);
 			}
@@ -184,6 +186,12 @@ public class AssigmentTemplate extends Application
 		start.setLayoutY(50);
 		start.setOnAction(actionButton);
 		ui.getChildren().add(start);
+		//set up textfield
+		textField = new TextField();
+		textField.setText("Your Answer");
+		textField.setLayoutX(15);
+		textField.setLayoutY(300);
+		ui.getChildren().add(textField);
 
 
 		
