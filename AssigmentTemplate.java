@@ -4,6 +4,8 @@ import java.util.Random;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -54,6 +56,19 @@ public class AssigmentTemplate extends Application
 	int rightNumber;
 	
 	
+	EventHandler<ActionEvent> actionButton = new EventHandler<ActionEvent>() 
+	{
+
+		@Override
+		public void handle(ActionEvent event) 
+		{
+			if (event.getSource() == stop) 
+			{
+				timer.stop();
+			}
+		}
+		
+	};
 	
 	AnimationTimer timer = new AnimationTimer() 
 	{
@@ -150,10 +165,12 @@ public class AssigmentTemplate extends Application
 		ui.setPrefSize(200, 600);
 		ui.setStyle("-fx-background-color: #ffffc8; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
 		rootTab1.getChildren().add(ui);
+		//set up of stop button
 		stop = new Button();
 		stop.setText("Stop");
 		stop.setLayoutX(25);
 		stop.setLayoutY(50);
+		stop.setOnAction(actionButton);
 		ui.getChildren().add(stop);
 
 		
@@ -186,7 +203,7 @@ public class AssigmentTemplate extends Application
 		//stroke the number and the location
 		
 
-//		timer.start();
+		timer.start();
 		stage.show();
 	}
 }
