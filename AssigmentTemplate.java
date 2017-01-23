@@ -150,6 +150,11 @@ public class AssigmentTemplate extends Application
 		ui.setPrefSize(200, 600);
 		ui.setStyle("-fx-background-color: #ffffc8; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
 		rootTab1.getChildren().add(ui);
+		stop = new Button();
+		stop.setText("Stop");
+		stop.setLayoutX(25);
+		stop.setLayoutY(50);
+		ui.getChildren().add(stop);
 
 		
 		game = new Pane();
