@@ -13,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -55,9 +57,38 @@ public class AssigmentTemplate extends Application
 	ArrayList<ParentNumber> collectionOfNumbers = new ArrayList<ParentNumber>();
 	
 	
-	int leftNumber;
-	int rightNumber;
+	double leftNumber;
+	double rightNumber;
 	
+	EventHandler<KeyEvent> keyEvent = new EventHandler<KeyEvent>() 
+	{
+
+		@Override
+		public void handle(KeyEvent event) 
+		{
+			double result = 0;
+			if (event.getCode() == KeyCode.ENTER) 
+			{
+				switch (operate.number) {
+				case 0:
+					result = leftNumber + rightNumber;
+					break;
+				case 1:
+					result = leftNumber - rightNumber;
+					break;
+				case 2:
+					result = leftNumber / rightNumber;
+					break;
+				case 3:
+					result = leftNumber * rightNumber;
+					break;
+				}
+//				System.out.println(textField.getText());
+//				int result = leftNumber + rightNumber;
+			}
+				System.out.println(result);
+		}
+	};
 	
 	//eventHandler to action the stop and start button
 	EventHandler<ActionEvent> actionButton = new EventHandler<ActionEvent>() 
@@ -87,6 +118,7 @@ public class AssigmentTemplate extends Application
 		@Override
 		public void handle(long now) 
 		{
+			System.out.println(counter);
 			//generate a random number which identifies an operator
 			operate = new Operator(randomNumber);
 			//background colour
@@ -98,6 +130,7 @@ public class AssigmentTemplate extends Application
 			//convert the number to string
 //			String stringNUumber = String.valueOf(number);
 			//the programme stalls every second
+
 			try 
 			{
 				Thread.sleep(1000);
@@ -191,6 +224,9 @@ public class AssigmentTemplate extends Application
 		textField.setText("Your Answer");
 		textField.setLayoutX(15);
 		textField.setLayoutY(300);
+		//key event for text field, when enter is pressed
+		//the value is processed
+		textField.setOnKeyPressed(keyEvent);
 		ui.getChildren().add(textField);
 
 
@@ -310,6 +346,12 @@ abstract class ParentNumber implements MarkerIF
 	public abstract void move();
 }
 
+/**
+ * generate a number from 10 to a 1000 in powers of 
+ * ten
+ * @author danbro
+ *
+ */
 class BigNumber extends ParentNumber
 {
 
@@ -333,6 +375,11 @@ class BigNumber extends ParentNumber
 	}
 }
 
+/**
+ * generate a number from -100 to 0
+ * @author danbro
+ *
+ */
 class SmallNumber extends ParentNumber
 {
 	
@@ -354,6 +401,11 @@ class SmallNumber extends ParentNumber
 	}
 }
 
+/**
+ * Generate a number from 1 to 100;
+ * @author danbro
+ *
+ */
 class MediumNumber extends ParentNumber
 {
 	
