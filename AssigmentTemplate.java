@@ -3,7 +3,6 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -87,9 +86,24 @@ public class AssigmentTemplate extends Application
 					break;
 				}
 //				System.out.println(textField.getText());
+				String numberInput = textField.getText();
+				double valueInput = 0;
+				try 
+				{
+					valueInput = Double.parseDouble(numberInput);
+				} 
+				catch (Exception e) 
+				{
+//					System.out.println("only numbers");
+				}
 //				int result = leftNumber + rightNumber;
+				if (valueInput == result) 
+				{
+					System.out.println("We made it");
+				}
+				System.out.println(valueInput);
 			}
-				System.out.println(result);
+//				System.out.println(result);
 		}
 	};
 	
