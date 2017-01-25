@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
-
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -50,6 +51,8 @@ public class AssigmentTemplate extends Application
 	
 	SmallNumber myNumber;
 	Operator operate;
+	
+	Timer timer2 = new Timer();
 	
 	Factory numberMaker = new Factory();
 	//amount of numbers in the arraylist
@@ -184,6 +187,7 @@ public class AssigmentTemplate extends Application
 	@Override
 	public void start(Stage stage) throws Exception 
 	{
+		
 		root = new TabPane();
 		scene = new Scene(root, 800, 600);
 		stage.setScene(scene);
@@ -260,7 +264,80 @@ public class AssigmentTemplate extends Application
 		//stroke the number and the location
 		
 
-		timer.start();
+//		timer.start();
+		
+		timer2.schedule(new TimerTask() {
+			
+		//counter
+		int counter = 1;
+		int randomNumber = rand.nextInt(4);
+			@Override
+			public void run() {
+
+			System.out.println(counter);
+			//generate a random number which identifies an operator
+			operate = new Operator(randomNumber);
+			//background colour
+			gc.setFill(Color.BLACK);
+			gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+			//int number
+//			int number = objectNumber.number;
+			//convert the number to string
+//			String stringNUumber = String.valueOf(number);
+			//the programme stalls every second
+
+			try 
+			{
+				Thread.sleep(1000);
+			} 
+			catch (InterruptedException e) 
+			{
+				e.printStackTrace();
+			}
+			
+			ParentNumber singleNumber = collectionOfNumbers.get(0);
+			ParentNumber singleNumber2 = collectionOfNumbers.get(1);
+
+			//int number
+			leftNumber = singleNumber.number;
+			rightNumber = singleNumber2.number;
+
+			//assigning numbers in the array to left or right side of the operation 
+			//so user input can be checked against later
+
+			//convert the number to string
+			//so it can be drawn
+			String stringNumber = String.valueOf(leftNumber);
+			String stringNumber2 = String.valueOf(rightNumber);
+
+			gc.strokeText(stringNumber, singleNumber.rectangle.getX(), singleNumber.rectangle.getY());
+			gc.strokeText(stringNumber2, singleNumber2.rectangle.getX(), singleNumber2.rectangle.getY());
+			singleNumber.move();
+			singleNumber2.move();
+
+			
+			//to place the operator in the middle of the two numbers 
+			double locationOperator = (singleNumber.rectangle.getX() + singleNumber2.rectangle.getX()) / 2;
+			
+			gc.strokeText(operate.OPERATOR, locationOperator, 100);
+			
+			
+			if (counter % 5 == 0) 
+			{
+				collectionOfNumbers.remove(1);
+				collectionOfNumbers.remove(0);
+				randomNumber = rand.nextInt(4);
+			}
+			if (collectionOfNumbers.isEmpty()) {
+				System.exit(0);
+			}
+			
+			counter++;
+
+				
+			}
+		}, 0, 2000);
 		stage.show();
 	}
 }
