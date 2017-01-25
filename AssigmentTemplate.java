@@ -281,20 +281,6 @@ public class AssigmentTemplate extends Application
 			gc.setFill(Color.BLACK);
 			gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-			//int number
-//			int number = objectNumber.number;
-			//convert the number to string
-//			String stringNUumber = String.valueOf(number);
-			//the programme stalls every second
-
-			try 
-			{
-				Thread.sleep(1000);
-			} 
-			catch (InterruptedException e) 
-			{
-				e.printStackTrace();
-			}
 			
 			ParentNumber singleNumber = collectionOfNumbers.get(0);
 			ParentNumber singleNumber2 = collectionOfNumbers.get(1);
