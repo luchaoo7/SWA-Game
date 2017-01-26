@@ -58,6 +58,9 @@ public class AssigmentTemplate extends Application
 	//amount of numbers in the arraylist,
 	//should only be even numbers
 	int i = 10;
+	
+	//counter to determine when to delete numbers
+	int counter = 1;
 	ArrayList<ParentNumber> collectionOfNumbers = new ArrayList<ParentNumber>();
 	
 	
@@ -109,10 +112,29 @@ public class AssigmentTemplate extends Application
 				{
 					gc.setStroke(Color.YELLOW);
 					gc.strokeText("Yes!!You are right", 400, 100);
+					//update score
 					score++;
+					//remove operations answered correctly
+					collectionOfNumbers.remove(1);
+					collectionOfNumbers.remove(0);
+					//reset counter
+					// to have 8 seconds for the next
+					//operation
+					counter = 1;
+					//clear text field
+					textField.clear();
+					//check if collection is empty
+					//if it is, exit
+					if (collectionOfNumbers.isEmpty()) 
+					{
+						timer2.cancel();
+//						System.exit(0);
+					}
 				}
 				else
 				{
+					//clear text field
+					textField.clear();
 //					gc.setFill(Color.YELLOW);
 					gc.setStroke(Color.RED);
 					gc.strokeText("Keep Trying", 400, 100);
@@ -138,7 +160,6 @@ public class AssigmentTemplate extends Application
 
 			}
 		}
-		
 	};
 	
 	
@@ -224,7 +245,7 @@ public class AssigmentTemplate extends Application
 		timer2.schedule(new TimerTask() {
 			
 		//counter to control event in the game
-		int counter = 1;
+//		int counter = 1;
 		int randomNumber = rand.nextInt(4);
 			@Override
 			public void run() {
@@ -242,6 +263,7 @@ public class AssigmentTemplate extends Application
 			//double
 //			leftNumber = singleNumber.number;
 //			rightNumber = singleNumber2.number;
+			//always divide big number by smaller number
 			if (operate.number == 2) 
 			{
 				if (singleNumber.number > singleNumber2.number) 
@@ -259,8 +281,6 @@ public class AssigmentTemplate extends Application
 				leftNumber = singleNumber.number;
 				rightNumber = singleNumber2.number;
 			}
-		
-		
 		
 
 			//convert the number to string
@@ -338,6 +358,11 @@ interface MarkerIF
 	
 }
 
+/**
+ * class to dictate what operation 
+ * will take place
+ * @author danbro
+ */
 class Operator
 {
 	public String OPERATOR = "";
@@ -389,7 +414,6 @@ abstract class ParentNumber implements MarkerIF
  * generate a number from 10 to a 100 in powers of 
  * ten
  * @author danbro
- *
  */
 class BigNumber extends ParentNumber
 {
@@ -399,6 +423,9 @@ class BigNumber extends ParentNumber
 		number = number * 10;
 	}
 
+	/**
+	 * move number downwards as loops carries on
+	 */
 	@Override
 	public void move() 
 	{
@@ -418,15 +445,13 @@ class SmallNumber extends ParentNumber
 		number = number * (-1);
 	}
 
+	/**
+	 * move number downwards as loops carries on
+	 */
+	@Override
 	public void move() 
 	{
 		rectangle.setY(rectangle.getY() + 50);
-//		rectangle.setX(rectangle.getX() + 50);
-//		if (rectangle.getX() > 600) 
-//		{
-//			rectangle.setX(40);
-//			rectangle.setY(rectangle.getY() + 100);
-//		}
 	}
 }
 /**
@@ -441,6 +466,10 @@ class MediumNumber extends ParentNumber
 		super(x, y);
 	}
 
+	/**
+	 * move number downwards as loops carries on
+	 */
+	@Override
 	public void move() 
 	{
 		rectangle.setY(rectangle.getY() + 50);
