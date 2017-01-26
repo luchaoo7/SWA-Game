@@ -51,20 +51,27 @@ public class AssigmentTemplate extends Application
 	SmallNumber myNumber;
 	Operator operate;
 	
+	//to pace the game
 	Timer timer2 = new Timer();
 	
 	Factory numberMaker = new Factory();
-	//amount of numbers in the arraylist
+	//amount of numbers in the arraylist,
+	//should only be even numbers
 	int i = 10;
 	ArrayList<ParentNumber> collectionOfNumbers = new ArrayList<ParentNumber>();
 	
 	
+	//the value of each side of the operation
+	//will be stored in this variables
 	double leftNumber;
 	double rightNumber;
+	int score = 0;
 	
+	//key even that processes the operation 
+	//and compares it with the user input
+	//when ENTER is pressed
 	EventHandler<KeyEvent> keyEvent = new EventHandler<KeyEvent>() 
 	{
-
 		@Override
 		public void handle(KeyEvent event) 
 		{
@@ -100,15 +107,17 @@ public class AssigmentTemplate extends Application
 
 				if (valueInput == result) 
 				{
-					gc.setFill(Color.YELLOW);
+					gc.setStroke(Color.YELLOW);
 					gc.strokeText("Yes!!You are right", 400, 100);
+					score++;
 				}
 				else
 				{
-					gc.setFill(Color.YELLOW);
+//					gc.setFill(Color.YELLOW);
+					gc.setStroke(Color.RED);
 					gc.strokeText("Keep Trying", 400, 100);
 				}
-				System.out.println(valueInput);
+				System.out.println(score);
 			}
 		}
 	};
@@ -122,11 +131,11 @@ public class AssigmentTemplate extends Application
 		{
 			if (event.getSource() == stop) 
 			{
-//				timer.stop();
+				timer2.cancel();
 			}
 			if (event.getSource() == start) 
 			{
-//				timer.start();
+
 			}
 		}
 		
@@ -183,7 +192,6 @@ public class AssigmentTemplate extends Application
 		ui.getChildren().add(textField);
 
 
-		
 		game = new Pane();
 		game.setPrefSize(600, 600);
 		game.setStyle("-fx-background-color: #000000;");
@@ -212,19 +220,15 @@ public class AssigmentTemplate extends Application
 		gc.setFont(new Font("Arial", 20));
 		//stroke the number and the location
 		
-
-//		timer.start();
-		
-		//Timer loop
+		//TIMER LOOP
 		timer2.schedule(new TimerTask() {
 			
-		//counter
+		//counter to control event in the game
 		int counter = 1;
 		int randomNumber = rand.nextInt(4);
 			@Override
 			public void run() {
 
-			System.out.println(counter);
 			//generate a random number which identifies an operator
 			operate = new Operator(randomNumber);
 			//background colour
@@ -236,8 +240,28 @@ public class AssigmentTemplate extends Application
 			ParentNumber singleNumber2 = collectionOfNumbers.get(1);
 
 			//double
-			leftNumber = singleNumber.number;
-			rightNumber = singleNumber2.number;
+//			leftNumber = singleNumber.number;
+//			rightNumber = singleNumber2.number;
+			if (operate.number == 2) 
+			{
+				if (singleNumber.number > singleNumber2.number) 
+				{
+					leftNumber = singleNumber.number;
+					rightNumber = singleNumber2.number;
+				}
+				else{
+					leftNumber = singleNumber2.number;
+					rightNumber = singleNumber.number;
+				}
+			}
+			else
+			{
+				leftNumber = singleNumber.number;
+				rightNumber = singleNumber2.number;
+			}
+		
+		
+		
 
 			//convert the number to string
 			//so it can be drawn
@@ -249,6 +273,8 @@ public class AssigmentTemplate extends Application
 			
 			//to place the operator in the middle of the two numbers 
 			double locationOperator = (singleNumber.rectangle.getX() + singleNumber2.rectangle.getX() + 50) / 2 + 15;
+			//set the text to white
+			gc.setStroke(Color.WHITE);
 			gc.strokeText(operate.OPERATOR, locationOperator, singleNumber2.rectangle.getY());
 
 			gc.strokeText(stringNumber, singleNumber.rectangle.getX(), singleNumber.rectangle.getY());
@@ -271,9 +297,9 @@ public class AssigmentTemplate extends Application
 			
 			counter++;
 
-				
 			}
 		}, 0, 2000);
+
 		stage.show();
 	}
 }
@@ -353,21 +379,20 @@ abstract class ParentNumber implements MarkerIF
 		//create rectangle at x,y coordinate and size w,h
 		rectangle = new Rectangle(x, y, 100, 100);
 		random = new Random();
-		number = random.nextInt(100) + 1;
+		number = random.nextInt(10) + 1;
 	}
 
 	public abstract void move();
 }
 
 /**
- * generate a number from 10 to a 1000 in powers of 
+ * generate a number from 10 to a 100 in powers of 
  * ten
  * @author danbro
  *
  */
 class BigNumber extends ParentNumber
 {
-
 	public BigNumber(int x, int y) 
 	{
 		super(x, y);
@@ -377,21 +402,12 @@ class BigNumber extends ParentNumber
 	@Override
 	public void move() 
 	{
-
 		rectangle.setY(rectangle.getY() + 50);
-//		rectangle.setX(rectangle.getX() + 50);
-//		if (rectangle.getX() > 600) 
-//		{
-//			rectangle.setX(40);
-//			rectangle.setY(rectangle.getY() + 100);
-//		}
 	}
 }
-
 /**
- * generate a number from -100 to 0
+ * generate a number from -1 to 10
  * @author danbro
- *
  */
 class SmallNumber extends ParentNumber
 {
@@ -399,7 +415,7 @@ class SmallNumber extends ParentNumber
 	public SmallNumber(int x, int y) 
 	{
 		super(x, y);
-		number = number - 100;
+		number = number * (-1);
 	}
 
 	public void move() 
@@ -413,11 +429,9 @@ class SmallNumber extends ParentNumber
 //		}
 	}
 }
-
 /**
- * Generate a number from 1 to 100;
+ * Generate a numbers from 1 to 10;
  * @author danbro
- *
  */
 class MediumNumber extends ParentNumber
 {
@@ -432,7 +446,3 @@ class MediumNumber extends ParentNumber
 		rectangle.setY(rectangle.getY() + 50);
 	}
 }
-
-
-
-
