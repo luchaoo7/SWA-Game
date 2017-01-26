@@ -71,6 +71,7 @@ public class AssigmentTemplate extends Application
 			double result = 0;
 			if (event.getCode() == KeyCode.ENTER) 
 			{
+				//compute operation 
 				switch (operate.number) {
 				case 0:
 					result = leftNumber + rightNumber;
@@ -85,7 +86,7 @@ public class AssigmentTemplate extends Application
 					result = leftNumber * rightNumber;
 					break;
 				}
-//				System.out.println(textField.getText());
+
 				String numberInput = textField.getText();
 				double valueInput = 0;
 				try 
@@ -96,14 +97,19 @@ public class AssigmentTemplate extends Application
 				{
 //					System.out.println("only numbers");
 				}
-//				int result = leftNumber + rightNumber;
+
 				if (valueInput == result) 
 				{
-					System.out.println("We made it");
+					gc.setFill(Color.YELLOW);
+					gc.strokeText("Yes!!You are right", 400, 100);
+				}
+				else
+				{
+					gc.setFill(Color.YELLOW);
+					gc.strokeText("Keep Trying", 400, 100);
 				}
 				System.out.println(valueInput);
 			}
-//				System.out.println(result);
 		}
 	};
 	
@@ -209,6 +215,7 @@ public class AssigmentTemplate extends Application
 
 //		timer.start();
 		
+		//Timer loop
 		timer2.schedule(new TimerTask() {
 			
 		//counter
@@ -223,41 +230,41 @@ public class AssigmentTemplate extends Application
 			//background colour
 			gc.setFill(Color.BLACK);
 			gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
 			
+			//assigning numbers in the array to left or right side of the operation 
 			ParentNumber singleNumber = collectionOfNumbers.get(0);
 			ParentNumber singleNumber2 = collectionOfNumbers.get(1);
 
-			//int number
+			//double
 			leftNumber = singleNumber.number;
 			rightNumber = singleNumber2.number;
 
-			//assigning numbers in the array to left or right side of the operation 
-			//so user input can be checked against later
-
 			//convert the number to string
 			//so it can be drawn
-			String stringNumber = String.valueOf(leftNumber);
-			String stringNumber2 = String.valueOf(rightNumber);
+			int left = (int) leftNumber;
+			int right = (int) rightNumber;
+			String stringNumber = String.valueOf(left);
+			String stringNumber2 = String.valueOf(right);
+
+			
+			//to place the operator in the middle of the two numbers 
+			double locationOperator = (singleNumber.rectangle.getX() + singleNumber2.rectangle.getX() + 50) / 2 + 15;
+			gc.strokeText(operate.OPERATOR, locationOperator, singleNumber2.rectangle.getY());
 
 			gc.strokeText(stringNumber, singleNumber.rectangle.getX(), singleNumber.rectangle.getY());
-			gc.strokeText(stringNumber2, singleNumber2.rectangle.getX(), singleNumber2.rectangle.getY());
+			gc.strokeText(stringNumber2, singleNumber2.rectangle.getX() + 50, singleNumber2.rectangle.getY());
 			singleNumber.move();
 			singleNumber2.move();
 
 			
-			//to place the operator in the middle of the two numbers 
-			double locationOperator = (singleNumber.rectangle.getX() + singleNumber2.rectangle.getX()) / 2;
-			
-			gc.strokeText(operate.OPERATOR, locationOperator, 100);
-			
-			
-			if (counter % 5 == 0) 
+			//Every Five seconds delete index 1 and 0
+			if (counter % 8 == 0) 
 			{
 				collectionOfNumbers.remove(1);
 				collectionOfNumbers.remove(0);
 				randomNumber = rand.nextInt(4);
 			}
+			//If collection is empty, exit game
 			if (collectionOfNumbers.isEmpty()) {
 				System.exit(0);
 			}
