@@ -187,6 +187,92 @@ public class AssigmentTemplate extends Application
 	};
 	
 	
+	TimerTask task = new TimerTask() {
+		
+		int randomNumber = rand.nextInt(4);
+
+		@Override
+		public void run() {
+			//generate a random number which identifies an operator
+			operate = new Operator(randomNumber);
+			//background colour
+			gc.setFill(Color.BLACK);
+			gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+			
+			//assigning numbers in the array to left or right side of the operation 
+			ParentNumber singleNumber = collectionOfNumbers.get(0);
+			ParentNumber singleNumber2 = collectionOfNumbers.get(1);
+
+			//double
+//			leftNumber = singleNumber.number;
+//			rightNumber = singleNumber2.number;
+			//always divide big number by smaller number
+			if (operate.number == 2) 
+			{
+				if (singleNumber.number > singleNumber2.number) 
+				{
+					leftNumber = singleNumber.number;
+					rightNumber = singleNumber2.number;
+				}
+				else{
+					leftNumber = singleNumber2.number;
+					rightNumber = singleNumber.number;
+				}
+				//to make division more do-able
+				if (leftNumber < 0) 
+				{
+					leftNumber = (leftNumber * (-1) * 10);
+				}
+
+			}
+			else
+			{
+				leftNumber = singleNumber.number;
+				rightNumber = singleNumber2.number;
+			}
+		
+
+			//convert the number to string
+			//so it can be drawn
+			int left = (int) leftNumber;
+			int right = (int) rightNumber;
+			String stringNumber = String.valueOf(left);
+			String stringNumber2 = String.valueOf(right);
+
+			
+			//to place the operator in the middle of the two numbers 
+			double locationOperator = (singleNumber.rectangle.getX() + singleNumber2.rectangle.getX() + 50) / 2 + 15;
+			//set the text to white
+			gc.setStroke(Color.WHITE);
+			gc.strokeText(operate.OPERATOR, locationOperator, singleNumber2.rectangle.getY());
+
+			gc.strokeText(stringNumber, singleNumber.rectangle.getX(), singleNumber.rectangle.getY());
+			gc.strokeText(stringNumber2, singleNumber2.rectangle.getX() + 50, singleNumber2.rectangle.getY());
+			singleNumber.move();
+			singleNumber2.move();
+
+			
+			//Every Five seconds delete index 1 and 0
+			if (counter % 4 == 0) 
+			{
+				streak = 0;
+				collectionOfNumbers.remove(1);
+				collectionOfNumbers.remove(0);
+				randomNumber = rand.nextInt(4);
+			}
+			//If collection is empty, exit game
+			if (collectionOfNumbers.isEmpty()) {
+//				System.exit(0);
+				timer2.cancel();
+			}
+			
+			counter++;
+
+
+			
+		}
+	};
+	
 	@Override
 	public void start(Stage stage) throws Exception 
 	{
@@ -299,91 +385,7 @@ public class AssigmentTemplate extends Application
 		//stroke the number and the location
 		
 		//TIMER LOOP
-		timer2.schedule(new TimerTask() {
-			
-		//counter to control event in the game
-//		int counter = 1;
-		int randomNumber = rand.nextInt(4);
-			@Override
-			public void run() {
-
-			//generate a random number which identifies an operator
-			operate = new Operator(randomNumber);
-			//background colour
-			gc.setFill(Color.BLACK);
-			gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-			
-			//assigning numbers in the array to left or right side of the operation 
-			ParentNumber singleNumber = collectionOfNumbers.get(0);
-			ParentNumber singleNumber2 = collectionOfNumbers.get(1);
-
-			//double
-//			leftNumber = singleNumber.number;
-//			rightNumber = singleNumber2.number;
-			//always divide big number by smaller number
-			if (operate.number == 2) 
-			{
-				if (singleNumber.number > singleNumber2.number) 
-				{
-					leftNumber = singleNumber.number;
-					rightNumber = singleNumber2.number;
-				}
-				else{
-					leftNumber = singleNumber2.number;
-					rightNumber = singleNumber.number;
-				}
-				//to make division more do-able
-				if (leftNumber < 0) 
-				{
-					leftNumber = (leftNumber * (-1) * 10);
-				}
-
-			}
-			else
-			{
-				leftNumber = singleNumber.number;
-				rightNumber = singleNumber2.number;
-			}
-		
-
-			//convert the number to string
-			//so it can be drawn
-			int left = (int) leftNumber;
-			int right = (int) rightNumber;
-			String stringNumber = String.valueOf(left);
-			String stringNumber2 = String.valueOf(right);
-
-			
-			//to place the operator in the middle of the two numbers 
-			double locationOperator = (singleNumber.rectangle.getX() + singleNumber2.rectangle.getX() + 50) / 2 + 15;
-			//set the text to white
-			gc.setStroke(Color.WHITE);
-			gc.strokeText(operate.OPERATOR, locationOperator, singleNumber2.rectangle.getY());
-
-			gc.strokeText(stringNumber, singleNumber.rectangle.getX(), singleNumber.rectangle.getY());
-			gc.strokeText(stringNumber2, singleNumber2.rectangle.getX() + 50, singleNumber2.rectangle.getY());
-			singleNumber.move();
-			singleNumber2.move();
-
-			
-			//Every Five seconds delete index 1 and 0
-			if (counter % 4 == 0) 
-			{
-				streak = 0;
-				collectionOfNumbers.remove(1);
-				collectionOfNumbers.remove(0);
-				randomNumber = rand.nextInt(4);
-			}
-			//If collection is empty, exit game
-			if (collectionOfNumbers.isEmpty()) {
-//				System.exit(0);
-				timer2.cancel();
-			}
-			
-			counter++;
-
-			}
-		}, 0, 2000);
+		timer2.schedule(task, 0, 2000);
 
 		stage.show();
 	}
