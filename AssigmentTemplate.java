@@ -67,6 +67,8 @@ public class AssigmentTemplate extends Application
 	
 	//to pace the game
 	Timer timer2;
+	//task to be ran
+	TimerTask task;
 	
 	Factory numberMaker = new Factory();
 	//amount of numbers in the arraylist,
@@ -85,7 +87,6 @@ public class AssigmentTemplate extends Application
 	int streak = 0;
 	int streakGauge = 0;
 	
-	TimerTask task;
 	
 	//key even that processes the operation 
 	//and compares it with the user input
@@ -202,12 +203,24 @@ public class AssigmentTemplate extends Application
 					}
 				};
 				//call method populate
+				reset();
 				populateArrayOfNumbers();
 				timer2.schedule(task, 0, 2000);
 			}
 		}
 	};
 	
+	/**
+	 * reset game score
+	 */
+	private void reset() 
+	{
+		streak = 0;
+		score = 0;
+		labelScore.setText("Your Score: " + score);
+		streakGauge = 0;
+		labelStreak.setText("Your Streak: " + streakGauge);
+	}
 	/**
 	 * Method to populate array of numbers
 	 */
@@ -226,6 +239,8 @@ public class AssigmentTemplate extends Application
 			//System.out.println(randomNumber);
 			collectionOfNumbers.add(numberMaker.createNumber(randomNumber, 50 * xlocation, 50));
 		}
+		//Display the amount of operations in array
+		labelTotal.setText("Possible Score: " + (collectionOfNumbers.size() / 2));
 	}
 	
 	/**
@@ -405,20 +420,8 @@ public class AssigmentTemplate extends Application
 		canvas = new Canvas(600, 600);
 		game.getChildren().add(canvas);
 		
-//		for (int x = 1; x <= i; x++) 
-//		{
-//			int randomNumber = rand.nextInt(15) + 1;
-//			//reset location the numbers to start at
-//			int xlocation = x % 6;
-//			if (xlocation == 0) {
-//				xlocation = 6;
-//			}
-//			//System.out.println(randomNumber);
-//			collectionOfNumbers.add(numberMaker.createNumber(randomNumber, 50 * xlocation, 50));
-//		}
 
 		//set here to have te maximum score
-		labelTotal.setText("Possible Score: " + (collectionOfNumbers.size() / 2));
 
 		//set up graphic context
 		gc = canvas.getGraphicsContext2D();
