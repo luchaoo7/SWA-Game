@@ -181,17 +181,39 @@ public class AssigmentTemplate extends Application
 			}
 			if (event.getSource() == start) 
 			{
-
+				//call method populate
+				populateArrayOfNumbers();
+				timer2.schedule(task, 0, 2000);
 			}
 		}
 	};
 	
+	/**
+	 * Method to populate array of numbers
+	 */
+	private void populateArrayOfNumbers()
+	{
+		//clear collection
+		collectionOfNumbers.clear();
+		for (int x = 1; x <= i; x++) 
+		{
+			int randomNumber = rand.nextInt(15) + 1;
+			//reset location the numbers to start at
+			int xlocation = x % 6;
+			if (xlocation == 0) {
+				xlocation = 6;
+			}
+			//System.out.println(randomNumber);
+			collectionOfNumbers.add(numberMaker.createNumber(randomNumber, 50 * xlocation, 50));
+		}
+	}
 	Runnable runnable = new Runnable() {
 		
 		int randomNumber = rand.nextInt(4);
-
+		
 		@Override
 		public void run() {
+
 				//generate a random number which identifies an operator
 			operate = new Operator(randomNumber);
 			//background colour
@@ -266,19 +288,15 @@ public class AssigmentTemplate extends Application
 			}
 			
 			counter++;
-
-			
-			
 		}
 	};
 	
 	TimerTask task = new TimerTask() {
 		
-		int randomNumber = rand.nextInt(4);
-
 		@Override
 		public void run() {
 			
+			runnable.run();
 		}
 	};
 	
@@ -371,17 +389,17 @@ public class AssigmentTemplate extends Application
 		canvas = new Canvas(600, 600);
 		game.getChildren().add(canvas);
 		
-		for (int x = 1; x <= i; x++) 
-		{
-			int randomNumber = rand.nextInt(15) + 1;
-			//reset location the numbers to start at
-			int xlocation = x % 6;
-			if (xlocation == 0) {
-				xlocation = 6;
-			}
-			//System.out.println(randomNumber);
-			collectionOfNumbers.add(numberMaker.createNumber(randomNumber, 50 * xlocation, 50));
-		}
+//		for (int x = 1; x <= i; x++) 
+//		{
+//			int randomNumber = rand.nextInt(15) + 1;
+//			//reset location the numbers to start at
+//			int xlocation = x % 6;
+//			if (xlocation == 0) {
+//				xlocation = 6;
+//			}
+//			//System.out.println(randomNumber);
+//			collectionOfNumbers.add(numberMaker.createNumber(randomNumber, 50 * xlocation, 50));
+//		}
 
 		//set here to have te maximum score
 		labelTotal.setText("Possible Score: " + (collectionOfNumbers.size() / 2));
@@ -394,7 +412,7 @@ public class AssigmentTemplate extends Application
 		//stroke the number and the location
 		
 		//TIMER LOOP
-		timer2.schedule(task, 0, 2000);
+//		timer2.schedule(task, 0, 2000);
 
 		stage.show();
 	}
