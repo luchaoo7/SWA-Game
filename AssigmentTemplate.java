@@ -186,14 +186,13 @@ public class AssigmentTemplate extends Application
 		}
 	};
 	
-	
-	TimerTask task = new TimerTask() {
+	Runnable runnable = new Runnable() {
 		
 		int randomNumber = rand.nextInt(4);
 
 		@Override
 		public void run() {
-			//generate a random number which identifies an operator
+				//generate a random number which identifies an operator
 			operate = new Operator(randomNumber);
 			//background colour
 			gc.setFill(Color.BLACK);
@@ -268,7 +267,17 @@ public class AssigmentTemplate extends Application
 			
 			counter++;
 
+			
+			
+		}
+	};
+	
+	TimerTask task = new TimerTask() {
+		
+		int randomNumber = rand.nextInt(4);
 
+		@Override
+		public void run() {
 			
 		}
 	};
