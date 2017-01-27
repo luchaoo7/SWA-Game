@@ -66,7 +66,7 @@ public class AssigmentTemplate extends Application
 	Operator operate;
 	
 	//to pace the game
-	Timer timer2 = new Timer();
+	Timer timer2;
 	
 	Factory numberMaker = new Factory();
 	//amount of numbers in the arraylist,
@@ -84,6 +84,8 @@ public class AssigmentTemplate extends Application
 	int score = 0;
 	int streak = 0;
 	int streakGauge = 0;
+	
+	TimerTask task;
 	
 	//key even that processes the operation 
 	//and compares it with the user input
@@ -177,10 +179,28 @@ public class AssigmentTemplate extends Application
 		{
 			if (event.getSource() == stop) 
 			{
-				timer2.cancel();
+				if (task != null)
+				{
+					task.cancel();
+				}
 			}
+			//
 			if (event.getSource() == start) 
 			{
+				if (task != null)
+				{
+					task.cancel();
+				}
+				collectionOfNumbers.clear();
+				timer2 = new Timer();
+				task = new TimerTask() {
+					
+					@Override
+					public void run() {
+						runnable.run();
+						
+					}
+				};
 				//call method populate
 				populateArrayOfNumbers();
 				timer2.schedule(task, 0, 2000);
@@ -207,6 +227,10 @@ public class AssigmentTemplate extends Application
 			collectionOfNumbers.add(numberMaker.createNumber(randomNumber, 50 * xlocation, 50));
 		}
 	}
+	
+	/**
+	 * Runnable for task to run
+	 */
 	Runnable runnable = new Runnable() {
 		
 		int randomNumber = rand.nextInt(4);
@@ -291,14 +315,6 @@ public class AssigmentTemplate extends Application
 		}
 	};
 	
-	TimerTask task = new TimerTask() {
-		
-		@Override
-		public void run() {
-			
-			runnable.run();
-		}
-	};
 	
 	@Override
 	public void start(Stage stage) throws Exception 
