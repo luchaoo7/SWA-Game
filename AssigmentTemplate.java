@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -30,14 +31,22 @@ public class AssigmentTemplate extends Application
 		launch(args);
 	}
 	
+	//main screen
 	Scene scene;
 	TabPane root;
 	Tab tab1, tab2;
 	
+	//set up for both tabs
 	//creating a flowpane for tab 1
 	FlowPane rootTab1;
+	//creating a flowpane for tab 2
+	FlowPane rootTab2;
 	//add ui and game to rootTab1
 	Pane ui, game;
+	//add ui and game to rootTab2
+	Pane ui2, game2;
+
+	//tab1
 	TextField textField;
 	//Button for ui controller
 	Button stop;
@@ -45,6 +54,11 @@ public class AssigmentTemplate extends Application
 	//canvas added to game pane
 	Canvas canvas;
 	GraphicsContext gc;
+	
+	//tab2
+	Label labelTotal;
+	Label labelScore;
+	Label labelStreak;
 
 	Random rand = new Random();
 	
@@ -57,18 +71,19 @@ public class AssigmentTemplate extends Application
 	Factory numberMaker = new Factory();
 	//amount of numbers in the arraylist,
 	//should only be even numbers
-	int i = 10;
+	int i = 20;
 	
 	//counter to determine when to delete numbers
 	int counter = 1;
 	ArrayList<ParentNumber> collectionOfNumbers = new ArrayList<ParentNumber>();
-	
 	
 	//the value of each side of the operation
 	//will be stored in this variables
 	double leftNumber;
 	double rightNumber;
 	int score = 0;
+	int streak = 0;
+	int streakGauge = 0;
 	
 	//key even that processes the operation 
 	//and compares it with the user input
@@ -114,6 +129,12 @@ public class AssigmentTemplate extends Application
 					gc.strokeText("Yes!!You are right", 400, 100);
 					//update score
 					score++;
+					streak++;
+
+					if (streak > streakGauge) 
+					{
+						streakGauge = streak;
+					}
 					//remove operations answered correctly
 					collectionOfNumbers.remove(1);
 					collectionOfNumbers.remove(0);
@@ -125,6 +146,8 @@ public class AssigmentTemplate extends Application
 					textField.clear();
 					//check if collection is empty
 					//if it is, exit
+					labelScore.setText("Your Score: " + score);
+					labelStreak.setText("Your Streak: " + streakGauge);
 					if (collectionOfNumbers.isEmpty()) 
 					{
 						timer2.cancel();
@@ -133,13 +156,14 @@ public class AssigmentTemplate extends Application
 				}
 				else
 				{
+					//set streak to 0 if miss answer
+					streak = 0;
 					//clear text field
 					textField.clear();
 //					gc.setFill(Color.YELLOW);
 					gc.setStroke(Color.RED);
 					gc.strokeText("Keep Trying", 400, 100);
 				}
-				System.out.println(score);
 			}
 		}
 	};
@@ -183,11 +207,42 @@ public class AssigmentTemplate extends Application
 		
 		rootTab1 = new FlowPane();
 		tab1.setContent(rootTab1);
+		
+		rootTab2 = new FlowPane();
+		tab2.setContent(rootTab2);
 
+		//set up of tab1
 		ui = new Pane();
 		ui.setPrefSize(200, 600);
 		ui.setStyle("-fx-background-color: #ffffc8; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
 		rootTab1.getChildren().add(ui);
+		
+		//set up of tab2
+		ui2 = new Pane();
+		ui2.setPrefSize(200, 600);
+		ui2.setStyle("-fx-background-color: #ffffc8; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
+		rootTab2.getChildren().add(ui2);
+		
+		labelTotal = new Label();
+		//This line of code is at the bottom
+		//when the array of numbers if filled
+//		labelTotal.setText("Possible Score: " + (collectionOfNumbers.size() / 2));
+		labelTotal.setLayoutX(25);
+		labelTotal.setLayoutY(50);
+		ui2.getChildren().add(labelTotal);
+
+		labelScore = new Label();
+		labelScore.setText("Your Score: " + score);
+		labelScore.setLayoutX(25);
+		labelScore.setLayoutY(75);
+		ui2.getChildren().add(labelScore);
+
+		labelStreak = new Label();
+		labelStreak.setText("Your Streak: " + streak);
+		labelStreak.setLayoutX(25);
+		labelStreak.setLayoutY(100);
+		ui2.getChildren().add(labelStreak);
+		
 		//set up of stop button
 		stop = new Button();
 		stop.setText("Stop");
@@ -223,7 +278,7 @@ public class AssigmentTemplate extends Application
 		
 		for (int x = 1; x <= i; x++) 
 		{
-			int randomNumber = rand.nextInt(16) - 5;
+			int randomNumber = rand.nextInt(15) + 1;
 			//reset location the numbers to start at
 			int xlocation = x % 6;
 			if (xlocation == 0) {
@@ -233,6 +288,8 @@ public class AssigmentTemplate extends Application
 			collectionOfNumbers.add(numberMaker.createNumber(randomNumber, 50 * xlocation, 50));
 		}
 
+		//set here to have te maximum score
+		labelTotal.setText("Possible Score: " + (collectionOfNumbers.size() / 2));
 
 		//set up graphic context
 		gc = canvas.getGraphicsContext2D();
@@ -275,6 +332,12 @@ public class AssigmentTemplate extends Application
 					leftNumber = singleNumber2.number;
 					rightNumber = singleNumber.number;
 				}
+				//to make division more do-able
+				if (leftNumber < 0) 
+				{
+					leftNumber = (leftNumber * (-1) * 10);
+				}
+
 			}
 			else
 			{
@@ -304,15 +367,17 @@ public class AssigmentTemplate extends Application
 
 			
 			//Every Five seconds delete index 1 and 0
-			if (counter % 8 == 0) 
+			if (counter % 4 == 0) 
 			{
+				streak = 0;
 				collectionOfNumbers.remove(1);
 				collectionOfNumbers.remove(0);
 				randomNumber = rand.nextInt(4);
 			}
 			//If collection is empty, exit game
 			if (collectionOfNumbers.isEmpty()) {
-				System.exit(0);
+//				System.exit(0);
+				timer2.cancel();
 			}
 			
 			counter++;
@@ -334,21 +399,17 @@ class Factory implements FactoryIF
 	@Override
 	public ParentNumber createNumber(int amount, int x, int y) 
 	{
-		if (amount < 0) 
+		if (amount > 0 && amount <= 5) 
 		{
 			return (new SmallNumber(x, y));
 		}
-		else if (amount >= 0 && amount <= 5) 
+		else if (amount > 5 && amount <= 10) 
 		{
 			return (new MediumNumber(x, y));
 		}
-		else if (amount > 5) 
+		else
 		{
 			return (new BigNumber(x, y));
-		}
-		else 
-		{
-			return null;
 		}
 	}
 }
