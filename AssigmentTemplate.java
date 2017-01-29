@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -14,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
@@ -44,7 +46,13 @@ public class AssigmentTemplate extends Application
 	//add ui and game to rootTab1
 	Pane ui, game;
 	//add ui and game to rootTab2
-	Pane ui2, game2;
+	Pane ui2;
+	FlowPane game2; //vertical flowpane
+	//Pane for game2
+	Pane picture1;
+	Pane picture2;
+	Canvas canvasP1;
+	GraphicsContext gcp1;
 
 	//tab1
 	TextField textField;
@@ -70,6 +78,7 @@ public class AssigmentTemplate extends Application
 	//task to be ran
 	TimerTask task;
 	
+	Mathematician mathGuy;
 	Factory numberMaker = new Factory();
 	//amount of numbers in the arraylist,
 	//should only be even numbers
@@ -134,6 +143,9 @@ public class AssigmentTemplate extends Application
 					score++;
 					streak++;
 
+					//set new image
+					mathGuy.setImage(score);
+					gcp1.drawImage(mathGuy.image, mathGuy.r.getX(), mathGuy.r.getY());
 					if (streak > streakGauge) 
 					{
 						streakGauge = streak;
@@ -282,6 +294,12 @@ public class AssigmentTemplate extends Application
 				if (leftNumber < 0) 
 				{
 					leftNumber = (leftNumber * (-1) * 10);
+					rightNumber = leftNumber / 2;
+				}
+				else {
+					
+					leftNumber = leftNumber * 10;
+					rightNumber = leftNumber / 2;
 				}
 
 			}
@@ -353,6 +371,8 @@ public class AssigmentTemplate extends Application
 		tab1.setContent(rootTab1);
 		
 		rootTab2 = new FlowPane();
+//		
+		rootTab2.setPrefHeight(600);
 		tab2.setContent(rootTab2);
 
 		//set up of tab1
@@ -417,6 +437,30 @@ public class AssigmentTemplate extends Application
 		game.setStyle("-fx-background-color: #000000;");
 		rootTab1.getChildren().add(game);
 		
+		game2 = new FlowPane(Orientation.VERTICAL); 
+		game2.setPrefSize(600, 600);
+		game2.setStyle("-fx-background-color: #000000;");
+		rootTab2.getChildren().add(game2);
+		
+		picture1 = new Pane();
+		picture1.setPrefSize(600, 200);
+		picture1.setStyle("-fx-background-color: #4283f4;");
+		//canvas for picture1 Pane
+		canvasP1 = new Canvas(600, 200);
+		picture1.getChildren().add(canvasP1);
+		game2.getChildren().add(picture1);
+		gcp1 = canvasP1.getGraphicsContext2D();
+		
+//		setting images
+//		Maths mathGuy = Maths.getInstace();
+		mathGuy = Mathematician.getInstace();
+		gcp1.drawImage(mathGuy.image, mathGuy.r.getX(), mathGuy.r.getY());
+
+		picture2 = new Pane();
+		picture2.setPrefSize(600, 200);
+		picture2.setStyle("-fx-background-color: #42f47d;");
+		game2.getChildren().add(picture2);;
+
 		canvas = new Canvas(600, 600);
 		game.getChildren().add(canvas);
 		
@@ -584,3 +628,11 @@ class MediumNumber extends ParentNumber
 		rectangle.setY(rectangle.getY() + 50);
 	}
 }
+
+
+
+
+
+
+
+
