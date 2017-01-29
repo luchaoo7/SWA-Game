@@ -15,13 +15,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
+//import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+//import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -70,7 +70,6 @@ public class AssigmentTemplate extends Application
 
 	Random rand = new Random();
 	
-	SmallNumber myNumber;
 	Operator operate;
 	
 	//to pace the game
@@ -109,7 +108,7 @@ public class AssigmentTemplate extends Application
 			if (event.getCode() == KeyCode.ENTER) 
 			{
 				//compute operation 
-				switch (operate.number) {
+				switch (operate.getNumber()) {
 				case 0:
 					result = leftNumber + rightNumber;
 					break;
@@ -279,7 +278,7 @@ public class AssigmentTemplate extends Application
 //			leftNumber = singleNumber.number;
 //			rightNumber = singleNumber2.number;
 			//always divide big number by smaller number
-			if (operate.number == 2) 
+			if (operate.getNumber() == 2) 
 			{
 				if (singleNumber.number > singleNumber2.number) 
 				{
@@ -322,7 +321,7 @@ public class AssigmentTemplate extends Application
 			double locationOperator = (singleNumber.rectangle.getX() + singleNumber2.rectangle.getX() + 50) / 2 + 15;
 			//set the text to white
 			gc.setStroke(Color.WHITE);
-			gc.strokeText(operate.OPERATOR, locationOperator, singleNumber2.rectangle.getY());
+			gc.strokeText(operate.getOPERATOR(), locationOperator, singleNumber2.rectangle.getY());
 
 			gc.strokeText(stringNumber, singleNumber.rectangle.getX(), singleNumber.rectangle.getY());
 			gc.strokeText(stringNumber2, singleNumber2.rectangle.getX() + 50, singleNumber2.rectangle.getY());
@@ -481,153 +480,11 @@ public class AssigmentTemplate extends Application
 	}
 }
 
-interface FactoryIF
-{
-	public ParentNumber createNumber(int amount, int x, int y);
-}
-
-class Factory implements FactoryIF
-{
-	@Override
-	public ParentNumber createNumber(int amount, int x, int y) 
-	{
-		if (amount > 0 && amount <= 5) 
-		{
-			return (new SmallNumber(x, y));
-		}
-		else if (amount > 5 && amount <= 10) 
-		{
-			return (new MediumNumber(x, y));
-		}
-		else
-		{
-			return (new BigNumber(x, y));
-		}
-	}
-}
-
 interface MarkerIF
 {
 	
 }
 
-/**
- * class to dictate what operation 
- * will take place
- * @author danbro
- */
-class Operator
-{
-	public String OPERATOR = "";
-	public int number;
-
-	public Operator(int operator) 
-	{
-		//store the passed number to identify 
-		//the operator user later
-		number = operator;
-
-		switch (operator) 
-		{
-		case 0:
-			OPERATOR = "+";
-			break;
-		case 1:
-			OPERATOR = "-";
-			break;
-		case 2:
-			OPERATOR = "/";
-			break;
-		case 3:
-			OPERATOR = "*";
-			break;
-		}
-	}
-	
-}
-
-abstract class ParentNumber implements MarkerIF
-{
-	Rectangle rectangle;
-	Random random;
-	int number;
-	
-	public ParentNumber(int x, int y) 
-	{
-		//create rectangle at x,y coordinate and size w,h
-		rectangle = new Rectangle(x, y, 100, 100);
-		random = new Random();
-		number = random.nextInt(10) + 1;
-	}
-
-	public abstract void move();
-}
-
-/**
- * generate a number from 10 to a 100 in powers of 
- * ten
- * @author danbro
- */
-class BigNumber extends ParentNumber
-{
-	public BigNumber(int x, int y) 
-	{
-		super(x, y);
-		number = number * 10;
-	}
-
-	/**
-	 * move number downwards as loops carries on
-	 */
-	@Override
-	public void move() 
-	{
-		rectangle.setY(rectangle.getY() + 50);
-	}
-}
-/**
- * generate a number from -1 to 10
- * @author danbro
- */
-class SmallNumber extends ParentNumber
-{
-	
-	public SmallNumber(int x, int y) 
-	{
-		super(x, y);
-		number = number * (-1);
-	}
-
-	/**
-	 * move number downwards as loops carries on
-	 */
-	@Override
-	public void move() 
-	{
-		rectangle.setY(rectangle.getY() + 50);
-	}
-}
-/**
- * Generate a numbers from 1 to 10;
- * @author danbro
- */
-class MediumNumber extends ParentNumber
-{
-	
-	public MediumNumber(int x, int y) 
-	{
-		super(x, y);
-	}
-
-	/**
-	 * move number downwards as loops carries on
-	 */
-	@Override
-	public void move() 
-	{
-		rectangle.setY(rectangle.getY() + 50);
-	}
-}
 
 
 
