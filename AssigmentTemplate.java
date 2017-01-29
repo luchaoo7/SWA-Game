@@ -15,13 +15,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-//import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-//import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -52,7 +50,9 @@ public class AssigmentTemplate extends Application
 	Pane picture1;
 	Pane picture2;
 	Canvas canvasP1;
+	Canvas canvasP2;
 	GraphicsContext gcp1;
+	GraphicsContext gcp2;
 
 	//tab1
 	TextField textField;
@@ -104,6 +104,7 @@ public class AssigmentTemplate extends Application
 		@Override
 		public void handle(KeyEvent event) 
 		{
+
 			double result = 0;
 			if (event.getCode() == KeyCode.ENTER) 
 			{
@@ -133,6 +134,7 @@ public class AssigmentTemplate extends Application
 				{
 //					System.out.println("only numbers");
 				}
+				
 
 				if (valueInput == result) 
 				{
@@ -144,7 +146,9 @@ public class AssigmentTemplate extends Application
 
 					//set new image
 					mathGuy.setImage(score);
-					gcp1.drawImage(mathGuy.image, mathGuy.r.getX(), mathGuy.r.getY());
+					gcp1.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
+					mathGuy.setImage(streak);
+					gcp2.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 					if (streak > streakGauge) 
 					{
 						streakGauge = streak;
@@ -199,6 +203,12 @@ public class AssigmentTemplate extends Application
 			//
 			if (event.getSource() == start) 
 			{
+				//clear textfield message once programme start
+				if (textField.getText().equalsIgnoreCase("Your Answer")) 
+				{
+					textField.clear();
+				}
+				//cancel task if running and start again
 				if (task != null)
 				{
 					task.cancel();
@@ -280,14 +290,14 @@ public class AssigmentTemplate extends Application
 			//always divide big number by smaller number
 			if (operate.getNumber() == 2) 
 			{
-				if (singleNumber.number > singleNumber2.number) 
+				if (singleNumber.getNumber() > singleNumber2.getNumber()) 
 				{
-					leftNumber = singleNumber.number;
-					rightNumber = singleNumber2.number;
+					leftNumber = singleNumber.getNumber();
+					rightNumber = singleNumber2.getNumber();
 				}
 				else{
-					leftNumber = singleNumber2.number;
-					rightNumber = singleNumber.number;
+					leftNumber = singleNumber2.getNumber();
+					rightNumber = singleNumber.getNumber();
 				}
 				//to make division more do-able
 				if (leftNumber < 0) 
@@ -304,8 +314,8 @@ public class AssigmentTemplate extends Application
 			}
 			else
 			{
-				leftNumber = singleNumber.number;
-				rightNumber = singleNumber2.number;
+				leftNumber = singleNumber.getNumber();
+				rightNumber = singleNumber2.getNumber();
 			}
 		
 
@@ -318,13 +328,13 @@ public class AssigmentTemplate extends Application
 
 			
 			//to place the operator in the middle of the two numbers 
-			double locationOperator = (singleNumber.rectangle.getX() + singleNumber2.rectangle.getX() + 50) / 2 + 15;
+			double locationOperator = (singleNumber.getRectangle().getX() + singleNumber2.getRectangle().getX() + 50) / 2 + 15;
 			//set the text to white
 			gc.setStroke(Color.WHITE);
-			gc.strokeText(operate.getOPERATOR(), locationOperator, singleNumber2.rectangle.getY());
+			gc.strokeText(operate.getOPERATOR(), locationOperator, singleNumber2.getRectangle().getY());
 
-			gc.strokeText(stringNumber, singleNumber.rectangle.getX(), singleNumber.rectangle.getY());
-			gc.strokeText(stringNumber2, singleNumber2.rectangle.getX() + 50, singleNumber2.rectangle.getY());
+			gc.strokeText(stringNumber, singleNumber.getRectangle().getX(), singleNumber.getRectangle().getY());
+			gc.strokeText(stringNumber2, singleNumber2.getRectangle().getX() + 50, singleNumber2.getRectangle().getY());
 			singleNumber.move();
 			singleNumber2.move();
 
@@ -453,18 +463,25 @@ public class AssigmentTemplate extends Application
 //		setting images
 //		Maths mathGuy = Maths.getInstace();
 		mathGuy = Mathematician.getInstace();
-		gcp1.drawImage(mathGuy.image, mathGuy.r.getX(), mathGuy.r.getY());
+		gcp1.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 
 		picture2 = new Pane();
 		picture2.setPrefSize(600, 200);
 		picture2.setStyle("-fx-background-color: #42f47d;");
+		//canvas for picture2 Pane
+		canvasP2 = new Canvas(600, 200);
+		picture2.getChildren().add(canvasP2);
 		game2.getChildren().add(picture2);;
+		gcp2 = canvasP2.getGraphicsContext2D();
+
+		//draw streak image
+		gcp2.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 
 		canvas = new Canvas(600, 600);
 		game.getChildren().add(canvas);
 		
 
-		//set here to have te maximum score
+		//set here to have the maximum score
 
 		//set up graphic context
 		gc = canvas.getGraphicsContext2D();
@@ -473,19 +490,9 @@ public class AssigmentTemplate extends Application
 		gc.setFont(new Font("Arial", 20));
 		//stroke the number and the location
 		
-		//TIMER LOOP
-//		timer2.schedule(task, 0, 2000);
-
 		stage.show();
 	}
 }
-
-interface MarkerIF
-{
-	
-}
-
-
 
 
 

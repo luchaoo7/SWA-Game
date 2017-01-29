@@ -5,14 +5,14 @@ public class Mathematician{
 	
 	private static Mathematician instace = null;
 
-	public Image image;
-	public Rectangle r;
+	private Image image;
+	private Rectangle rectangle;
 	private static String imageFile;
 	
 	private Mathematician(String imageFile)
 	{
 		image = new Image(AssigmentTemplate.class.getResource("resource/" + imageFile).toExternalForm(),600, 200, false, false);
-		r = new Rectangle(0, 0, 600, 200);
+		rectangle = new Rectangle(0, 0, 600, 200);
 	}
 	
 	public static Mathematician getInstace()
@@ -59,6 +59,17 @@ public class Mathematician{
 			break;
 		}
 		this.image = new Image(AssigmentTemplate.class.getResource("resource/" + imageFile).toExternalForm(),600, 200, false, false);
+	}
+
+	public Rectangle getRectangle() {
+		return rectangle;
+	}
+
+	/**
+	 * @return image
+	 */
+	public Image getImage() {
+		return image;
 	}
 
 }

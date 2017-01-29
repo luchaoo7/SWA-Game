@@ -8,7 +8,7 @@ public class BigNumber extends ParentNumber
 	public BigNumber(int x, int y) 
 	{
 		super(x, y);
-		number = number * 10;
+		setNumber();
 	}
 
 	/**
@@ -17,7 +17,13 @@ public class BigNumber extends ParentNumber
 	@Override
 	public void move() 
 	{
-		rectangle.setY(rectangle.getY() + 50);
+//		rectangle.setY(rectangle.getY() + 50);
+		setRectangle(50);
+	}
+
+	@Override
+	protected void setNumber() {
+		setNumber(getNumber() * 10);
 	}
 }
 

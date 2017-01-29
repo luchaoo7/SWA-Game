@@ -8,7 +8,8 @@ public class SmallNumber extends ParentNumber
 	public SmallNumber(int x, int y) 
 	{
 		super(x, y);
-		number = number * (-1);
+//		number = number * (-1);
+		setNumber();
 	}
 
 	/**
@@ -17,7 +18,15 @@ public class SmallNumber extends ParentNumber
 	@Override
 	public void move() 
 	{
-		rectangle.setY(rectangle.getY() + 50);
+//		rectangle.setY(rectangle.getY() + 50);
+		setRectangle(50);
 	}
+
+	@Override
+	protected void setNumber() 
+	{
+		setNumber(getNumber() * (-1));
+	}
+	
 }
 

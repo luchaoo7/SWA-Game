@@ -5,12 +5,11 @@ import javafx.scene.shape.Rectangle;
  * 
  * @author danbro
  */
-//MarkerIF not doing nothing yet
-public abstract class ParentNumber implements MarkerIF
+public abstract class ParentNumber
 {
-	Rectangle rectangle;
-	Random random;
-	int number;
+	private Rectangle rectangle;
+	private Random random;
+	private int number;
 	
 	public ParentNumber(int x, int y) 
 	{
@@ -21,5 +20,29 @@ public abstract class ParentNumber implements MarkerIF
 	}
 
 	public abstract void move();
+
+	/**
+	 * @return a number
+	 */
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+	
+	public Rectangle getRectangle() {
+		return rectangle;
+	}
+
+	public void setRectangle(int setY) {
+		this.rectangle.setY(this.rectangle.getY() + setY);
+	}
+
+	/**
+	 * all sub classes will have to implement this method
+	 */
+	protected abstract void setNumber();
 }
 
