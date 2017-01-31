@@ -446,16 +446,16 @@ public class AssigmentTemplate extends Application
 		game.setStyle("-fx-background-color: #000000;");
 		rootTab1.getChildren().add(game);
 		
-		game2 = new FlowPane(Orientation.VERTICAL); 
-		game2.setPrefSize(600, 600);
+		game2 = new FlowPane(Orientation.HORIZONTAL); 
+		game2.setPrefSize(600, 800);
 		game2.setStyle("-fx-background-color: #000000;");
 		rootTab2.getChildren().add(game2);
 		
 		picture1 = new Pane();
-		picture1.setPrefSize(600, 200);
+		picture1.setPrefSize(600, 300);
 		picture1.setStyle("-fx-background-color: #4283f4;");
 		//canvas for picture1 Pane
-		canvasP1 = new Canvas(600, 200);
+		canvasP1 = new Canvas(600, 400);
 		picture1.getChildren().add(canvasP1);
 		game2.getChildren().add(picture1);
 		gcp1 = canvasP1.getGraphicsContext2D();
@@ -466,10 +466,10 @@ public class AssigmentTemplate extends Application
 		gcp1.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 
 		picture2 = new Pane();
-		picture2.setPrefSize(600, 200);
+		picture2.setPrefSize(600, 300);
 		picture2.setStyle("-fx-background-color: #42f47d;");
 		//canvas for picture2 Pane
-		canvasP2 = new Canvas(600, 200);
+		canvasP2 = new Canvas(600, 400);
 		picture2.getChildren().add(canvasP2);
 		game2.getChildren().add(picture2);;
 		gcp2 = canvasP2.getGraphicsContext2D();

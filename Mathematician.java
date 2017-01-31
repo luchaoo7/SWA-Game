@@ -11,7 +11,7 @@ public class Mathematician{
 	
 	private Mathematician(String imageFile)
 	{
-		image = new Image(AssigmentTemplate.class.getResource("resource/" + imageFile).toExternalForm(),600, 200, false, false);
+		image = new Image(AssigmentTemplate.class.getResource("resource/" + imageFile).toExternalForm(),600, 300, false, false);
 		rectangle = new Rectangle(0, 0, 600, 200);
 	}
 	
@@ -58,7 +58,7 @@ public class Mathematician{
 			imageFile = "isaak_newton.jpg";
 			break;
 		}
-		this.image = new Image(AssigmentTemplate.class.getResource("resource/" + imageFile).toExternalForm(),600, 200, false, false);
+		this.image = new Image(AssigmentTemplate.class.getResource("resource/" + imageFile).toExternalForm(),600, 300, false, false);
 	}
 
 	public Rectangle getRectangle() {
