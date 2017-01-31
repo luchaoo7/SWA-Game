@@ -28,7 +28,7 @@ public class Mathematician{
 	{
 		switch (fileNumber) {
 		case 1:
-			imageFile = "isaak_newton.jpg";
+			imageFile = "isaac_newton.jpg";
 			break;
 		case 2:
 			imageFile = "al_khwarizmi.jpg";
@@ -55,7 +55,7 @@ public class Mathematician{
 			imageFile = "rene_descartes.jpg";
 			break;
 		default:
-			imageFile = "isaak_newton.jpg";
+			imageFile = "isaac_newton.jpg";
 			break;
 		}
 		this.image = new Image(AssigmentTemplate.class.getResource("resource/" + imageFile).toExternalForm(),600, 300, false, false);

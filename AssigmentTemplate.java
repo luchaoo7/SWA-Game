@@ -226,7 +226,7 @@ public class AssigmentTemplate extends Application
 				//call method populate
 				reset();
 				populateArrayOfNumbers();
-				timer2.schedule(task, 0, 2000);
+				timer2.schedule(task, 0, 1000);
 			}
 		}
 	};
@@ -290,25 +290,37 @@ public class AssigmentTemplate extends Application
 			//always divide big number by smaller number
 			if (operate.getNumber() == 2) 
 			{
-				if (singleNumber.getNumber() > singleNumber2.getNumber()) 
+				if (singleNumber.getNumber() < 0 && singleNumber2.getNumber() < 0) 
 				{
+					//make the both positive numbers
+//					leftNumber = singleNumber.getNumber() * (-1);
+//					rightNumber = singleNumber2.getNumber() * (-1);
+					leftNumber = Math.abs(singleNumber.getNumber());
+
+					rightNumber = Math.abs(singleNumber2.getNumber());
+					leftNumber = leftNumber * rightNumber;
+				}
+				else if (singleNumber.getNumber() < 0 && singleNumber2.getNumber() > 0) {
+					
+					leftNumber = Math.abs(singleNumber.getNumber());
+					rightNumber = singleNumber2.getNumber();
+					
+					leftNumber = leftNumber * rightNumber;
+				}
+				else if (singleNumber2.getNumber() < 0 && singleNumber.getNumber() > 0 ) {
+
+					rightNumber = Math.abs(singleNumber2.getNumber());
+					leftNumber = singleNumber.getNumber();
+					
+					leftNumber = leftNumber * rightNumber;
+					
+				}
+				else if (singleNumber.getNumber() > 0 && singleNumber2.getNumber() > 0) {
+					
 					leftNumber = singleNumber.getNumber();
 					rightNumber = singleNumber2.getNumber();
-				}
-				else{
-					leftNumber = singleNumber2.getNumber();
-					rightNumber = singleNumber.getNumber();
-				}
-				//to make division more do-able
-				if (leftNumber < 0) 
-				{
-					leftNumber = (leftNumber * (-1) * 10);
-					rightNumber = leftNumber / 2;
-				}
-				else {
 					
-					leftNumber = leftNumber * 10;
-					rightNumber = leftNumber / 2;
+					leftNumber = leftNumber * rightNumber;
 				}
 
 			}
@@ -340,7 +352,7 @@ public class AssigmentTemplate extends Application
 
 			
 			//Every Five seconds delete index 1 and 0
-			if (counter % 4 == 0) 
+			if (counter % 7 == 0) 
 			{
 				streak = 0;
 				collectionOfNumbers.remove(1);
@@ -365,6 +377,7 @@ public class AssigmentTemplate extends Application
 		root = new TabPane();
 		scene = new Scene(root, 800, 600);
 		stage.setScene(scene);
+		stage.setResizable(false);
 		
 		tab1 = new Tab();
 		tab1.setText("First Tab");

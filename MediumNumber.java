@@ -17,7 +17,7 @@ public class MediumNumber extends ParentNumber{
 	public void move() 
 	{
 //		rectangle.setY(rectangle.getY() + 50);
-		setRectangle(50);
+		setRectangle(80);
 	}
 
 	@Override
