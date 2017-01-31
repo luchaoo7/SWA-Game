@@ -1,5 +1,5 @@
 /**
- * generate a number from -1 to 10
+ * generate a number from -1 to -10
  * @author danbro
  */
 public class SmallNumber extends ParentNumber
