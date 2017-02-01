@@ -59,6 +59,7 @@ public class AssigmentTemplate extends Application
 	//Button for ui controller
 	Button stop;
 	Button start;
+	Label welcomeLabel; 
 	//canvas added to game pane
 	Canvas canvas;
 	GraphicsContext gc;
@@ -153,6 +154,8 @@ public class AssigmentTemplate extends Application
 					{
 						streakGauge = streak;
 					}
+					
+					
 					//remove operations answered correctly
 					collectionOfNumbers.remove(1);
 					collectionOfNumbers.remove(0);
@@ -169,7 +172,6 @@ public class AssigmentTemplate extends Application
 					if (collectionOfNumbers.isEmpty()) 
 					{
 						timer2.cancel();
-//						System.exit(0);
 					}
 				}
 				else
@@ -199,10 +201,13 @@ public class AssigmentTemplate extends Application
 				{
 					task.cancel();
 				}
+					textField.requestFocus();
 			}
 			//
 			if (event.getSource() == start) 
 			{
+				counter = 1;
+				textField.requestFocus();
 				//clear textfield message once programme start
 				if (textField.getText().equalsIgnoreCase("Your Answer")) 
 				{
@@ -358,6 +363,7 @@ public class AssigmentTemplate extends Application
 				collectionOfNumbers.remove(1);
 				collectionOfNumbers.remove(0);
 				randomNumber = rand.nextInt(4);
+				counter = 1;
 			}
 			//If collection is empty, exit game
 			if (collectionOfNumbers.isEmpty()) {
@@ -402,6 +408,13 @@ public class AssigmentTemplate extends Application
 		ui.setPrefSize(200, 600);
 		ui.setStyle("-fx-background-color: #ffffc8; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
 		rootTab1.getChildren().add(ui);
+
+		welcomeLabel = new Label("Welcome");
+		welcomeLabel.setLayoutX(20);
+		welcomeLabel.setLayoutY(130);
+		welcomeLabel.setTextFill(Color.web("#ccff33"));
+		welcomeLabel.setFont(Font.font("Arial", 32));
+		ui.getChildren().add(welcomeLabel);
 		
 		//set up of tab2
 		ui2 = new Pane();

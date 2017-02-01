@@ -9,12 +9,21 @@ public class Mathematician{
 	private Rectangle rectangle;
 	private static String imageFile;
 	
+	/**
+	 * private constructor 
+	 * passed the string name of an image
+	 * @param imageFile
+	 */
 	private Mathematician(String imageFile)
 	{
 		image = new Image(AssigmentTemplate.class.getResource("resource/" + imageFile).toExternalForm(),600, 300, false, false);
 		rectangle = new Rectangle(0, 0, 600, 200);
 	}
 	
+	/**
+	 * @return the Mathematician object if 
+	 * its not already created
+	 */
 	public static Mathematician getInstace()
 	{
 		imageFile = "alan_turing.jpg";
@@ -24,6 +33,11 @@ public class Mathematician{
 		return instace;
 	}
 
+	/**
+	 * Sets the image depending of the int value 
+	 * received
+	 * @param fileNumber
+	 */
 	public void setImage(int fileNumber) 
 	{
 		switch (fileNumber) {
@@ -61,6 +75,9 @@ public class Mathematician{
 		this.image = new Image(AssigmentTemplate.class.getResource("resource/" + imageFile).toExternalForm(),600, 300, false, false);
 	}
 
+	/**
+	 * @return the rectangle 
+	 */
 	public Rectangle getRectangle() {
 		return rectangle;
 	}

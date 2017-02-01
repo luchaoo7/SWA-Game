@@ -19,8 +19,6 @@ public abstract class ParentNumber
 		number = random.nextInt(10) + 1;
 	}
 
-	public abstract void move();
-
 	/**
 	 * @return a number
 	 */
@@ -41,8 +39,15 @@ public abstract class ParentNumber
 	}
 
 	/**
-	 * all sub classes will have to implement this method
+	 * A method for all subclasses to implement
+	 * and generate a number in a given range.
 	 */
 	protected abstract void setNumber();
+
+	/**
+	 * A method for all subclasses to implement
+	 * to move their location
+	 */
+	public abstract void move();
 }
 

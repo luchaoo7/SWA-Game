@@ -4,8 +4,9 @@
  * @author danbro
  *
  */
-public class Factory implements FactoryIF
+public final class Factory implements FactoryIF
 {
+		
 	@Override
 	public ParentNumber createNumber(int amount, int x, int y) 
 	{
