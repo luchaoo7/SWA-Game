@@ -532,14 +532,14 @@ public class AssigmentTemplate extends Application
 		startPane1.setPrefSize(800, 600);
 		startPane1.setStyle("-fx-background-color: #000; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
 		tab1.setContent(startPane1);
-		tab1.setContent(rootTab1);
+//		tab1.setContent(rootTab1);
 
 //		Image image2 = new Image(AssigmentTemplate.class.getResource("resource/alan_turing").toExternalForm());
-		canvas = new Canvas(800, 600);
-		startPane1.getChildren().add(canvas);
-		gc = canvas.getGraphicsContext2D();
+		canvasStart = new Canvas(800, 600);
+		startPane1.getChildren().add(canvasStart);
+		gcStart = canvasStart.getGraphicsContext2D();
 		Image image3 = new Image(AssigmentTemplate.class.getResource("resource/alan_turing.jpg").toExternalForm(),800, 600, false, false);
-		gc.drawImage(image3, 0, 0);
+		gcStart.drawImage(image3, 0, 0);
 		
 		rootTab2 = new FlowPane();
 //		
