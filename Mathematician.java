@@ -1,5 +1,6 @@
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import jdk.nashorn.internal.ir.CaseNode;
 
 public class Mathematician{
 	
@@ -41,6 +42,9 @@ public class Mathematician{
 	public void setImage(int fileNumber) 
 	{
 		switch (fileNumber) {
+		case 0:
+			imageFile = "alan_turing.jpg";
+			break;
 		case 1:
 			imageFile = "isaac_newton.jpg";
 			break;
@@ -67,6 +71,9 @@ public class Mathematician{
 			break;
 		case 9:
 			imageFile = "rene_descartes.jpg";
+			break;
+		case 10:
+			imageFile = "genius.png";
 			break;
 		default:
 			imageFile = "isaac_newton.jpg";

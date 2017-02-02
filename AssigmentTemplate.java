@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
@@ -39,6 +40,8 @@ public class AssigmentTemplate extends Application
 	//set up for both tabs
 	//creating a flowpane for tab 1
 	FlowPane rootTab1;
+	//start pane 
+	Pane startPane1;
 	//creating a flowpane for tab 2
 	FlowPane rootTab2;
 	//add ui and game to rootTab1
@@ -49,8 +52,10 @@ public class AssigmentTemplate extends Application
 	//Pane for game2
 	Pane picture1;
 	Pane picture2;
+	Canvas canvasStart;
 	Canvas canvasP1;
 	Canvas canvasP2;
+	GraphicsContext gcStart;
 	GraphicsContext gcp1;
 	GraphicsContext gcp2;
 
@@ -185,6 +190,8 @@ public class AssigmentTemplate extends Application
 					if (collectionOfNumbers.isEmpty()) 
 					{
 						timer2.cancel();
+						//hide textfield on game termination
+						textField.setEditable(false);
 					}
 				}
 				else
@@ -214,7 +221,8 @@ public class AssigmentTemplate extends Application
 				{
 					task.cancel();
 				}
-				textField.requestFocus();
+				textField.setEditable(false);
+//				textField.requestFocus();
 				setButtonsVisible();
 			}
 			if (event.getSource() == btnRandom) 
@@ -266,12 +274,19 @@ public class AssigmentTemplate extends Application
 			//
 			if (event.getSource() == start) 
 			{
+				//set image to start image
+				mathGuy.setImage(0);
+				gcp1.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
+				mathGuy.setImage(0);
+				gcp2.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 				//set button difficulty visible
 				if (clickedLevel == 0)
 				{
-					setButtonsVisible();
+//					setButtonsVisible();
+					setInvisible();
 					setLevel(0);
 				}
+				textField.setEditable(true);
 
 				//set level to easy when you start
 				//set time to answer question back to 1
@@ -312,6 +327,17 @@ public class AssigmentTemplate extends Application
 	private void setClickedLevel(int level)
 	{
 		this.clickedLevel = level;
+	}
+	/**
+	 * set all buttons to invisible
+	 */
+	private void setInvisible()
+	{
+		btnVeryEasy.setVisible(false);
+		btnHard.setVisible(false);
+		btnEasy.setVisible(false);
+		btnRandom.setVisible(false);
+		btnTough.setVisible(false);
 	}
 	/**
 	 * set the buttons visible
@@ -356,7 +382,15 @@ public class AssigmentTemplate extends Application
 		//Display the amount of operations in array
 		labelTotal.setText("Possible Score: " + (collectionOfNumbers.size() / 2));
 	}
-	
+		
+	/**
+	 * set the difficulty of the game
+	 * @param level
+	 */
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
 	/**
 	 * Runnable for task to run
 	 */
@@ -466,19 +500,13 @@ public class AssigmentTemplate extends Application
 			if (collectionOfNumbers.isEmpty()) {
 //				System.exit(0);
 				timer2.cancel();
+				//hide texfield
+				textField.setVisible(false);
 			}
 			
 			counter++;
 		}
 	};
-	
-	/**
-	 * set the difficulty of the game
-	 * @param level
-	 */
-	public void setLevel(int level) {
-		this.level = level;
-	}
 	
 	@Override
 	public void start(Stage stage) throws Exception 
@@ -500,7 +528,18 @@ public class AssigmentTemplate extends Application
 		root.getTabs().add(tab2);
 		
 		rootTab1 = new FlowPane();
+		startPane1 = new Pane();
+		startPane1.setPrefSize(800, 600);
+		startPane1.setStyle("-fx-background-color: #000; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
+		tab1.setContent(startPane1);
 		tab1.setContent(rootTab1);
+
+//		Image image2 = new Image(AssigmentTemplate.class.getResource("resource/alan_turing").toExternalForm());
+		canvas = new Canvas(800, 600);
+		startPane1.getChildren().add(canvas);
+		gc = canvas.getGraphicsContext2D();
+		Image image3 = new Image(AssigmentTemplate.class.getResource("resource/alan_turing.jpg").toExternalForm(),800, 600, false, false);
+		gc.drawImage(image3, 0, 0);
 		
 		rootTab2 = new FlowPane();
 //		
@@ -591,6 +630,8 @@ public class AssigmentTemplate extends Application
 		textField.setText("Your Answer");
 		textField.setLayoutX(15);
 		textField.setLayoutY(300);
+		//not editable
+		textField.setEditable(false);
 		//key event for text field, when enter is pressed
 		//the value is processed
 		textField.setOnKeyPressed(keyEvent);
