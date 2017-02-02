@@ -70,6 +70,14 @@ public class AssigmentTemplate extends Application
 	Label labelStreak;
 
 	Random rand = new Random();
+	int level = 0;
+
+	Button btnHard;
+	Button btnTough;
+	Button btnEasy;
+	Button btnVeryEasy;
+	Button btnRandom;
+	private int clickedLevel = 0;
 	
 	Operator operate;
 	
@@ -155,6 +163,11 @@ public class AssigmentTemplate extends Application
 						streakGauge = streak;
 					}
 					
+					//Generate a random operation
+					if (clickedLevel == 2) {
+						
+						level = rand.nextInt(4);
+					}
 					
 					//remove operations answered correctly
 					collectionOfNumbers.remove(1);
@@ -201,12 +214,69 @@ public class AssigmentTemplate extends Application
 				{
 					task.cancel();
 				}
-					textField.requestFocus();
+				textField.requestFocus();
+				setButtonsVisible();
+			}
+			if (event.getSource() == btnRandom) 
+			{
+				setLevel(4);
+				btnEasy.setVisible(false);
+				btnHard.setVisible(false);
+				btnTough.setVisible(false);
+				btnVeryEasy.setVisible(false);
+				setClickedLevel(2);
+			}
+			if (event.getSource() == btnVeryEasy) 
+			{
+				setLevel(0);
+				btnEasy.setVisible(false);
+				btnHard.setVisible(false);
+				btnTough.setVisible(false);
+				btnRandom.setVisible(false);
+				setClickedLevel(1);
+			}
+
+			if (event.getSource() == btnEasy) 
+			{
+				setLevel(1);
+				btnVeryEasy.setVisible(false);
+				btnHard.setVisible(false);
+				btnTough.setVisible(false);
+				btnRandom.setVisible(false);
+				setClickedLevel(1);
+			}
+			if (event.getSource() == btnHard) 
+			{
+				setLevel(2);
+				btnVeryEasy.setVisible(false);
+				btnTough.setVisible(false);
+				btnEasy.setVisible(false);
+				btnRandom.setVisible(false);
+				setClickedLevel(1);
+			}
+			if (event.getSource() == btnTough) 
+			{
+				setLevel(3);
+				btnVeryEasy.setVisible(false);
+				btnHard.setVisible(false);
+				btnEasy.setVisible(false);
+				btnRandom.setVisible(false);
+				setClickedLevel(1);
 			}
 			//
 			if (event.getSource() == start) 
 			{
+				//set button difficulty visible
+				if (clickedLevel == 0)
+				{
+					setButtonsVisible();
+					setLevel(0);
+				}
+
+				//set level to easy when you start
+				//set time to answer question back to 1
 				counter = 1;
+				//focus text field when starting
 				textField.requestFocus();
 				//clear textfield message once programme start
 				if (textField.getText().equalsIgnoreCase("Your Answer")) 
@@ -236,6 +306,24 @@ public class AssigmentTemplate extends Application
 		}
 	};
 	
+	/**
+	 * check to see if a level as been picked
+	 */
+	private void setClickedLevel(int level)
+	{
+		this.clickedLevel = level;
+	}
+	/**
+	 * set the buttons visible
+	 */
+	private void setButtonsVisible()
+	{
+		btnTough.setVisible(true);
+		btnVeryEasy.setVisible(true);
+		btnHard.setVisible(true);
+		btnEasy.setVisible(true);
+		btnRandom.setVisible(true);
+	}
 	/**
 	 * reset game score
 	 */
@@ -274,13 +362,18 @@ public class AssigmentTemplate extends Application
 	 */
 	Runnable runnable = new Runnable() {
 		
-		int randomNumber = rand.nextInt(4);
 		
 		@Override
 		public void run() {
+			//check if random button has been pressed
+			//generate a random operation each time
+			if (clickedLevel == 2 && level == 4) 
+			{
+				level = rand.nextInt(4);
+			}
 
 				//generate a random number which identifies an operator
-			operate = new Operator(randomNumber);
+			operate = new Operator(level);
 			//background colour
 			gc.setFill(Color.BLACK);
 			gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -362,7 +455,11 @@ public class AssigmentTemplate extends Application
 				streak = 0;
 				collectionOfNumbers.remove(1);
 				collectionOfNumbers.remove(0);
-				randomNumber = rand.nextInt(4);
+
+				if (clickedLevel == 2) {
+					
+					level = rand.nextInt(4);
+				}
 				counter = 1;
 			}
 			//If collection is empty, exit game
@@ -375,6 +472,13 @@ public class AssigmentTemplate extends Application
 		}
 	};
 	
+	/**
+	 * set the difficulty of the game
+	 * @param level
+	 */
+	public void setLevel(int level) {
+		this.level = level;
+	}
 	
 	@Override
 	public void start(Stage stage) throws Exception 
@@ -408,10 +512,36 @@ public class AssigmentTemplate extends Application
 		ui.setPrefSize(200, 600);
 		ui.setStyle("-fx-background-color: #ffffc8; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
 		rootTab1.getChildren().add(ui);
+		
+		btnVeryEasy = new Button("V Easy");
+		btnVeryEasy.setLayoutX(10);
+		btnVeryEasy.setLayoutY(10);
+		btnVeryEasy.setOnAction(actionButton);
+		ui.getChildren().add(btnVeryEasy);
+		btnEasy = new Button("Easy");
+		btnEasy.setLayoutX(10);
+		btnEasy.setLayoutY(40);
+		btnEasy.setOnAction(actionButton);
+		ui.getChildren().add(btnEasy);
+		btnHard = new Button("Hard");
+		btnHard.setLayoutX(10);
+		btnHard.setLayoutY(70);
+		btnHard.setOnAction(actionButton);
+		ui.getChildren().add(btnHard);
+		btnTough = new Button("Tough");
+		btnTough.setLayoutX(10);
+		btnTough.setLayoutY(100);
+		btnTough.setOnAction(actionButton);
+		ui.getChildren().add(btnTough);
+		btnRandom = new Button("Random");
+		btnRandom.setLayoutX(10);
+		btnRandom.setLayoutY(130);
+		btnRandom.setOnAction(actionButton);
+		ui.getChildren().add(btnRandom);
 
 		welcomeLabel = new Label("Welcome");
 		welcomeLabel.setLayoutX(20);
-		welcomeLabel.setLayoutY(130);
+		welcomeLabel.setLayoutY(230);
 		welcomeLabel.setTextFill(Color.web("#ccff33"));
 		welcomeLabel.setFont(Font.font("Arial", 32));
 		ui.getChildren().add(welcomeLabel);
@@ -446,14 +576,14 @@ public class AssigmentTemplate extends Application
 		stop = new Button();
 		stop.setText("Stop");
 		stop.setLayoutX(25);
-		stop.setLayoutY(50);
+		stop.setLayoutY(200);
 		stop.setOnAction(actionButton);
 		ui.getChildren().add(stop);
 		//set up start button
 		start = new Button();
 		start.setText("Start");
 		start.setLayoutX(100);
-		start.setLayoutY(50);
+		start.setLayoutY(200);
 		start.setOnAction(actionButton);
 		ui.getChildren().add(start);
 		//set up textfield
