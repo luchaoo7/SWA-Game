@@ -113,7 +113,6 @@ public class AssigmentTemplate extends Application
 	double rightNumber;
 	
 	Score scoreClass = new Score();
-	int streakGauge = 0;
 	
 	//key even that processes the operation 
 	//and compares it with the user input
@@ -169,11 +168,10 @@ public class AssigmentTemplate extends Application
 					gcp1.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 					mathGuy.setImage(scoreClass.getStreak());
 					gcp2.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
-					if (scoreClass.getStreak() > streakGauge) 
+					if (scoreClass.getStreak() > scoreClass.getStreakGauge()) 
 					{
-						streakGauge = scoreClass.getStreak();
+						scoreClass.setStreakGauge(scoreClass.getStreak());
 					}
-					
 					//Generate a random operation
 					if (clickedLevel == 2) {
 						
@@ -192,7 +190,7 @@ public class AssigmentTemplate extends Application
 					//check if collection is empty
 					//if it is, exit
 					labelScore.setText("Your Score: " + scoreClass.getScore());
-					labelStreak.setText("Your Streak: " + streakGauge);
+					labelStreak.setText("Your Streak: " + scoreClass.getStreakGauge());
 					if (collectionOfNumbers.isEmpty()) 
 					{
 						timer2.cancel();
@@ -376,8 +374,8 @@ public class AssigmentTemplate extends Application
 		scoreClass.setStreakZero();
 		scoreClass.setScoreZero();;
 		labelScore.setText("Your Score: " + scoreClass.getScore());
-		streakGauge = 0;
-		labelStreak.setText("Your Streak: " + streakGauge);
+		scoreClass.setStreakGauge(0);
+		labelStreak.setText("Your Streak: " + scoreClass.getStreakGauge());
 	}
 	/**
 	 * Method to populate array of numbers
