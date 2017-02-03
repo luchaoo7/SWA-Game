@@ -159,7 +159,6 @@ public class AssigmentTemplate extends Application
 					gc.setStroke(Color.YELLOW);
 					gc.strokeText("Yes!!You are right", 400, 100);
 					//update score
-//					score++;
 					scoreClass.setScore();
 					scoreClass.setStreak();
 
@@ -418,9 +417,6 @@ public class AssigmentTemplate extends Application
 			ParentNumber singleNumber = collectionOfNumbers.get(0);
 			ParentNumber singleNumber2 = collectionOfNumbers.get(1);
 
-			//double
-//			leftNumber = singleNumber.number;
-//			rightNumber = singleNumber2.number;
 			//always divide big number by smaller number
 			if (operate.getNumber() == 2) 
 			{
