@@ -10,7 +10,6 @@ public class BigNumber extends ParentNumber
 		super(x, y);
 		setNumber();
 	}
-
 	/**
 	 * move number downwards as loops carries on
 	 */
@@ -26,4 +25,3 @@ public class BigNumber extends ParentNumber
 		setNumber(getNumber() * 10);
 	}
 }
-
