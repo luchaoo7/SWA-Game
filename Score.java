@@ -24,8 +24,8 @@ public class Score {
 	}/**
 	 * @param score the score to set
 	 */
-	public void setScoreZero(int score ) {
-		this.score = score;
+	public void setScoreZero() {
+		this.score = 0;
 	}
 	/**
 	 * @return the streak
@@ -36,8 +36,14 @@ public class Score {
 	/**
 	 * @param streak the streak to set
 	 */
-	public void setStreak(int streak) {
-		this.streak = streak;
+	public void setStreakZero() {
+		this.streak = 0;
+	}
+	/**
+	 * @param streak the streak to set
+	 */
+	public void setStreak() {
+		this.streak++;
 	}
 	/**
 	 * @return the streakGauge

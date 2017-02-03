@@ -113,9 +113,7 @@ public class AssigmentTemplate extends Application
 	double rightNumber;
 	
 	Score scoreClass = new Score();
-	int streak = 0;
 	int streakGauge = 0;
-	
 	
 	//key even that processes the operation 
 	//and compares it with the user input
@@ -164,16 +162,16 @@ public class AssigmentTemplate extends Application
 					//update score
 //					score++;
 					scoreClass.setScore();
-					streak++;
+					scoreClass.setStreak();
 
 					//set new image
 					mathGuy.setImage(scoreClass.getScore());
 					gcp1.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
-					mathGuy.setImage(streak);
+					mathGuy.setImage(scoreClass.getStreak());
 					gcp2.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
-					if (streak > streakGauge) 
+					if (scoreClass.getStreak() > streakGauge) 
 					{
-						streakGauge = streak;
+						streakGauge = scoreClass.getStreak();
 					}
 					
 					//Generate a random operation
@@ -205,7 +203,7 @@ public class AssigmentTemplate extends Application
 				else
 				{
 					//set streak to 0 if miss answer
-					streak = 0;
+					scoreClass.setStreakZero();
 					//clear text field
 					textField.clear();
 //					gc.setFill(Color.YELLOW);
@@ -375,8 +373,8 @@ public class AssigmentTemplate extends Application
 	 */
 	private void reset() 
 	{
-		streak = 0;
-		scoreClass.setScoreZero(0);;
+		scoreClass.setStreakZero();
+		scoreClass.setScoreZero();;
 		labelScore.setText("Your Score: " + scoreClass.getScore());
 		streakGauge = 0;
 		labelStreak.setText("Your Streak: " + streakGauge);
@@ -500,7 +498,7 @@ public class AssigmentTemplate extends Application
 			//Every Five seconds delete index 1 and 0
 			if (counter % 7 == 0) 
 			{
-				streak = 0;
+				scoreClass.setStreakZero();
 				collectionOfNumbers.remove(1);
 				collectionOfNumbers.remove(0);
 
@@ -657,7 +655,7 @@ public class AssigmentTemplate extends Application
 		ui2.getChildren().add(labelScore);
 
 		labelStreak = new Label();
-		labelStreak.setText("Your Streak: " + streak);
+		labelStreak.setText("Your Streak: " + scoreClass.getStreak());
 		labelStreak.setLayoutX(25);
 		labelStreak.setLayoutY(100);
 		ui2.getChildren().add(labelStreak);
