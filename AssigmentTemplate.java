@@ -53,10 +53,6 @@ public class AssigmentTemplate extends Application
 	//Pane for game2
 	Pane picture1;
 	Pane picture2;
-	Canvas canvasStart;
-	Canvas canvasP1;
-	Canvas canvasP2;
-	GraphicsContext gcStart;
 	GraphicsContext gcp1;
 	GraphicsContext gcp2;
 
@@ -650,10 +646,10 @@ public class AssigmentTemplate extends Application
 		picture1.setPrefSize(600, 300);
 		picture1.setStyle("-fx-background-color: #4283f4;");
 		//canvas for picture1 Pane
-		canvasP1 = new Canvas(600, 400);
-		picture1.getChildren().add(canvasP1);
+		canvas = new Canvas(600, 400);
+		picture1.getChildren().add(canvas);
 		game2.getChildren().add(picture1);
-		gcp1 = canvasP1.getGraphicsContext2D();
+		gcp1 = canvas.getGraphicsContext2D();
 		
 //		setting images
 //		Maths mathGuy = Maths.getInstace();
@@ -664,10 +660,10 @@ public class AssigmentTemplate extends Application
 		picture2.setPrefSize(600, 300);
 		picture2.setStyle("-fx-background-color: #42f47d;");
 		//canvas for picture2 Pane
-		canvasP2 = new Canvas(600, 400);
-		picture2.getChildren().add(canvasP2);
+		canvas = new Canvas(600, 400);
+		picture2.getChildren().add(canvas);
 		game2.getChildren().add(picture2);;
-		gcp2 = canvasP2.getGraphicsContext2D();
+		gcp2 = canvas.getGraphicsContext2D();
 
 		//draw streak image
 		gcp2.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
