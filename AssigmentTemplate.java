@@ -62,6 +62,7 @@ public class AssigmentTemplate extends Application
 	//tab1
 	TextField textField;
 	//Button for ui controller
+	Button btnEnterGame;
 	Button stop;
 	Button start;
 	Label welcomeLabel; 
@@ -82,6 +83,7 @@ public class AssigmentTemplate extends Application
 	Button btnEasy;
 	Button btnVeryEasy;
 	Button btnRandom;
+
 	private int clickedLevel = 0;
 	
 	Operator operate;
@@ -215,6 +217,10 @@ public class AssigmentTemplate extends Application
 		@Override
 		public void handle(ActionEvent event) 
 		{
+			if (event.getSource() == btnEnterGame) 
+			{
+				tab1.setContent(rootTab1);
+			}
 			if (event.getSource() == stop) 
 			{
 				if (task != null)
@@ -286,7 +292,9 @@ public class AssigmentTemplate extends Application
 					setInvisible();
 					setLevel(0);
 				}
+				//can type in textfield
 				textField.setEditable(true);
+				textField.clear();
 
 				//set level to easy when you start
 				//set time to answer question back to 1
@@ -501,7 +509,7 @@ public class AssigmentTemplate extends Application
 //				System.exit(0);
 				timer2.cancel();
 				//hide texfield
-				textField.setVisible(false);
+				textField.setEditable(false);
 			}
 			
 			counter++;
@@ -534,12 +542,20 @@ public class AssigmentTemplate extends Application
 		tab1.setContent(startPane1);
 //		tab1.setContent(rootTab1);
 
-//		Image image2 = new Image(AssigmentTemplate.class.getResource("resource/alan_turing").toExternalForm());
-		canvasStart = new Canvas(800, 600);
-		startPane1.getChildren().add(canvasStart);
-		gcStart = canvasStart.getGraphicsContext2D();
-		Image image3 = new Image(AssigmentTemplate.class.getResource("resource/alan_turing.jpg").toExternalForm(),800, 600, false, false);
-		gcStart.drawImage(image3, 0, 0);
+//Cover page
+		canvas = new Canvas(800, 600);
+		startPane1.getChildren().add(canvas);
+		gc = canvas.getGraphicsContext2D();
+//		Image image3 = new Image(AssigmentTemplate.class.getResource("resource/genius.png").toExternalForm(),800, 600, false, false);
+		Image image3 = new Image(AssigmentTemplate.class.getResource("resource/instructions.jpg").toExternalForm(),800, 600, false, false);
+		gc.drawImage(image3, 0, 0);
+		btnEnterGame = new Button("Enter");
+		btnEnterGame.setLayoutX(300);
+		btnEnterGame.setLayoutY(300);
+		btnEnterGame.setPrefSize(200, 100);
+		btnEnterGame.setOnAction(actionButton);
+		startPane1.getChildren().add(btnEnterGame);
+
 		
 		rootTab2 = new FlowPane();
 //		

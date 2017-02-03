@@ -75,9 +75,6 @@ public class Mathematician{
 		case 10:
 			imageFile = "genius.png";
 			break;
-		default:
-			imageFile = "isaac_newton.jpg";
-			break;
 		}
 		this.image = new Image(AssigmentTemplate.class.getResource("resource/" + imageFile).toExternalForm(),600, 300, false, false);
 	}
