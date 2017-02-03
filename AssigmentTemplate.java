@@ -80,7 +80,8 @@ public class AssigmentTemplate extends Application
 	Label labelStreak;
 
 	Random rand = new Random();
-	int level = 0;
+
+	Level difficultyLvl = new Level();
 
 	Button btnHard;
 	Button btnTough;
@@ -174,7 +175,7 @@ public class AssigmentTemplate extends Application
 					//Generate a random operation
 					if (clickedLevel == 2) {
 						
-						level = rand.nextInt(4);
+						difficultyLvl.setLevel(rand.nextInt(4));
 					}
 					
 					//remove operations answered correctly
@@ -242,7 +243,7 @@ public class AssigmentTemplate extends Application
 			}
 			if (event.getSource() == btnRandom) 
 			{
-				setLevel(4);
+				difficultyLvl.setLevel(4);
 				btnEasy.setVisible(false);
 				btnHard.setVisible(false);
 				btnTough.setVisible(false);
@@ -251,7 +252,7 @@ public class AssigmentTemplate extends Application
 			}
 			if (event.getSource() == btnVeryEasy) 
 			{
-				setLevel(0);
+				difficultyLvl.setLevel(0);
 				btnEasy.setVisible(false);
 				btnHard.setVisible(false);
 				btnTough.setVisible(false);
@@ -261,7 +262,7 @@ public class AssigmentTemplate extends Application
 
 			if (event.getSource() == btnEasy) 
 			{
-				setLevel(1);
+				difficultyLvl.setLevel(1);
 				btnVeryEasy.setVisible(false);
 				btnHard.setVisible(false);
 				btnTough.setVisible(false);
@@ -270,7 +271,7 @@ public class AssigmentTemplate extends Application
 			}
 			if (event.getSource() == btnHard) 
 			{
-				setLevel(2);
+				difficultyLvl.setLevel(2);
 				btnVeryEasy.setVisible(false);
 				btnTough.setVisible(false);
 				btnEasy.setVisible(false);
@@ -279,7 +280,7 @@ public class AssigmentTemplate extends Application
 			}
 			if (event.getSource() == btnTough) 
 			{
-				setLevel(3);
+				difficultyLvl.setLevel(3);
 				btnVeryEasy.setVisible(false);
 				btnHard.setVisible(false);
 				btnEasy.setVisible(false);
@@ -298,7 +299,7 @@ public class AssigmentTemplate extends Application
 				if (clickedLevel == 0)
 				{
 					setInvisible();
-					setLevel(0);
+					difficultyLvl.setLevel(0);
 				}
 				//can type in textfield
 				textField.setEditable(true);
@@ -388,13 +389,6 @@ public class AssigmentTemplate extends Application
 		labelTotal.setText("Possible Score: " + (collectionOfNumbers.size() / 2));
 	}
 	/**
-	 * set the difficulty of the game
-	 * @param level
-	 */
-	public void setLevel(int level) {
-		this.level = level;
-	}
-	/**
 	 * Runnable for task to run
 	 */
 	Runnable runnable = new Runnable() {
@@ -403,12 +397,12 @@ public class AssigmentTemplate extends Application
 		public void run() {
 			//check if random button has been pressed
 			//generate a random operation each time
-			if (clickedLevel == 2 && level == 4) 
+			if (clickedLevel == 2 && difficultyLvl.getLevel() == 4) 
 			{
-				level = rand.nextInt(4);
+				difficultyLvl.setLevel(rand.nextInt(4));
 			}
 				//generate a random number which identifies an operator
-			operate = new Operator(level);
+			operate = new Operator(difficultyLvl.getLevel());
 			//background colour
 			gc.setFill(Color.BLACK);
 			gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -488,7 +482,7 @@ public class AssigmentTemplate extends Application
 
 				if (clickedLevel == 2) {
 					
-					level = rand.nextInt(4);
+					difficultyLvl.setLevel(rand.nextInt(4));
 				}
 				counter = 1;
 			}
