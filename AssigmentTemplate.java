@@ -99,9 +99,6 @@ public class AssigmentTemplate extends Application
 	
 	Mathematician mathGuy;
 	Factory numberMaker = new Factory();
-	//amount of numbers in the arraylist,
-	//should only be even numbers
-	int i = 20;
 	
 	//counter to determine when to delete numbers
 	int counter = 1;
@@ -113,7 +110,6 @@ public class AssigmentTemplate extends Application
 	double rightNumber;
 	
 	Score scoreClass = new Score();
-	private int clickedLevel = 0;
 	
 	//key even that processes the operation 
 	//and compares it with the user input
@@ -367,7 +363,7 @@ public class AssigmentTemplate extends Application
 	{
 		//clear collection
 		collectionOfNumbers.clear();
-		for (int x = 1; x <= i; x++) 
+		for (int x = 1; x <= (difficultyLvl.getOperations() * 2); x++) 
 		{
 			int randomNumber = rand.nextInt(15) + 1;
 			//reset location the numbers to start at

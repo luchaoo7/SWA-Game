@@ -3,6 +3,7 @@ public class Level {
 
 	private int level;
 	private int clickedLevel;
+	private int operations = 10;
 
 	/**
 	 * @return the level
@@ -27,5 +28,11 @@ public class Level {
 	 */
 	public void setClickedLevel(int clickedLevel) {
 		this.clickedLevel = clickedLevel;
+	}
+	/**
+	 * @return the operations
+	 */
+	public int getOperations() {
+		return operations;
 	}
 }
