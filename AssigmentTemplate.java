@@ -89,7 +89,6 @@ public class AssigmentTemplate extends Application
 	Button btnVeryEasy;
 	Button btnRandom;
 
-	private int clickedLevel = 0;
 	
 	Operator operate;
 	
@@ -114,6 +113,7 @@ public class AssigmentTemplate extends Application
 	double rightNumber;
 	
 	Score scoreClass = new Score();
+	private int clickedLevel = 0;
 	
 	//key even that processes the operation 
 	//and compares it with the user input
@@ -173,7 +173,7 @@ public class AssigmentTemplate extends Application
 						scoreClass.setStreakGauge(scoreClass.getStreak());
 					}
 					//Generate a random operation
-					if (clickedLevel == 2) {
+					if (difficultyLvl.getClickedLevel() == 2) {
 						
 						difficultyLvl.setLevel(rand.nextInt(4));
 					}
@@ -248,7 +248,7 @@ public class AssigmentTemplate extends Application
 				btnHard.setVisible(false);
 				btnTough.setVisible(false);
 				btnVeryEasy.setVisible(false);
-				setClickedLevel(2);
+				difficultyLvl.setClickedLevel(2);
 			}
 			if (event.getSource() == btnVeryEasy) 
 			{
@@ -257,7 +257,7 @@ public class AssigmentTemplate extends Application
 				btnHard.setVisible(false);
 				btnTough.setVisible(false);
 				btnRandom.setVisible(false);
-				setClickedLevel(1);
+				difficultyLvl.setClickedLevel(1);
 			}
 
 			if (event.getSource() == btnEasy) 
@@ -267,7 +267,7 @@ public class AssigmentTemplate extends Application
 				btnHard.setVisible(false);
 				btnTough.setVisible(false);
 				btnRandom.setVisible(false);
-				setClickedLevel(1);
+				difficultyLvl.setClickedLevel(1);
 			}
 			if (event.getSource() == btnHard) 
 			{
@@ -276,7 +276,7 @@ public class AssigmentTemplate extends Application
 				btnTough.setVisible(false);
 				btnEasy.setVisible(false);
 				btnRandom.setVisible(false);
-				setClickedLevel(1);
+				difficultyLvl.setClickedLevel(1);
 			}
 			if (event.getSource() == btnTough) 
 			{
@@ -285,7 +285,7 @@ public class AssigmentTemplate extends Application
 				btnHard.setVisible(false);
 				btnEasy.setVisible(false);
 				btnRandom.setVisible(false);
-				setClickedLevel(1);
+				difficultyLvl.setClickedLevel(1);
 			}
 			//
 			if (event.getSource() == start) 
@@ -296,7 +296,7 @@ public class AssigmentTemplate extends Application
 				mathGuy.setImage(0);
 				gcp2.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 				//set button difficulty visible
-				if (clickedLevel == 0)
+				if (difficultyLvl.getClickedLevel() == 0)
 				{
 					setInvisible();
 					difficultyLvl.setLevel(0);
@@ -339,32 +339,25 @@ public class AssigmentTemplate extends Application
 		}
 	};
 	/**
-	 * check to see if a level as been picked
-	 */
-	private void setClickedLevel(int level)
-	{
-		this.clickedLevel = level;
-	}
-	/**
 	 * set all buttons to invisible
 	 */
 	private void setInvisible()
 	{
 		btnVeryEasy.setVisible(false);
-		btnHard.setVisible(false);
 		btnEasy.setVisible(false);
-		btnRandom.setVisible(false);
+		btnHard.setVisible(false);
 		btnTough.setVisible(false);
+		btnRandom.setVisible(false);
 	}
 	/**
 	 * set the buttons visible
 	 */
 	private void setButtonsVisible()
 	{
-		btnTough.setVisible(true);
 		btnVeryEasy.setVisible(true);
-		btnHard.setVisible(true);
 		btnEasy.setVisible(true);
+		btnHard.setVisible(true);
+		btnTough.setVisible(true);
 		btnRandom.setVisible(true);
 	}
 	/**
@@ -397,7 +390,7 @@ public class AssigmentTemplate extends Application
 		public void run() {
 			//check if random button has been pressed
 			//generate a random operation each time
-			if (clickedLevel == 2 && difficultyLvl.getLevel() == 4) 
+			if (difficultyLvl.getClickedLevel() == 2 && difficultyLvl.getLevel() == 4) 
 			{
 				difficultyLvl.setLevel(rand.nextInt(4));
 			}
@@ -480,7 +473,7 @@ public class AssigmentTemplate extends Application
 				collectionOfNumbers.remove(1);
 				collectionOfNumbers.remove(0);
 
-				if (clickedLevel == 2) {
+				if (difficultyLvl.getClickedLevel() == 2) {
 					
 					difficultyLvl.setLevel(rand.nextInt(4));
 				}
