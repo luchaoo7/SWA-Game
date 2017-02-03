@@ -1,6 +1,5 @@
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
-import jdk.nashorn.internal.ir.CaseNode;
 
 public class Mathematician{
 	
@@ -20,7 +19,6 @@ public class Mathematician{
 		image = new Image(AssigmentTemplate.class.getResource("resource/" + imageFile).toExternalForm(),600, 300, false, false);
 		rectangle = new Rectangle(0, 0, 600, 200);
 	}
-	
 	/**
 	 * @return the Mathematician object if 
 	 * its not already created
@@ -33,7 +31,6 @@ public class Mathematician{
 		}
 		return instace;
 	}
-
 	/**
 	 * Sets the image depending of the int value 
 	 * received
@@ -78,23 +75,16 @@ public class Mathematician{
 		}
 		this.image = new Image(AssigmentTemplate.class.getResource("resource/" + imageFile).toExternalForm(),600, 300, false, false);
 	}
-
 	/**
 	 * @return the rectangle 
 	 */
 	public Rectangle getRectangle() {
 		return rectangle;
 	}
-
 	/**
 	 * @return image
 	 */
 	public Image getImage() {
 		return image;
 	}
-
 }
-
-
-
-

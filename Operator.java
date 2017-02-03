@@ -30,20 +30,16 @@ public class Operator
 			break;
 		}
 	}
-	
 	/**
 	 * @return the number
 	 */
 	public int getNumber() {
 		return number;
 	}
-
 	/**
-	 * 
 	 * @return operator to be used
 	 */
 	public String getOPERATOR() {
 		return OPERATOR;
 	}
 }
-

@@ -79,17 +79,12 @@ public class AssigmentTemplate extends Application
 	Label labelScore;
 	Label labelStreak;
 
-	Random rand = new Random();
-
-	Level difficultyLvl = new Level();
-
 	Button btnHard;
 	Button btnTough;
 	Button btnEasy;
 	Button btnVeryEasy;
 	Button btnRandom;
 
-	
 	Operator operate;
 	
 	//to pace the game
@@ -97,19 +92,21 @@ public class AssigmentTemplate extends Application
 	//task to be ran
 	TimerTask task;
 	
+	ArrayList<ParentNumber> collectionOfNumbers = new ArrayList<ParentNumber>();
+
 	Mathematician mathGuy;
 	Factory numberMaker = new Factory();
+	Level difficultyLvl = new Level();
+	Random rand = new Random();
+	Score scoreClass = new Score();
 	
 	//counter to determine when to delete numbers
 	int counter = 1;
-	ArrayList<ParentNumber> collectionOfNumbers = new ArrayList<ParentNumber>();
 	
 	//the value of each side of the operation
 	//will be stored in this variables
 	double leftNumber;
 	double rightNumber;
-	
-	Score scoreClass = new Score();
 	
 	//key even that processes the operation 
 	//and compares it with the user input
@@ -294,7 +291,6 @@ public class AssigmentTemplate extends Application
 				//set button difficulty visible
 				if (difficultyLvl.getClickedLevel() == 0)
 				{
-					setInvisible();
 					difficultyLvl.setLevel(0);
 				}
 				//can type in textfield
@@ -334,17 +330,6 @@ public class AssigmentTemplate extends Application
 			}
 		}
 	};
-	/**
-	 * set all buttons to invisible
-	 */
-	private void setInvisible()
-	{
-		btnVeryEasy.setVisible(false);
-		btnEasy.setVisible(false);
-		btnHard.setVisible(false);
-		btnTough.setVisible(false);
-		btnRandom.setVisible(false);
-	}
 	/**
 	 * set the buttons visible
 	 */
@@ -482,7 +467,6 @@ public class AssigmentTemplate extends Application
 				//hide texfield
 				textField.setEditable(false);
 			}
-			
 			counter++;
 		}
 	};
@@ -505,6 +489,8 @@ public class AssigmentTemplate extends Application
 		tab2.setText("Second Tab");
 		tab2.setClosable(false);
 		root.getTabs().add(tab2);
+		
+		
 		
 		rootTab1 = new FlowPane();
 		//set up the layout of the cover pane
@@ -610,7 +596,6 @@ public class AssigmentTemplate extends Application
 		labelTotal = new Label();
 		//This line of code is at the bottom
 		//when the array of numbers if filled
-//		labelTotal.setText("Possible Score: " + (collectionOfNumbers.size() / 2));
 		labelTotal.setLayoutX(25);
 		labelTotal.setLayoutY(50);
 		ui2.getChildren().add(labelTotal);
@@ -628,22 +613,19 @@ public class AssigmentTemplate extends Application
 		ui2.getChildren().add(labelStreak);
 		
 		//set up of stop button
-		stop = new Button();
-		stop.setText("Stop");
+		stop = new Button("Stop");
 		stop.setLayoutX(25);
 		stop.setLayoutY(200);
 		stop.setOnAction(actionButton);
 		ui.getChildren().add(stop);
 		//set up start button
-		start = new Button();
-		start.setText("Start");
+		start = new Button("Start");
 		start.setLayoutX(100);
 		start.setLayoutY(200);
 		start.setOnAction(actionButton);
 		ui.getChildren().add(start);
 		//set up textfield
-		textField = new TextField();
-		textField.setText("Your Answer");
+		textField = new TextField("Your Answer");
 		textField.setLayoutX(15);
 		textField.setLayoutY(300);
 		//not editable
@@ -695,7 +677,6 @@ public class AssigmentTemplate extends Application
 		
 		//set up graphic context
 		gc = canvas.getGraphicsContext2D();
-		gc.setStroke(Color.LIGHTCYAN);
 		//set the font
 		gc.setFont(new Font("Arial", 20));
 		//stroke the number and the location
