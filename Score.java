@@ -1,9 +1,8 @@
-
+import javafx.scene.control.Label;
 /**
  * Keeps track of score
  * and streak
  * @author danbro
- *
  */
 public class Score {
 	
@@ -57,6 +56,13 @@ public class Score {
 	public void setStreakGauge(int streakGauge) {
 		this.streakGauge = streakGauge;
 	}
-	
 
+	public void reset(Score score, Label labelScore, Label labelStreak) 
+	{
+		score.setStreakZero();
+		score.setScoreZero();;
+		labelScore.setText("Your Score: " + score.getScore());
+		score.setStreakGauge(0);
+		labelStreak.setText("Your Streak: " + score.getStreakGauge());
+	}
 }

@@ -331,7 +331,8 @@ public class AssigmentTemplate extends Application
 					}
 				};
 				//call method populate
-				reset();
+//				reset();
+				scoreClass.reset(scoreClass, labelScore, labelStreak);
 				populateArrayOfNumbers();
 				timer2.schedule(task, 0, 1000);
 			}
@@ -365,17 +366,6 @@ public class AssigmentTemplate extends Application
 		btnHard.setVisible(true);
 		btnEasy.setVisible(true);
 		btnRandom.setVisible(true);
-	}
-	/**
-	 * reset game score
-	 */
-	private void reset() 
-	{
-		scoreClass.setStreakZero();
-		scoreClass.setScoreZero();;
-		labelScore.setText("Your Score: " + scoreClass.getScore());
-		scoreClass.setStreakGauge(0);
-		labelStreak.setText("Your Streak: " + scoreClass.getStreakGauge());
 	}
 	/**
 	 * Method to populate array of numbers
@@ -724,8 +714,6 @@ public class AssigmentTemplate extends Application
 		canvas = new Canvas(600, 600);
 		game.getChildren().add(canvas);
 		
-		//set here to have the maximum score
-
 		//set up graphic context
 		gc = canvas.getGraphicsContext2D();
 		gc.setStroke(Color.LIGHTCYAN);
