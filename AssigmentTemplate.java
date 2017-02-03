@@ -551,17 +551,17 @@ public class AssigmentTemplate extends Application
 		gc = canvas.getGraphicsContext2D();
 		Image coverImage = new Image(AssigmentTemplate.class.getResource("resource/algebra.jpg").toExternalForm(),800, 600, false, false);
 		gc.drawImage(coverImage, 0, 0);
-		coverInstruction = new Button("Instruction");
-		coverInstruction.setLayoutX(337);
+		coverInstruction = new Button("Instructions");
+		coverInstruction.setLayoutX(337.5);
 		coverInstruction.setLayoutY(100);
 		coverInstruction.setPrefSize(125, 75);
 		coverInstruction.setOnAction(actionButton);
 		coverPane.getChildren().add(coverInstruction);
 
 		coverEnterGame = new Button("Enter");
-		coverEnterGame.setLayoutX(300);
+		coverEnterGame.setLayoutX(337.5);
 		coverEnterGame.setLayoutY(300);
-		coverEnterGame.setPrefSize(200, 100);
+		coverEnterGame.setPrefSize(125, 75);
 		coverEnterGame.setOnAction(actionButton);
 		coverPane.getChildren().add(coverEnterGame);
 		tab1.setContent(coverPane);
