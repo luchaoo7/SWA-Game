@@ -41,7 +41,8 @@ public class AssigmentTemplate extends Application
 	//creating a flowpane for tab 1
 	FlowPane rootTab1;
 	//start pane 
-	Pane startPane1;
+	Pane instructPane;
+	Pane coverPane;
 	//creating a flowpane for tab 2
 	FlowPane rootTab2;
 	//add ui and game to rootTab1
@@ -63,6 +64,8 @@ public class AssigmentTemplate extends Application
 	TextField textField;
 	//Button for ui controller
 	Button btnEnterGame;
+	Button coverEnterGame;
+	Button coverInstruction;
 	Button stop;
 	Button start;
 	Label welcomeLabel; 
@@ -217,7 +220,11 @@ public class AssigmentTemplate extends Application
 		@Override
 		public void handle(ActionEvent event) 
 		{
-			if (event.getSource() == btnEnterGame) 
+			if (event.getSource() == coverInstruction) 
+			{
+				tab1.setContent(instructPane);
+			}
+			if (event.getSource() == btnEnterGame || event.getSource() == coverEnterGame) 
 			{
 				tab1.setContent(rootTab1);
 			}
@@ -536,15 +543,38 @@ public class AssigmentTemplate extends Application
 		root.getTabs().add(tab2);
 		
 		rootTab1 = new FlowPane();
-		startPane1 = new Pane();
-		startPane1.setPrefSize(800, 600);
-		startPane1.setStyle("-fx-background-color: #000; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
-		tab1.setContent(startPane1);
-//		tab1.setContent(rootTab1);
+		coverPane = new Pane();
+		coverPane.setPrefSize(800, 600);
+		coverPane.setStyle("-fx-background-color: #000; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
+		canvas = new Canvas(800, 600);
+		coverPane.getChildren().add(canvas);
+		gc = canvas.getGraphicsContext2D();
+		Image coverImage = new Image(AssigmentTemplate.class.getResource("resource/algebra.jpg").toExternalForm(),800, 600, false, false);
+		gc.drawImage(coverImage, 0, 0);
+		coverInstruction = new Button("Instruction");
+		coverInstruction.setLayoutX(337);
+		coverInstruction.setLayoutY(100);
+		coverInstruction.setPrefSize(125, 75);
+		coverInstruction.setOnAction(actionButton);
+		coverPane.getChildren().add(coverInstruction);
 
+		coverEnterGame = new Button("Enter");
+		coverEnterGame.setLayoutX(300);
+		coverEnterGame.setLayoutY(300);
+		coverEnterGame.setPrefSize(200, 100);
+		coverEnterGame.setOnAction(actionButton);
+		coverPane.getChildren().add(coverEnterGame);
+		tab1.setContent(coverPane);
+		
+
+		instructPane = new Pane();
+		instructPane.setPrefSize(800, 600);
+		instructPane.setStyle("-fx-background-color: #000; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
+//		tab1.setContent(instructPane);
+//		tab1.setContent(rootTab1);
 //Cover page
 		canvas = new Canvas(800, 600);
-		startPane1.getChildren().add(canvas);
+		instructPane.getChildren().add(canvas);
 		gc = canvas.getGraphicsContext2D();
 //		Image image3 = new Image(AssigmentTemplate.class.getResource("resource/genius.png").toExternalForm(),800, 600, false, false);
 		Image image3 = new Image(AssigmentTemplate.class.getResource("resource/instructions.jpg").toExternalForm(),800, 600, false, false);
@@ -554,7 +584,7 @@ public class AssigmentTemplate extends Application
 		btnEnterGame.setLayoutY(300);
 		btnEnterGame.setPrefSize(200, 100);
 		btnEnterGame.setOnAction(actionButton);
-		startPane1.getChildren().add(btnEnterGame);
+		instructPane.getChildren().add(btnEnterGame);
 
 		
 		rootTab2 = new FlowPane();
