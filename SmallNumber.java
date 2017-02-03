@@ -9,7 +9,6 @@ public class SmallNumber extends ParentNumber
 		super(x, y);
 		setNumber();
 	}
-
 	/**
 	 * move number downwards as loops carries on
 	 */

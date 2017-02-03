@@ -37,16 +37,29 @@ public class AssigmentTemplate extends Application
 	TabPane root;
 	Tab tab1, tab2;
 	
-	//set up for both tabs
-	//creating a flowpane for tab 1
+
+	//Tab1
 	FlowPane rootTab1;
 	//start pane 
 	Pane instructPane;
 	Pane coverPane;
-	//creating a flowpane for tab 2
-	FlowPane rootTab2;
 	//add ui and game to rootTab1
 	Pane ui, game;
+	TextField textField;
+	//Button for ui controller
+	Button btnEnterGame;
+	Button coverEnterGame;
+	Button coverInstruction;
+	Button InstructionCover;
+	Button stop;
+	Button start;
+	//canvas added to game pane
+	Canvas canvas;
+	GraphicsContext gc;
+	View1 mainTab1 = new View1();
+
+	//Tab2
+	FlowPane rootTab2;
 	//add ui and game to rootTab2
 	Pane ui2;
 	FlowPane game2; //vertical flowpane
@@ -56,21 +69,6 @@ public class AssigmentTemplate extends Application
 	GraphicsContext gcp1;
 	GraphicsContext gcp2;
 
-	//tab1
-	TextField textField;
-	//Button for ui controller
-	Button btnEnterGame;
-	Button coverEnterGame;
-	Button coverInstruction;
-	Button InstructionCover;
-	Button stop;
-	Button start;
-	Label welcomeLabel; 
-	//canvas added to game pane
-	Canvas canvas;
-	GraphicsContext gc;
-	
-	//tab2
 	Label labelTotal;
 	Label labelScore;
 	Label labelStreak;
@@ -81,15 +79,15 @@ public class AssigmentTemplate extends Application
 	Button btnVeryEasy;
 	Button btnRandom;
 
+
 	Operator operate;
-	
 	//to pace the game
 	Timer timer2;
 	//task to be ran
 	TimerTask task;
 	
-	ArrayList<ParentNumber> collectionOfNumbers = new ArrayList<ParentNumber>();
 
+	ArrayList<ParentNumber> collectionOfNumbers = new ArrayList<ParentNumber>();
 	Mathematician mathGuy;
 	Factory numberMaker = new Factory();
 	Level difficultyLvl = new Level();
@@ -497,6 +495,7 @@ public class AssigmentTemplate extends Application
 		canvas = new Canvas(800, 600);
 		coverPane.getChildren().add(canvas);
 		gc = canvas.getGraphicsContext2D();
+
 		Image coverImage = new Image(AssigmentTemplate.class.getResource("resource/algebra.jpg").toExternalForm(),800, 600, false, false);
 		gc.drawImage(coverImage, 0, 0);
 		coverInstruction = new Button("Instructions");
@@ -522,7 +521,6 @@ public class AssigmentTemplate extends Application
 		canvas = new Canvas(800, 600);
 		instructPane.getChildren().add(canvas);
 		gc = canvas.getGraphicsContext2D();
-//		Image image3 = new Image(AssigmentTemplate.class.getResource("resource/genius.png").toExternalForm(),800, 600, false, false);
 		Image image3 = new Image(AssigmentTemplate.class.getResource("resource/instructions.jpg").toExternalForm(),800, 600, false, false);
 		gc.drawImage(image3, 0, 0);
 		btnEnterGame = new Button("Enter");
@@ -539,17 +537,16 @@ public class AssigmentTemplate extends Application
 		InstructionCover.setOnAction(actionButton);
 		instructPane.getChildren().add(InstructionCover);
 		
-		rootTab2 = new FlowPane();
-//		
-		rootTab2.setPrefHeight(600);
-		tab2.setContent(rootTab2);
-
 		//set up of tab1
 		ui = new Pane();
 		ui.setPrefSize(200, 600);
 		ui.setStyle("-fx-background-color: #ffffc8; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
 		rootTab1.getChildren().add(ui);
 		
+		rootTab2 = new FlowPane();
+		rootTab2.setPrefHeight(600);
+		tab2.setContent(rootTab2);
+
 		btnVeryEasy = new Button("V Easy");
 		btnVeryEasy.setLayoutX(10);
 		btnVeryEasy.setLayoutY(10);
@@ -576,13 +573,6 @@ public class AssigmentTemplate extends Application
 		btnRandom.setOnAction(actionButton);
 		ui.getChildren().add(btnRandom);
 
-		welcomeLabel = new Label("Welcome");
-		welcomeLabel.setLayoutX(20);
-		welcomeLabel.setLayoutY(230);
-		welcomeLabel.setTextFill(Color.web("#ccff33"));
-		welcomeLabel.setFont(Font.font("Arial", 32));
-		ui.getChildren().add(welcomeLabel);
-		
 		//set up of tab2
 		ui2 = new Pane();
 		ui2.setPrefSize(200, 600);
