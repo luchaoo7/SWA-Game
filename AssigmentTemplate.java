@@ -66,6 +66,7 @@ public class AssigmentTemplate extends Application
 	Button btnEnterGame;
 	Button coverEnterGame;
 	Button coverInstruction;
+	Button InstructionCover;
 	Button stop;
 	Button start;
 	Label welcomeLabel; 
@@ -216,13 +217,17 @@ public class AssigmentTemplate extends Application
 	//eventHandler to action the stop and start button
 	EventHandler<ActionEvent> actionButton = new EventHandler<ActionEvent>() 
 	{
-
 		@Override
 		public void handle(ActionEvent event) 
 		{
 			if (event.getSource() == coverInstruction) 
 			{
 				tab1.setContent(instructPane);
+			}
+			if (event.getSource() == InstructionCover) {
+
+				tab1.setContent(coverPane);
+				
 			}
 			if (event.getSource() == btnEnterGame || event.getSource() == coverEnterGame) 
 			{
@@ -295,7 +300,6 @@ public class AssigmentTemplate extends Application
 				//set button difficulty visible
 				if (clickedLevel == 0)
 				{
-//					setButtonsVisible();
 					setInvisible();
 					setLevel(0);
 				}
@@ -335,7 +339,6 @@ public class AssigmentTemplate extends Application
 			}
 		}
 	};
-	
 	/**
 	 * check to see if a level as been picked
 	 */
@@ -397,7 +400,6 @@ public class AssigmentTemplate extends Application
 		//Display the amount of operations in array
 		labelTotal.setText("Possible Score: " + (collectionOfNumbers.size() / 2));
 	}
-		
 	/**
 	 * set the difficulty of the game
 	 * @param level
@@ -405,12 +407,10 @@ public class AssigmentTemplate extends Application
 	public void setLevel(int level) {
 		this.level = level;
 	}
-
 	/**
 	 * Runnable for task to run
 	 */
 	Runnable runnable = new Runnable() {
-		
 		
 		@Override
 		public void run() {
@@ -420,7 +420,6 @@ public class AssigmentTemplate extends Application
 			{
 				level = rand.nextInt(4);
 			}
-
 				//generate a random number which identifies an operator
 			operate = new Operator(level);
 			//background colour
@@ -469,14 +468,12 @@ public class AssigmentTemplate extends Application
 					
 					leftNumber = leftNumber * rightNumber;
 				}
-
 			}
 			else
 			{
 				leftNumber = singleNumber.getNumber();
 				rightNumber = singleNumber2.getNumber();
 			}
-		
 
 			//convert the number to string
 			//so it can be drawn
@@ -543,6 +540,8 @@ public class AssigmentTemplate extends Application
 		root.getTabs().add(tab2);
 		
 		rootTab1 = new FlowPane();
+		//set up the layout of the cover pane
+		//and panes it can reach with the buttons
 		coverPane = new Pane();
 		coverPane.setPrefSize(800, 600);
 		coverPane.setStyle("-fx-background-color: #000; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
@@ -553,14 +552,14 @@ public class AssigmentTemplate extends Application
 		gc.drawImage(coverImage, 0, 0);
 		coverInstruction = new Button("Instructions");
 		coverInstruction.setLayoutX(337.5);
-		coverInstruction.setLayoutY(100);
+		coverInstruction.setLayoutY(200);
 		coverInstruction.setPrefSize(125, 75);
 		coverInstruction.setOnAction(actionButton);
 		coverPane.getChildren().add(coverInstruction);
 
 		coverEnterGame = new Button("Enter");
 		coverEnterGame.setLayoutX(337.5);
-		coverEnterGame.setLayoutY(300);
+		coverEnterGame.setLayoutY(325);
 		coverEnterGame.setPrefSize(125, 75);
 		coverEnterGame.setOnAction(actionButton);
 		coverPane.getChildren().add(coverEnterGame);
@@ -570,8 +569,6 @@ public class AssigmentTemplate extends Application
 		instructPane = new Pane();
 		instructPane.setPrefSize(800, 600);
 		instructPane.setStyle("-fx-background-color: #000; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
-//		tab1.setContent(instructPane);
-//		tab1.setContent(rootTab1);
 //Cover page
 		canvas = new Canvas(800, 600);
 		instructPane.getChildren().add(canvas);
@@ -580,12 +577,18 @@ public class AssigmentTemplate extends Application
 		Image image3 = new Image(AssigmentTemplate.class.getResource("resource/instructions.jpg").toExternalForm(),800, 600, false, false);
 		gc.drawImage(image3, 0, 0);
 		btnEnterGame = new Button("Enter");
-		btnEnterGame.setLayoutX(300);
-		btnEnterGame.setLayoutY(300);
-		btnEnterGame.setPrefSize(200, 100);
+		btnEnterGame.setLayoutX(337.5);
+		btnEnterGame.setLayoutY(200);
+		btnEnterGame.setPrefSize(125, 75);
 		btnEnterGame.setOnAction(actionButton);
 		instructPane.getChildren().add(btnEnterGame);
 
+		InstructionCover = new Button("Menu");
+		InstructionCover.setLayoutX(337.7);
+		InstructionCover.setLayoutY(325);
+		InstructionCover.setPrefSize(125, 75);
+		InstructionCover.setOnAction(actionButton);
+		instructPane.getChildren().add(InstructionCover);
 		
 		rootTab2 = new FlowPane();
 //		
@@ -723,7 +726,6 @@ public class AssigmentTemplate extends Application
 		canvas = new Canvas(600, 600);
 		game.getChildren().add(canvas);
 		
-
 		//set here to have the maximum score
 
 		//set up graphic context
@@ -736,10 +738,3 @@ public class AssigmentTemplate extends Application
 		stage.show();
 	}
 }
-
-
-
-
-
-
-
