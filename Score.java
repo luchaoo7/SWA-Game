@@ -1,4 +1,10 @@
 
+/**
+ * Keeps track of score
+ * and streak
+ * @author danbro
+ *
+ */
 public class Score {
 	
 	private int score = 0;
@@ -13,7 +19,12 @@ public class Score {
 	/**
 	 * @param score the score to set
 	 */
-	public void setScore(int score) {
+	public void setScore() {
+		this.score++;
+	}/**
+	 * @param score the score to set
+	 */
+	public void setScoreZero(int score ) {
 		this.score = score;
 	}
 	/**

@@ -111,7 +111,8 @@ public class AssigmentTemplate extends Application
 	//will be stored in this variables
 	double leftNumber;
 	double rightNumber;
-	int score = 0;
+	
+	Score scoreClass = new Score();
 	int streak = 0;
 	int streakGauge = 0;
 	
@@ -161,11 +162,12 @@ public class AssigmentTemplate extends Application
 					gc.setStroke(Color.YELLOW);
 					gc.strokeText("Yes!!You are right", 400, 100);
 					//update score
-					score++;
+//					score++;
+					scoreClass.setScore();
 					streak++;
 
 					//set new image
-					mathGuy.setImage(score);
+					mathGuy.setImage(scoreClass.getScore());
 					gcp1.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 					mathGuy.setImage(streak);
 					gcp2.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
@@ -191,7 +193,7 @@ public class AssigmentTemplate extends Application
 					textField.clear();
 					//check if collection is empty
 					//if it is, exit
-					labelScore.setText("Your Score: " + score);
+					labelScore.setText("Your Score: " + scoreClass.getScore());
 					labelStreak.setText("Your Streak: " + streakGauge);
 					if (collectionOfNumbers.isEmpty()) 
 					{
@@ -374,8 +376,8 @@ public class AssigmentTemplate extends Application
 	private void reset() 
 	{
 		streak = 0;
-		score = 0;
-		labelScore.setText("Your Score: " + score);
+		scoreClass.setScoreZero(0);;
+		labelScore.setText("Your Score: " + scoreClass.getScore());
 		streakGauge = 0;
 		labelStreak.setText("Your Streak: " + streakGauge);
 	}
@@ -649,7 +651,7 @@ public class AssigmentTemplate extends Application
 		ui2.getChildren().add(labelTotal);
 
 		labelScore = new Label();
-		labelScore.setText("Your Score: " + score);
+		labelScore.setText("Your Score: " + scoreClass.getScore());
 		labelScore.setLayoutX(25);
 		labelScore.setLayoutY(75);
 		ui2.getChildren().add(labelScore);
