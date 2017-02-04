@@ -24,10 +24,8 @@ public class View2 {
 	
 	public View2( Score scoreClass, View1 mainTab1, Mathematician mathGuy)
 	{
-		
 		rootTab2 = new FlowPane();
 		rootTab2.setPrefHeight(600);
-		
 		
 			//set up of tab2
 		ui2 = new Pane();

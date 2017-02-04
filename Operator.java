@@ -36,9 +36,24 @@ public class Operator
 	 * @param leftNum
 	 * @param rightNum
 	 */
-	public void compute(int leftNum, int rightNum)
+	public double compute(double leftNumber, double rightNumber)
 	{
-		
+		double result = 0;
+		switch (this.number) {
+				case 0:
+					result = leftNumber + rightNumber;
+					break;
+				case 1:
+					result = leftNumber - rightNumber;
+					break;
+				case 2:
+					result = leftNumber / rightNumber;
+					break;
+				case 3:
+					result = leftNumber * rightNumber;
+					break;
+				}
+		return result;
 	}
 	/**
 	 * @return the number

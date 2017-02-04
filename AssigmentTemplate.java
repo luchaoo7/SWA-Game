@@ -73,20 +73,7 @@ public class AssigmentTemplate extends Application
 			if (event.getCode() == KeyCode.ENTER) 
 			{
 				//compute operation 
-				switch (operate.getNumber()) {
-				case 0:
-					result = leftNumber + rightNumber;
-					break;
-				case 1:
-					result = leftNumber - rightNumber;
-					break;
-				case 2:
-					result = leftNumber / rightNumber;
-					break;
-				case 3:
-					result = leftNumber * rightNumber;
-					break;
-				}
+				result = operate.compute(leftNumber, rightNumber);
 
 				String numberInput = mainTab1.getTextField().getText();
 				double valueInput = 0;
@@ -96,10 +83,8 @@ public class AssigmentTemplate extends Application
 				} 
 				catch (Exception e) 
 				{
-//					System.out.println("only numbers");
 				}
 				
-
 				if (valueInput == result) 
 				{
 					mainTab1.getGc().setStroke(Color.YELLOW);
@@ -187,6 +172,7 @@ public class AssigmentTemplate extends Application
 				mainTab1.getTextField().setEditable(false);
 				setButtonsVisible();
 			}
+
 			if (event.getSource() == mainTab1.getBtnRandom()) 
 			{
 				difficultyLvl.setLevel(4);
