@@ -32,8 +32,6 @@ public class AssigmentTemplate extends Application
 	//Tab1 contents
 	View1 mainTab1 = new View1();
 
-	//Tab2
-
 	Operator operate;
 	//to pace the game
 	Timer timer2;
@@ -47,7 +45,8 @@ public class AssigmentTemplate extends Application
 	Score scoreClass = new Score();
 	Mathematician mathGuy = Mathematician.getInstace();
 
-	View2 mainTab2 = new View2(scoreClass, mainTab1, mathGuy);
+	//Tab2
+	View2 mainTab2 = new View2(mainTab1, mathGuy);
 	
 	//counter to determine when to delete numbers
 	int counter = 1;
@@ -289,38 +288,9 @@ public class AssigmentTemplate extends Application
 			//always divide big number by smaller number
 			if (operate.getNumber() == 2) 
 			{
-				if (singleNumber.getNumber() < 0 && singleNumber2.getNumber() < 0) 
-				{
-					//make the both positive numbers
-//					leftNumber = singleNumber.getNumber() * (-1);
-//					rightNumber = singleNumber2.getNumber() * (-1);
-					leftNumber = Math.abs(singleNumber.getNumber());
-
-					rightNumber = Math.abs(singleNumber2.getNumber());
+					leftNumber = Math.abs(singleNumber.getNumber()) / 2;
+					rightNumber = Math.abs(singleNumber2.getNumber()) / 2;
 					leftNumber = leftNumber * rightNumber;
-				}
-				else if (singleNumber.getNumber() < 0 && singleNumber2.getNumber() > 0) {
-					
-					leftNumber = Math.abs(singleNumber.getNumber());
-					rightNumber = singleNumber2.getNumber();
-					
-					leftNumber = leftNumber * rightNumber;
-				}
-				else if (singleNumber2.getNumber() < 0 && singleNumber.getNumber() > 0 ) {
-
-					rightNumber = Math.abs(singleNumber2.getNumber());
-					leftNumber = singleNumber.getNumber();
-					
-					leftNumber = leftNumber * rightNumber;
-					
-				}
-				else if (singleNumber.getNumber() > 0 && singleNumber2.getNumber() > 0) {
-					
-					leftNumber = singleNumber.getNumber();
-					rightNumber = singleNumber2.getNumber();
-					
-					leftNumber = leftNumber * rightNumber;
-				}
 			}
 			else
 			{

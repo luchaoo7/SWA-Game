@@ -22,7 +22,7 @@ public class View2 {
 	private Label labelScore;
 	private Label labelStreak;
 	
-	public View2( Score scoreClass, View1 mainTab1, Mathematician mathGuy)
+	public View2(View1 mainTab1, Mathematician mathGuy)
 	{
 		rootTab2 = new FlowPane();
 		rootTab2.setPrefHeight(600);
@@ -34,20 +34,16 @@ public class View2 {
 		rootTab2.getChildren().add(ui2);
 		
 		labelTotal = new Label();
-		//This line of code is at the bottom
-		//when the array of numbers if filled
 		labelTotal.setLayoutX(25);
 		labelTotal.setLayoutY(50);
 		ui2.getChildren().add(labelTotal);
 
-		labelScore = new Label();
-		labelScore.setText("Your Score: " + scoreClass.getScore());
+		labelScore = new Label("Your Score: 0");
 		labelScore.setLayoutX(25);
 		labelScore.setLayoutY(75);
 		ui2.getChildren().add(labelScore);
 
-		labelStreak = new Label();
-		labelStreak.setText("Your Streak: " + scoreClass.getStreak());
+		labelStreak = new Label("Your Streak: 0");
 		labelStreak.setLayoutX(25);
 		labelStreak.setLayoutY(100);
 		ui2.getChildren().add(labelStreak);
