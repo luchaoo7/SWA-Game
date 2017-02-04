@@ -31,6 +31,8 @@ public class AssigmentTemplate extends Application
 
 	//Tab1 contents
 	View1 mainTab1 = new View1();
+	//Tab2 contents
+	View2 mainTab2 = new View2(mainTab1);
 
 	Operator operate;
 	//to pace the game
@@ -44,19 +46,14 @@ public class AssigmentTemplate extends Application
 	Random rand = new Random();
 	Score scoreClass = new Score();
 	Mathematician mathGuy = Mathematician.getInstace();
-
-	//Tab2
-	View2 mainTab2 = new View2(mainTab1, mathGuy);
 	
 	//counter to determine when to delete numbers
 	int counter = 1;
-	
 	//the value of each side of the operation
 	//will be stored in this variables
 	double leftNumber;
 	double rightNumber;
 	
-	//key even that processes the operation 
 	//and compares it with the user input
 	//when ENTER is pressed
 	EventHandler<KeyEvent> keyEvent = new EventHandler<KeyEvent>() 
@@ -106,8 +103,7 @@ public class AssigmentTemplate extends Application
 					}
 					
 					//remove operations answered correctly
-					collectionOfNumbers.remove(1);
-					collectionOfNumbers.remove(0);
+					operate.removeNumbers(collectionOfNumbers);
 					// to have 8 seconds for the next
 					//operation
 					counter = 1;
@@ -143,6 +139,7 @@ public class AssigmentTemplate extends Application
 		@Override
 		public void handle(ActionEvent event) 
 		{
+			//setting the scenes depending on buttons clicked
 			if (event.getSource() == mainTab1.getCoverInstruction()) 
 			{
 				tab1.setContent(mainTab1.getInstructPane());
@@ -150,13 +147,13 @@ public class AssigmentTemplate extends Application
 			if (event.getSource() == mainTab1.getInstructionCover()) {
 
 				tab1.setContent(mainTab1.getCoverPane());
-				
 			}
 			if (event.getSource() == mainTab1.getBtnEnterGame()|| 
 					event.getSource() == mainTab1.getCoverEnterGame()) 
 			{
 				tab1.setContent(mainTab1.getRootTab1());
 			}
+
 			if (event.getSource() == mainTab1.getStop()) 
 			{
 				if (task != null)
@@ -288,9 +285,8 @@ public class AssigmentTemplate extends Application
 			//always divide big number by smaller number
 			if (operate.getNumber() == 2) 
 			{
-					leftNumber = Math.abs(singleNumber.getNumber()) / 2;
 					rightNumber = Math.abs(singleNumber2.getNumber()) / 2;
-					leftNumber = leftNumber * rightNumber;
+					leftNumber = (Math.abs(singleNumber.getNumber()) / 2) * rightNumber;
 			}
 			else
 			{
@@ -302,10 +298,7 @@ public class AssigmentTemplate extends Application
 			//so it can be drawn
 			int left = (int) leftNumber;
 			int right = (int) rightNumber;
-			String stringNumber = String.valueOf(left);
-			String stringNumber2 = String.valueOf(right);
 
-			
 			//to place the operator in the middle of the two numbers 
 			double locationOperator = (singleNumber.getRectangle().getX() + singleNumber2.getRectangle().getX() + 50) / 2 + 15;
 			//set the text to white
@@ -313,20 +306,18 @@ public class AssigmentTemplate extends Application
 			mainTab1.getGc().setStroke(Color.WHITE);
 			mainTab1.getGc().strokeText(operate.getOPERATOR(), locationOperator, singleNumber2.getRectangle().getY());
 
-			mainTab1.getGc().strokeText(stringNumber, singleNumber.getRectangle().getX(), singleNumber.getRectangle().getY());
-			mainTab1.getGc().strokeText(stringNumber2, singleNumber2.getRectangle().getX() + 50, singleNumber2.getRectangle().getY());
+			mainTab1.getGc().strokeText(left + "", singleNumber.getRectangle().getX(), singleNumber.getRectangle().getY());
+			mainTab1.getGc().strokeText(right +"", singleNumber2.getRectangle().getX() + 50, singleNumber2.getRectangle().getY());
 			singleNumber.move();
 			singleNumber2.move();
 
-			
 			mainTab1.getGc().setFont(new Font(40));
 			mainTab1.getGc().strokeText(counter + "", 500, 50);
-			//Every Five seconds delete index 1 and 0
+			//Every 7 seconds delete index 1 and 0
 			if (counter  == 7) 
 			{
 				scoreClass.setStreakZero();
-				collectionOfNumbers.remove(1);
-				collectionOfNumbers.remove(0);
+				operate.removeNumbers(collectionOfNumbers);
 
 				if (difficultyLvl.getClickedLevel() == 2) {
 					
@@ -336,9 +327,8 @@ public class AssigmentTemplate extends Application
 			}
 			//If collection is empty, exit game
 			if (collectionOfNumbers.isEmpty()) {
-//				System.exit(0);
 				timer2.cancel();
-				//hide texfield
+				//prevent from entering text
 				mainTab1.getTextField().setEditable(false);
 			}
 			counter++;

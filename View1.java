@@ -202,7 +202,6 @@ public class View1 {
 	public void setOnActionButton(EventHandler<ActionEvent> actionButton, 
 			EventHandler<KeyEvent> keyEvent)
 	{
-		
 		textField.setOnKeyPressed(keyEvent);
 		btnVeryEasy.setOnAction(actionButton);
 		btnEasy.setOnAction(actionButton);
@@ -216,7 +215,6 @@ public class View1 {
 		stop.setOnAction(actionButton);
 		start.setOnAction(actionButton);
 	}
-
 	/**
 	 * @return the rootTab1
 	 */

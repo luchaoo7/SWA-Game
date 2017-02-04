@@ -1,7 +1,7 @@
+import java.util.ArrayList;
 /**
  * class to dictate what operation 
  * will take place
- * @author danbro
  */
 public class Operator
 {
@@ -66,5 +66,15 @@ public class Operator
 	 */
 	public String getOPERATOR() {
 		return OPERATOR;
+	}
+	
+	/**
+	 * remove numbers
+	 * @param arrayOfnumbers
+	 */
+	public void removeNumbers( ArrayList<ParentNumber> arrayOfnumbers)
+	{
+		arrayOfnumbers.remove(1);
+		arrayOfnumbers.remove(0);
 	}
 }

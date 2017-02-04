@@ -40,7 +40,7 @@ public class Mathematician{
 	{
 		switch (fileNumber) {
 		case 0:
-			imageFile = "alan_turing.jpg";
+			imageFile = "math_fun2.jpg";
 			break;
 		case 1:
 			imageFile = "isaac_newton.jpg";
@@ -58,7 +58,7 @@ public class Mathematician{
 			imageFile = "john_von_neumann.jpg";
 			break;
 		case 6:
-			imageFile = "karl_friedrich.jpg";
+			imageFile = "alan_turing.jpg";
 			break;
 		case 7:
 			imageFile = "leonhard_euler.jpg";

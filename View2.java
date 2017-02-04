@@ -2,6 +2,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 
@@ -22,7 +23,7 @@ public class View2 {
 	private Label labelScore;
 	private Label labelStreak;
 	
-	public View2(View1 mainTab1, Mathematician mathGuy)
+	public View2(View1 mainTab1)
 	{
 		rootTab2 = new FlowPane();
 		rootTab2.setPrefHeight(600);
@@ -61,9 +62,8 @@ public class View2 {
 		picture1.getChildren().add(mainTab1.getCanvas());
 		game2.getChildren().add(picture1);
 		gcp1 = mainTab1.getCanvas().getGraphicsContext2D();
-		
 //		setting images
-		gcp1.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
+		gcp1.drawImage(new Image(View2.class.getResource("resource/math_fun2.jpg").toExternalForm()), 0, 0);
 
 		picture2 = new Pane();
 		picture2.setPrefSize(600, 300);
@@ -73,10 +73,8 @@ public class View2 {
 		picture2.getChildren().add(mainTab1.getCanvas());
 		game2.getChildren().add(picture2);;
 		gcp2 = mainTab1.getCanvas().getGraphicsContext2D();
-
 		//draw streak image
-		gcp2.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
-		
+		gcp2.drawImage(new Image(View2.class.getResource("resource/math_fun.jpg").toExternalForm()), 0, 0);
 	}
 	/**
 	 * @return the rootTab2
