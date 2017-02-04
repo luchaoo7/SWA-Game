@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 
@@ -29,13 +30,11 @@ public class View1 {
 	private Canvas canvas;
 	private GraphicsContext gc;
 
-	Button btnHard;
-	Button btnTough;
-	Button btnEasy;
-	Button btnVeryEasy;
-	Button btnRandom;
-
-
+	private Button btnHard;
+	private Button btnTough;
+	private Button btnEasy;
+	private Button btnVeryEasy;
+	private Button btnRandom;
 	
 	public View1()
 	{
@@ -87,12 +86,38 @@ public class View1 {
 		InstructionCover.setPrefSize(125, 75);
 //		InstructionCover.setOnAction(actionButton);
 		instructPane.getChildren().add(InstructionCover);
-
+		
 		//set up of tab1
 		ui = new Pane();
 		ui.setPrefSize(200, 600);
 		ui.setStyle("-fx-background-color: #ffffc8; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
 //		rootTab1.getChildren().add(ui);
+			
+		//set up of stop button
+		stop = new Button("Stop");
+		stop.setLayoutX(25);
+		stop.setLayoutY(200);
+//		stop.setOnAction(actionButton);
+		ui.getChildren().add(stop);
+		//set up start button
+		start = new Button("Start");
+		start.setLayoutX(100);
+		start.setLayoutY(200);
+//		start.setOnAction(actionButton);
+		ui.getChildren().add(start);
+		
+		
+		//set up textfield
+		textField = new TextField("Your Answer");
+		textField.setLayoutX(15);
+		textField.setLayoutY(300);
+		//not editable
+		textField.setEditable(false);
+		//key event for text field, when enter is pressed
+		//the value is processed
+//		textField.setOnKeyPressed(keyEvent);
+		ui.getChildren().add(textField);
+		
 		
 		btnVeryEasy = new Button("V Easy");
 		btnVeryEasy.setLayoutX(10);
@@ -120,9 +145,33 @@ public class View1 {
 //		btnRandom.setOnAction(actionButton);
 		ui.getChildren().add(btnRandom);
 
+		game = new Pane();
+		game.setPrefSize(600, 600);
+		game.setStyle("-fx-background-color: #000000;");
+		canvas = new Canvas(600, 600);
+		game.getChildren().add(canvas);
+		gc = canvas.getGraphicsContext2D();
+		
+		
 		rootTab1.getChildren().add(ui);
+		rootTab1.getChildren().add(game);
+
 	}
 	
+	/**
+	 * @return the btnRandom
+	 */
+	public Button getBtnRandom() {
+		return btnRandom;
+	}
+
+	/**
+	 * @return the btnHard
+	 */
+	public Button getBtnHard() {
+		return btnHard;
+	}
+
 	/**
 	 * @return the btnTough
 	 */
@@ -148,9 +197,11 @@ public class View1 {
 	 * set button action event
 	 * @param actionButton
 	 */
-	public void setOnActionButton(EventHandler<ActionEvent> actionButton)
+	public void setOnActionButton(EventHandler<ActionEvent> actionButton, 
+			EventHandler<KeyEvent> keyEvent)
 	{
 		
+		textField.setOnKeyPressed(keyEvent);
 		btnVeryEasy.setOnAction(actionButton);
 		btnEasy.setOnAction(actionButton);
 		btnRandom.setOnAction(actionButton);
@@ -160,10 +211,10 @@ public class View1 {
 		coverEnterGame.setOnAction(actionButton);
 		InstructionCover.setOnAction(actionButton);
 		btnEnterGame.setOnAction(actionButton);
+		stop.setOnAction(actionButton);
+		start.setOnAction(actionButton);
 	}
 
-	
-	
 	/**
 	 * @return the rootTab1
 	 */
@@ -241,6 +292,10 @@ public class View1 {
 	 */
 	public Canvas getCanvas() {
 		return canvas;
+	}
+	public void setCanvas(Canvas canvas)
+	{
+		this.canvas = canvas;
 	}
 	/**
 	 * @return the gc

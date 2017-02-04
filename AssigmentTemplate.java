@@ -6,16 +6,10 @@ import java.util.TimerTask;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
@@ -36,49 +30,11 @@ public class AssigmentTemplate extends Application
 	Scene scene;
 	TabPane root;
 	Tab tab1, tab2;
-	
 
-	//Tab1
-	FlowPane rootTab1;
-	//start pane 
-	Pane instructPane;
-	Pane coverPane;
-	//add ui and game to rootTab1
-	Pane ui, game;
-	TextField textField;
-	//Button for ui controller
-	Button btnEnterGame;
-	Button coverEnterGame;
-	Button coverInstruction;
-	Button InstructionCover;
-	Button stop;
-	Button start;
-	//canvas added to game pane
-	Canvas canvas;
-	GraphicsContext gc;
+	//Tab1 contents
 	View1 mainTab1 = new View1();
 
 	//Tab2
-	FlowPane rootTab2;
-	//add ui and game to rootTab2
-	Pane ui2;
-	FlowPane game2; //vertical flowpane
-	//Pane for game2
-	Pane picture1;
-	Pane picture2;
-	GraphicsContext gcp1;
-	GraphicsContext gcp2;
-
-	Label labelTotal;
-	Label labelScore;
-	Label labelStreak;
-
-	Button btnHard;
-	Button btnTough;
-	Button btnEasy;
-	Button btnVeryEasy;
-	Button btnRandom;
-
 
 	Operator operate;
 	//to pace the game
@@ -86,13 +42,15 @@ public class AssigmentTemplate extends Application
 	//task to be ran
 	TimerTask task;
 	
-
 	ArrayList<ParentNumber> collectionOfNumbers = new ArrayList<ParentNumber>();
-	Mathematician mathGuy;
 	Factory numberMaker = new Factory();
 	Level difficultyLvl = new Level();
 	Random rand = new Random();
 	Score scoreClass = new Score();
+
+	Mathematician mathGuy = Mathematician.getInstace();
+
+	View2 mainTab2 = new View2(scoreClass, mainTab1, mathGuy);
 	
 	//counter to determine when to delete numbers
 	int counter = 1;
@@ -130,7 +88,7 @@ public class AssigmentTemplate extends Application
 					break;
 				}
 
-				String numberInput = textField.getText();
+				String numberInput = mainTab1.getTextField().getText();
 				double valueInput = 0;
 				try 
 				{
@@ -144,17 +102,18 @@ public class AssigmentTemplate extends Application
 
 				if (valueInput == result) 
 				{
-					gc.setStroke(Color.YELLOW);
-					gc.strokeText("Yes!!You are right", 400, 100);
+					mainTab1.getGc().setStroke(Color.YELLOW);
+					mainTab1.getGc().strokeText("Yes!!You are right", 400, 100);
 					//update score
 					scoreClass.setScore();
 					scoreClass.setStreak();
 
 					//set new image
 					mathGuy.setImage(scoreClass.getScore());
-					gcp1.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
+					mainTab2.getGcp1().drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
+
 					mathGuy.setImage(scoreClass.getStreak());
-					gcp2.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
+					mainTab2.getGcp2().drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 					if (scoreClass.getStreak() > scoreClass.getStreakGauge()) 
 					{
 						scoreClass.setStreakGauge(scoreClass.getStreak());
@@ -173,16 +132,16 @@ public class AssigmentTemplate extends Application
 					//operation
 					counter = 1;
 					//clear text field
-					textField.clear();
+					mainTab1.getTextField().clear();
 					//check if collection is empty
 					//if it is, exit
-					labelScore.setText("Your Score: " + scoreClass.getScore());
-					labelStreak.setText("Your Streak: " + scoreClass.getStreakGauge());
+					mainTab2.getLabelScore().setText("Your Score: " + scoreClass.getScore());
+					mainTab2.getLabelStreak().setText("Your Streak: " + scoreClass.getStreakGauge());
 					if (collectionOfNumbers.isEmpty()) 
 					{
 						timer2.cancel();
 						//hide textfield on game termination
-						textField.setEditable(false);
+						mainTab1.getTextField().setEditable(false);
 					}
 				}
 				else
@@ -190,10 +149,9 @@ public class AssigmentTemplate extends Application
 					//set streak to 0 if miss answer
 					scoreClass.setStreakZero();
 					//clear text field
-					textField.clear();
-//					gc.setFill(Color.YELLOW);
-					gc.setStroke(Color.RED);
-					gc.strokeText("Keep Trying", 400, 100);
+					mainTab1.getTextField().clear();
+					mainTab1.getGc().setStroke(Color.RED);
+					mainTab1.getGc().strokeText("Keep Trying", 400, 100);
 				}
 			}
 		}
@@ -205,101 +163,104 @@ public class AssigmentTemplate extends Application
 		@Override
 		public void handle(ActionEvent event) 
 		{
-			if (event.getSource() == coverInstruction) 
+			if (event.getSource() == mainTab1.getCoverInstruction()) 
 			{
-				tab1.setContent(instructPane);
+				tab1.setContent(mainTab1.getInstructPane());
 			}
-			if (event.getSource() == InstructionCover) {
+			if (event.getSource() == mainTab1.getInstructionCover()) {
 
-				tab1.setContent(coverPane);
+				tab1.setContent(mainTab1.getCoverPane());
 				
 			}
-			if (event.getSource() == btnEnterGame || event.getSource() == coverEnterGame) 
+			if (event.getSource() == mainTab1.getBtnEnterGame()|| 
+					event.getSource() == mainTab1.getCoverEnterGame()) 
 			{
-				tab1.setContent(rootTab1);
+				tab1.setContent(mainTab1.getRootTab1());
 			}
-			if (event.getSource() == stop) 
+			if (event.getSource() == mainTab1.getStop()) 
 			{
 				if (task != null)
 				{
 					task.cancel();
 				}
-				textField.setEditable(false);
-//				textField.requestFocus();
+
+				mainTab1.getTextField().setEditable(false);
 				setButtonsVisible();
 			}
-			if (event.getSource() == btnRandom) 
+			if (event.getSource() == mainTab1.getBtnRandom()) 
 			{
 				difficultyLvl.setLevel(4);
-				btnEasy.setVisible(false);
-				btnHard.setVisible(false);
-				btnTough.setVisible(false);
-				btnVeryEasy.setVisible(false);
+				mainTab1.getBtnTough().setVisible(false);
+				mainTab1.getBtnEasy().setVisible(false);
+				mainTab1.getBtnHard().setVisible(false);
+				mainTab1.getBtnVeryEasy().setVisible(false);
 				difficultyLvl.setClickedLevel(2);
 			}
-			if (event.getSource() == btnVeryEasy) 
+			if (event.getSource() == mainTab1.getBtnVeryEasy()) 
 			{
 				difficultyLvl.setLevel(0);
-				btnEasy.setVisible(false);
-				btnHard.setVisible(false);
-				btnTough.setVisible(false);
-				btnRandom.setVisible(false);
+				mainTab1.getBtnTough().setVisible(false);
+				mainTab1.getBtnEasy().setVisible(false);
+				mainTab1.getBtnHard().setVisible(false);
+				mainTab1.getBtnRandom().setVisible(false);
 				difficultyLvl.setClickedLevel(1);
 			}
 
-			if (event.getSource() == btnEasy) 
+			if (event.getSource() == mainTab1.getBtnEasy()) 
 			{
 				difficultyLvl.setLevel(1);
-				btnVeryEasy.setVisible(false);
-				btnHard.setVisible(false);
-				btnTough.setVisible(false);
-				btnRandom.setVisible(false);
+				mainTab1.getBtnVeryEasy().setVisible(false);
+				mainTab1.getBtnHard().setVisible(false);
+				mainTab1.getBtnTough().setVisible(false);
+				mainTab1.getBtnRandom().setVisible(false);
 				difficultyLvl.setClickedLevel(1);
 			}
-			if (event.getSource() == btnHard) 
+			if (event.getSource() == mainTab1.getBtnHard()) 
 			{
 				difficultyLvl.setLevel(2);
-				btnVeryEasy.setVisible(false);
-				btnTough.setVisible(false);
-				btnEasy.setVisible(false);
-				btnRandom.setVisible(false);
+				mainTab1.getBtnVeryEasy().setVisible(false);
+				mainTab1.getBtnEasy().setVisible(false);
+				mainTab1.getBtnTough().setVisible(false);
+				mainTab1.getBtnRandom().setVisible(false);
 				difficultyLvl.setClickedLevel(1);
 			}
-			if (event.getSource() == btnTough) 
+			if (event.getSource() == mainTab1.getBtnTough()) 
 			{
 				difficultyLvl.setLevel(3);
-				btnVeryEasy.setVisible(false);
-				btnHard.setVisible(false);
-				btnEasy.setVisible(false);
-				btnRandom.setVisible(false);
+				mainTab1.getBtnVeryEasy().setVisible(false);
+				mainTab1.getBtnEasy().setVisible(false);
+				mainTab1.getBtnHard().setVisible(false);
+				mainTab1.getBtnRandom().setVisible(false);
 				difficultyLvl.setClickedLevel(1);
 			}
 			//
-			if (event.getSource() == start) 
+			if (event.getSource() ==  mainTab1.getStart()) 
 			{
+				System.out.println(mathGuy.getRectangle().getY());
 				//set image to start image
 				mathGuy.setImage(0);
-				gcp1.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
+				mainTab2.getGcp1().drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 				mathGuy.setImage(0);
-				gcp2.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
+				mainTab2.getGcp2().drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 				//set button difficulty visible
 				if (difficultyLvl.getClickedLevel() == 0)
 				{
 					difficultyLvl.setLevel(0);
 				}
 				//can type in textfield
-				textField.setEditable(true);
-				textField.clear();
+				mainTab1.getTextField().setEditable(true);;
+				mainTab1.getTextField().clear();
 
 				//set level to easy when you start
 				//set time to answer question back to 1
 				counter = 1;
 				//focus text field when starting
-				textField.requestFocus();
+				mainTab1.getTextField().requestFocus();;
+
 				//clear textfield message once programme start
-				if (textField.getText().equalsIgnoreCase("Your Answer")) 
+				if (mainTab1.getTextField().getText().equalsIgnoreCase("Your Answer")) 
 				{
-					textField.clear();
+					mainTab1.getTextField().clear();
 				}
 				//cancel task if running and start again
 				if (task != null)
@@ -313,12 +274,9 @@ public class AssigmentTemplate extends Application
 					@Override
 					public void run() {
 						runnable.run();
-						
 					}
 				};
-				//call method populate
-//				reset();
-				scoreClass.reset(scoreClass, labelScore, labelStreak);
+				scoreClass.reset(scoreClass, mainTab2.getLabelScore(), mainTab2.getLabelStreak());
 				populateArrayOfNumbers();
 				timer2.schedule(task, 0, 1000);
 			}
@@ -329,11 +287,11 @@ public class AssigmentTemplate extends Application
 	 */
 	private void setButtonsVisible()
 	{
-		btnVeryEasy.setVisible(true);
-		btnEasy.setVisible(true);
-		btnHard.setVisible(true);
-		btnTough.setVisible(true);
-		btnRandom.setVisible(true);
+		mainTab1.getBtnVeryEasy().setVisible(true);
+		mainTab1.getBtnEasy().setVisible(true);
+		mainTab1.getBtnTough().setVisible(true);
+		mainTab1.getBtnHard().setVisible(true);
+		mainTab1.getBtnRandom().setVisible(true);
 	}
 	/**
 	 * Method to populate array of numbers
@@ -354,7 +312,7 @@ public class AssigmentTemplate extends Application
 			collectionOfNumbers.add(numberMaker.createNumber(randomNumber, 50 * xlocation, 50));
 		}
 		//Display the amount of operations in array
-		labelTotal.setText("Possible Score: " + (collectionOfNumbers.size() / 2));
+		mainTab2.getLabelTotal().setText("Possible Score: " + (collectionOfNumbers.size() / 2));
 	}
 	/**
 	 * Runnable for task to run
@@ -372,8 +330,8 @@ public class AssigmentTemplate extends Application
 				//generate a random number which identifies an operator
 			operate = new Operator(difficultyLvl.getLevel());
 			//background colour
-			gc.setFill(Color.BLACK);
-			gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+			mainTab1.getGc().setFill(Color.BLACK);
+			mainTab1.getGc().fillRect(0, 0, mainTab1.getCanvas().getWidth(), mainTab1.getCanvas().getHeight());
 			
 			//assigning numbers in the array to left or right side of the operation 
 			ParentNumber singleNumber = collectionOfNumbers.get(0);
@@ -432,11 +390,11 @@ public class AssigmentTemplate extends Application
 			//to place the operator in the middle of the two numbers 
 			double locationOperator = (singleNumber.getRectangle().getX() + singleNumber2.getRectangle().getX() + 50) / 2 + 15;
 			//set the text to white
-			gc.setStroke(Color.WHITE);
-			gc.strokeText(operate.getOPERATOR(), locationOperator, singleNumber2.getRectangle().getY());
+			mainTab1.getGc().setStroke(Color.WHITE);
+			mainTab1.getGc().strokeText(operate.getOPERATOR(), locationOperator, singleNumber2.getRectangle().getY());
 
-			gc.strokeText(stringNumber, singleNumber.getRectangle().getX(), singleNumber.getRectangle().getY());
-			gc.strokeText(stringNumber2, singleNumber2.getRectangle().getX() + 50, singleNumber2.getRectangle().getY());
+			mainTab1.getGc().strokeText(stringNumber, singleNumber.getRectangle().getX(), singleNumber.getRectangle().getY());
+			mainTab1.getGc().strokeText(stringNumber2, singleNumber2.getRectangle().getX() + 50, singleNumber2.getRectangle().getY());
 			singleNumber.move();
 			singleNumber2.move();
 
@@ -459,7 +417,7 @@ public class AssigmentTemplate extends Application
 //				System.exit(0);
 				timer2.cancel();
 				//hide texfield
-				textField.setEditable(false);
+				mainTab1.getTextField().setEditable(false);
 			}
 			counter++;
 		}
@@ -468,7 +426,6 @@ public class AssigmentTemplate extends Application
 	@Override
 	public void start(Stage stage) throws Exception 
 	{
-		
 		root = new TabPane();
 		scene = new Scene(root, 800, 600);
 		stage.setScene(scene);
@@ -483,190 +440,16 @@ public class AssigmentTemplate extends Application
 		tab2.setText("Second Tab");
 		tab2.setClosable(false);
 		root.getTabs().add(tab2);
-		
-		
-		
-		rootTab1 = new FlowPane();
-		//set up the layout of the cover pane
-		//and panes it can reach with the buttons
-		coverPane = new Pane();
-		coverPane.setPrefSize(800, 600);
-		coverPane.setStyle("-fx-background-color: #000; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
-		canvas = new Canvas(800, 600);
-		coverPane.getChildren().add(canvas);
-		gc = canvas.getGraphicsContext2D();
 
-		Image coverImage = new Image(AssigmentTemplate.class.getResource("resource/algebra.jpg").toExternalForm(),800, 600, false, false);
-		gc.drawImage(coverImage, 0, 0);
-		coverInstruction = new Button("Instructions");
-		coverInstruction.setLayoutX(337.5);
-		coverInstruction.setLayoutY(200);
-		coverInstruction.setPrefSize(125, 75);
-		coverInstruction.setOnAction(actionButton);
-		coverPane.getChildren().add(coverInstruction);
+//		**************************************************************************
+		mainTab1.setOnActionButton(actionButton , keyEvent);
 
-		coverEnterGame = new Button("Enter");
-		coverEnterGame.setLayoutX(337.5);
-		coverEnterGame.setLayoutY(325);
-		coverEnterGame.setPrefSize(125, 75);
-		coverEnterGame.setOnAction(actionButton);
-		coverPane.getChildren().add(coverEnterGame);
-		tab1.setContent(coverPane);
-		
-
-		instructPane = new Pane();
-		instructPane.setPrefSize(800, 600);
-		instructPane.setStyle("-fx-background-color: #000; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
-//Cover page
-		canvas = new Canvas(800, 600);
-		instructPane.getChildren().add(canvas);
-		gc = canvas.getGraphicsContext2D();
-		Image image3 = new Image(AssigmentTemplate.class.getResource("resource/instructions.jpg").toExternalForm(),800, 600, false, false);
-		gc.drawImage(image3, 0, 0);
-		btnEnterGame = new Button("Enter");
-		btnEnterGame.setLayoutX(337.5);
-		btnEnterGame.setLayoutY(200);
-		btnEnterGame.setPrefSize(125, 75);
-		btnEnterGame.setOnAction(actionButton);
-		instructPane.getChildren().add(btnEnterGame);
-
-		InstructionCover = new Button("Menu");
-		InstructionCover.setLayoutX(337.7);
-		InstructionCover.setLayoutY(325);
-		InstructionCover.setPrefSize(125, 75);
-		InstructionCover.setOnAction(actionButton);
-		instructPane.getChildren().add(InstructionCover);
-		
-		//set up of tab1
-		ui = new Pane();
-		ui.setPrefSize(200, 600);
-		ui.setStyle("-fx-background-color: #ffffc8; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
-		rootTab1.getChildren().add(ui);
-		
-		rootTab2 = new FlowPane();
-		rootTab2.setPrefHeight(600);
-		tab2.setContent(rootTab2);
-
-		btnVeryEasy = new Button("V Easy");
-		btnVeryEasy.setLayoutX(10);
-		btnVeryEasy.setLayoutY(10);
-		btnVeryEasy.setOnAction(actionButton);
-		ui.getChildren().add(btnVeryEasy);
-		btnEasy = new Button("Easy");
-		btnEasy.setLayoutX(10);
-		btnEasy.setLayoutY(40);
-		btnEasy.setOnAction(actionButton);
-		ui.getChildren().add(btnEasy);
-		btnHard = new Button("Hard");
-		btnHard.setLayoutX(10);
-		btnHard.setLayoutY(70);
-		btnHard.setOnAction(actionButton);
-		ui.getChildren().add(btnHard);
-		btnTough = new Button("Tough");
-		btnTough.setLayoutX(10);
-		btnTough.setLayoutY(100);
-		btnTough.setOnAction(actionButton);
-		ui.getChildren().add(btnTough);
-		btnRandom = new Button("Random");
-		btnRandom.setLayoutX(10);
-		btnRandom.setLayoutY(130);
-		btnRandom.setOnAction(actionButton);
-		ui.getChildren().add(btnRandom);
-
-		//set up of tab2
-		ui2 = new Pane();
-		ui2.setPrefSize(200, 600);
-		ui2.setStyle("-fx-background-color: #ffffc8; -fx-border-color: #2e8b57; -fx-border-width: 3px;");
-		rootTab2.getChildren().add(ui2);
-		
-		labelTotal = new Label();
-		//This line of code is at the bottom
-		//when the array of numbers if filled
-		labelTotal.setLayoutX(25);
-		labelTotal.setLayoutY(50);
-		ui2.getChildren().add(labelTotal);
-
-		labelScore = new Label();
-		labelScore.setText("Your Score: " + scoreClass.getScore());
-		labelScore.setLayoutX(25);
-		labelScore.setLayoutY(75);
-		ui2.getChildren().add(labelScore);
-
-		labelStreak = new Label();
-		labelStreak.setText("Your Streak: " + scoreClass.getStreak());
-		labelStreak.setLayoutX(25);
-		labelStreak.setLayoutY(100);
-		ui2.getChildren().add(labelStreak);
-		
-		//set up of stop button
-		stop = new Button("Stop");
-		stop.setLayoutX(25);
-		stop.setLayoutY(200);
-		stop.setOnAction(actionButton);
-		ui.getChildren().add(stop);
-		//set up start button
-		start = new Button("Start");
-		start.setLayoutX(100);
-		start.setLayoutY(200);
-		start.setOnAction(actionButton);
-		ui.getChildren().add(start);
-		//set up textfield
-		textField = new TextField("Your Answer");
-		textField.setLayoutX(15);
-		textField.setLayoutY(300);
-		//not editable
-		textField.setEditable(false);
-		//key event for text field, when enter is pressed
-		//the value is processed
-		textField.setOnKeyPressed(keyEvent);
-		ui.getChildren().add(textField);
-
-
-		game = new Pane();
-		game.setPrefSize(600, 600);
-		game.setStyle("-fx-background-color: #000000;");
-		rootTab1.getChildren().add(game);
-		
-		game2 = new FlowPane(Orientation.HORIZONTAL); 
-		game2.setPrefSize(600, 800);
-		game2.setStyle("-fx-background-color: #000000;");
-		rootTab2.getChildren().add(game2);
-		
-		picture1 = new Pane();
-		picture1.setPrefSize(600, 300);
-		picture1.setStyle("-fx-background-color: #4283f4;");
-		//canvas for picture1 Pane
-		canvas = new Canvas(600, 400);
-		picture1.getChildren().add(canvas);
-		game2.getChildren().add(picture1);
-		gcp1 = canvas.getGraphicsContext2D();
-		
-//		setting images
-//		Maths mathGuy = Maths.getInstace();
-		mathGuy = Mathematician.getInstace();
-		gcp1.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
-
-		picture2 = new Pane();
-		picture2.setPrefSize(600, 300);
-		picture2.setStyle("-fx-background-color: #42f47d;");
-		//canvas for picture2 Pane
-		canvas = new Canvas(600, 400);
-		picture2.getChildren().add(canvas);
-		game2.getChildren().add(picture2);;
-		gcp2 = canvas.getGraphicsContext2D();
-
-		//draw streak image
-		gcp2.drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
-
-		canvas = new Canvas(600, 600);
-		game.getChildren().add(canvas);
-		
-		//set up graphic context
-		gc = canvas.getGraphicsContext2D();
+		tab1.setContent(mainTab1.getCoverPane());
+		tab2.setContent(mainTab2.getRootTab2());
+		mainTab1.setCanvas(new Canvas(600, 600));
 		//set the font
-		gc.setFont(new Font("Arial", 20));
+		mainTab1.getGc().setFont(new Font("Arial", 20));
 		//stroke the number and the location
-		
 		stage.show();
 	}
 }

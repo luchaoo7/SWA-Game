@@ -30,6 +30,16 @@ public class Operator
 			break;
 		}
 	}
+	
+	/**
+	 * compute result
+	 * @param leftNum
+	 * @param rightNum
+	 */
+	public void compute(int leftNum, int rightNum)
+	{
+		
+	}
 	/**
 	 * @return the number
 	 */
