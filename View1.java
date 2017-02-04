@@ -3,7 +3,9 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
@@ -30,11 +32,13 @@ public class View1 {
 	private Canvas canvas;
 	private GraphicsContext gc;
 
-	private Button btnHard;
-	private Button btnTough;
-	private Button btnEasy;
-	private Button btnVeryEasy;
-	private Button btnRandom;
+	
+	ToggleGroup btnGroup;
+	RadioButton btnVeryEasy;
+	RadioButton btnEasy;
+	RadioButton btnHard;
+	RadioButton btnTough;
+	RadioButton btnRandom;
 	
 	public View1()
 	{
@@ -119,32 +123,30 @@ public class View1 {
 		ui.getChildren().add(textField);
 		
 		
-		btnVeryEasy = new Button("V Easy");
+		btnGroup = new ToggleGroup();
+		//group
+		btnVeryEasy = new RadioButton("V Easy");
+		btnVeryEasy.setToggleGroup(btnGroup);
 		btnVeryEasy.setLayoutX(10);
 		btnVeryEasy.setLayoutY(10);
-//		btnVeryEasy.setOnAction(actionButton);
-		ui.getChildren().add(btnVeryEasy);
-		btnEasy = new Button("Easy");
+		btnEasy = new RadioButton("Easy");
+		btnEasy.setToggleGroup(btnGroup);
 		btnEasy.setLayoutX(10);
 		btnEasy.setLayoutY(40);
-//		btnEasy.setOnAction(actionButton);
-		ui.getChildren().add(btnEasy);
-		btnHard = new Button("Hard");
+		btnHard = new RadioButton("Hard");
+		btnHard.setToggleGroup(btnGroup);
 		btnHard.setLayoutX(10);
 		btnHard.setLayoutY(70);
-//		btnHard.setOnAction(actionButton);
-		ui.getChildren().add(btnHard);
-		btnTough = new Button("Tough");
+		btnTough = new RadioButton("Tough");
+		btnTough.setToggleGroup(btnGroup);
 		btnTough.setLayoutX(10);
 		btnTough.setLayoutY(100);
-//		btnTough.setOnAction(actionButton);
-		ui.getChildren().add(btnTough);
-		btnRandom = new Button("Random");
+		btnRandom = new RadioButton("Random");
+		btnRandom.setToggleGroup(btnGroup);
 		btnRandom.setLayoutX(10);
 		btnRandom.setLayoutY(130);
-//		btnRandom.setOnAction(actionButton);
-		ui.getChildren().add(btnRandom);
-
+		ui.getChildren().addAll(btnVeryEasy, btnEasy, btnTough, btnHard, btnRandom);
+		
 		game = new Pane();
 		game.setPrefSize(600, 600);
 		game.setStyle("-fx-background-color: #000000;");
@@ -161,35 +163,35 @@ public class View1 {
 	/**
 	 * @return the btnRandom
 	 */
-	public Button getBtnRandom() {
+	public RadioButton getBtnRandom() {
 		return btnRandom;
 	}
 
 	/**
 	 * @return the btnHard
 	 */
-	public Button getBtnHard() {
+	public RadioButton getBtnHard() {
 		return btnHard;
 	}
 
 	/**
 	 * @return the btnTough
 	 */
-	public Button getBtnTough() {
+	public RadioButton getBtnTough() {
 		return btnTough;
 	}
 
 	/**
 	 * @return the btnVeryEasy
 	 */
-	public Button getBtnVeryEasy() {
+	public RadioButton getBtnVeryEasy() {
 		return btnVeryEasy;
 	}
 
 	/**
 	 * @return the btnEasy
 	 */
-	public Button getBtnEasy() {
+	public RadioButton getBtnEasy() {
 		return btnEasy;
 	}
 

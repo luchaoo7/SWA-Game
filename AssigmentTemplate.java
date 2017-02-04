@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,10 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -47,7 +45,6 @@ public class AssigmentTemplate extends Application
 	Level difficultyLvl = new Level();
 	Random rand = new Random();
 	Score scoreClass = new Score();
-
 	Mathematician mathGuy = Mathematician.getInstace();
 
 	View2 mainTab2 = new View2(scoreClass, mainTab1, mathGuy);
@@ -81,14 +78,14 @@ public class AssigmentTemplate extends Application
 				{
 					valueInput = Double.parseDouble(numberInput);
 				} 
-				catch (Exception e) 
-				{
-				}
+				catch (Exception e) {}
 				
 				if (valueInput == result) 
 				{
 					mainTab1.getGc().setStroke(Color.YELLOW);
-					mainTab1.getGc().strokeText("Yes!!You are right", 400, 100);
+					mainTab1.getGc().strokeText("Correct", 400, 100);
+					mainTab1.getGc().drawImage( new Image(AssigmentTemplate.class.getResource("/resource/happy_boy.png").toExternalForm()), 400, 100);
+					
 					//update score
 					scoreClass.setScore();
 					scoreClass.setStreak();
@@ -112,7 +109,6 @@ public class AssigmentTemplate extends Application
 					//remove operations answered correctly
 					collectionOfNumbers.remove(1);
 					collectionOfNumbers.remove(0);
-					//reset counter
 					// to have 8 seconds for the next
 					//operation
 					counter = 1;
@@ -136,7 +132,7 @@ public class AssigmentTemplate extends Application
 					//clear text field
 					mainTab1.getTextField().clear();
 					mainTab1.getGc().setStroke(Color.RED);
-					mainTab1.getGc().strokeText("Keep Trying", 400, 100);
+					mainTab1.getGc().drawImage( new Image(AssigmentTemplate.class.getResource("/resource/think.png").toExternalForm()), 400, 100);
 				}
 			}
 		}
@@ -170,59 +166,37 @@ public class AssigmentTemplate extends Application
 				}
 
 				mainTab1.getTextField().setEditable(false);
-				setButtonsVisible();
 			}
 
 			if (event.getSource() == mainTab1.getBtnRandom()) 
 			{
 				difficultyLvl.setLevel(4);
-				mainTab1.getBtnTough().setVisible(false);
-				mainTab1.getBtnEasy().setVisible(false);
-				mainTab1.getBtnHard().setVisible(false);
-				mainTab1.getBtnVeryEasy().setVisible(false);
 				difficultyLvl.setClickedLevel(2);
 			}
 			if (event.getSource() == mainTab1.getBtnVeryEasy()) 
 			{
 				difficultyLvl.setLevel(0);
-				mainTab1.getBtnTough().setVisible(false);
-				mainTab1.getBtnEasy().setVisible(false);
-				mainTab1.getBtnHard().setVisible(false);
-				mainTab1.getBtnRandom().setVisible(false);
 				difficultyLvl.setClickedLevel(1);
 			}
 
 			if (event.getSource() == mainTab1.getBtnEasy()) 
 			{
 				difficultyLvl.setLevel(1);
-				mainTab1.getBtnVeryEasy().setVisible(false);
-				mainTab1.getBtnHard().setVisible(false);
-				mainTab1.getBtnTough().setVisible(false);
-				mainTab1.getBtnRandom().setVisible(false);
 				difficultyLvl.setClickedLevel(1);
 			}
 			if (event.getSource() == mainTab1.getBtnHard()) 
 			{
 				difficultyLvl.setLevel(2);
-				mainTab1.getBtnVeryEasy().setVisible(false);
-				mainTab1.getBtnEasy().setVisible(false);
-				mainTab1.getBtnTough().setVisible(false);
-				mainTab1.getBtnRandom().setVisible(false);
 				difficultyLvl.setClickedLevel(1);
 			}
 			if (event.getSource() == mainTab1.getBtnTough()) 
 			{
 				difficultyLvl.setLevel(3);
-				mainTab1.getBtnVeryEasy().setVisible(false);
-				mainTab1.getBtnEasy().setVisible(false);
-				mainTab1.getBtnHard().setVisible(false);
-				mainTab1.getBtnRandom().setVisible(false);
 				difficultyLvl.setClickedLevel(1);
 			}
 			//
 			if (event.getSource() ==  mainTab1.getStart()) 
 			{
-				System.out.println(mathGuy.getRectangle().getY());
 				//set image to start image
 				mathGuy.setImage(0);
 				mainTab2.getGcp1().drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
@@ -268,17 +242,6 @@ public class AssigmentTemplate extends Application
 			}
 		}
 	};
-	/**
-	 * set the buttons visible
-	 */
-	private void setButtonsVisible()
-	{
-		mainTab1.getBtnVeryEasy().setVisible(true);
-		mainTab1.getBtnEasy().setVisible(true);
-		mainTab1.getBtnTough().setVisible(true);
-		mainTab1.getBtnHard().setVisible(true);
-		mainTab1.getBtnRandom().setVisible(true);
-	}
 	/**
 	 * Method to populate array of numbers
 	 */
@@ -376,6 +339,7 @@ public class AssigmentTemplate extends Application
 			//to place the operator in the middle of the two numbers 
 			double locationOperator = (singleNumber.getRectangle().getX() + singleNumber2.getRectangle().getX() + 50) / 2 + 15;
 			//set the text to white
+			mainTab1.getGc().setFont(new Font(20));
 			mainTab1.getGc().setStroke(Color.WHITE);
 			mainTab1.getGc().strokeText(operate.getOPERATOR(), locationOperator, singleNumber2.getRectangle().getY());
 
@@ -385,8 +349,10 @@ public class AssigmentTemplate extends Application
 			singleNumber2.move();
 
 			
+			mainTab1.getGc().setFont(new Font(40));
+			mainTab1.getGc().strokeText(counter + "", 500, 50);
 			//Every Five seconds delete index 1 and 0
-			if (counter % 7 == 0) 
+			if (counter  == 7) 
 			{
 				scoreClass.setStreakZero();
 				collectionOfNumbers.remove(1);
@@ -396,7 +362,7 @@ public class AssigmentTemplate extends Application
 					
 					difficultyLvl.setLevel(rand.nextInt(4));
 				}
-				counter = 1;
+				counter = 0;
 			}
 			//If collection is empty, exit game
 			if (collectionOfNumbers.isEmpty()) {
@@ -427,7 +393,6 @@ public class AssigmentTemplate extends Application
 		tab2.setClosable(false);
 		root.getTabs().add(tab2);
 
-//		**************************************************************************
 		mainTab1.setOnActionButton(actionButton , keyEvent);
 
 		tab1.setContent(mainTab1.getCoverPane());
