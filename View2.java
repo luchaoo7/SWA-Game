@@ -23,7 +23,9 @@ public class View2 {
 	private Label labelScore;
 	private Label labelStreak;
 	
-	public View2(View1 mainTab1)
+	private Canvas canvas;
+	
+	public View2()
 	{
 		rootTab2 = new FlowPane();
 		rootTab2.setPrefHeight(600);
@@ -58,10 +60,10 @@ public class View2 {
 		picture1.setPrefSize(600, 300);
 		picture1.setStyle("-fx-background-color: #4283f4;");
 		//canvas for picture1 Pane
-		mainTab1.setCanvas(new Canvas(600, 400));
-		picture1.getChildren().add(mainTab1.getCanvas());
+		canvas = new Canvas(600, 400);
+		picture1.getChildren().add(canvas);
 		game2.getChildren().add(picture1);
-		gcp1 = mainTab1.getCanvas().getGraphicsContext2D();
+		gcp1 = canvas.getGraphicsContext2D();
 //		setting images
 		gcp1.drawImage(new Image(View2.class.getResource("resource/math_fun2.jpg").toExternalForm()), 0, 0);
 
@@ -69,12 +71,24 @@ public class View2 {
 		picture2.setPrefSize(600, 300);
 		picture2.setStyle("-fx-background-color: #42f47d;");
 		//canvas for picture2 Pane
-		mainTab1.setCanvas(new Canvas(600, 400));
-		picture2.getChildren().add(mainTab1.getCanvas());
+		canvas = new Canvas(600, 400);
+		picture2.getChildren().add(canvas);
 		game2.getChildren().add(picture2);;
-		gcp2 = mainTab1.getCanvas().getGraphicsContext2D();
+		gcp2 = canvas.getGraphicsContext2D();
 		//draw streak image
 		gcp2.drawImage(new Image(View2.class.getResource("resource/math_fun.jpg").toExternalForm()), 0, 0);
+	}
+	/**
+	 * @return the canvas
+	 */
+	public Canvas getCanvas() {
+		return canvas;
+	}
+	/**
+	 * @param canvas the canvas to set
+	 */
+	public void setCanvas(Canvas canvas) {
+		this.canvas = canvas;
 	}
 	/**
 	 * @return the rootTab2

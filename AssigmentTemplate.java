@@ -32,7 +32,7 @@ public class AssigmentTemplate extends Application
 	//Tab1 contents
 	View1 mainTab1 = new View1();
 	//Tab2 contents
-	View2 mainTab2 = new View2(mainTab1);
+	View2 mainTab2 = new View2();
 
 	Operator operate;
 	//to pace the game
