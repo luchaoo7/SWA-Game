@@ -43,12 +43,12 @@ public class AssigmentTemplate extends Application
 	ArrayList<ParentNumber> collectionOfNumbers = new ArrayList<ParentNumber>();
 	Factory numberMaker = new Factory();
 	Level difficultyLvl = new Level();
-	Random rand = new Random();
 	Score scoreClass = new Score();
 	Mathematician mathGuy = Mathematician.getInstace();
+	Random rand = new Random();
 	
 	//counter to determine when to delete numbers
-	int counter = 1;
+	int counter = 0;
 	//the value of each side of the operation
 	//will be stored in this variables
 	double leftNumber;
@@ -106,7 +106,7 @@ public class AssigmentTemplate extends Application
 					operate.removeNumbers(collectionOfNumbers);
 					// to have 8 seconds for the next
 					//operation
-					counter = 1;
+					counter = 0;
 					//clear text field
 					mainTab1.getTextField().clear();
 					//check if collection is empty
@@ -190,13 +190,11 @@ public class AssigmentTemplate extends Application
 				difficultyLvl.setLevel(3);
 				difficultyLvl.setClickedLevel(1);
 			}
-			//
 			if (event.getSource() ==  mainTab1.getStart()) 
 			{
 				//set image to start image
 				mathGuy.setImage(0);
 				mainTab2.getGcp1().drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
-				mathGuy.setImage(0);
 				mainTab2.getGcp2().drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 				//set button difficulty visible
 				if (difficultyLvl.getClickedLevel() == 0)
@@ -208,8 +206,8 @@ public class AssigmentTemplate extends Application
 				mainTab1.getTextField().clear();
 
 				//set level to easy when you start
-				//set time to answer question back to 1
-				counter = 1;
+				//set time to answer question back to 0
+				counter = 0;
 				//focus text field when starting
 				mainTab1.getTextField().requestFocus();;
 
@@ -263,7 +261,6 @@ public class AssigmentTemplate extends Application
 	 * Runnable for task to run
 	 */
 	Runnable runnable = new Runnable() {
-		
 		@Override
 		public void run() {
 			//check if random button has been pressed
