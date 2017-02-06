@@ -1,8 +1,10 @@
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -21,6 +23,7 @@ public class View1 {
 	//add ui and game to rootTab1
 	private Pane ui, game;
 	private TextField textField;
+	private TextField nameField;
 	//Button for ui controller
 	private Button btnEnterGame;
 	private Button coverEnterGame;
@@ -32,13 +35,13 @@ public class View1 {
 	private Canvas canvas;
 	private GraphicsContext gc;
 
-	
-	ToggleGroup btnGroup;
-	RadioButton btnVeryEasy;
-	RadioButton btnEasy;
-	RadioButton btnHard;
-	RadioButton btnTough;
-	RadioButton btnRandom;
+	private ToggleGroup btnGroup;
+	private RadioButton btnVeryEasy;
+	private RadioButton btnEasy;
+	private RadioButton btnHard;
+	private RadioButton btnTough;
+	private RadioButton btnRandom;
+    private Label label;
 	
 	public View1()
 	{
@@ -100,28 +103,41 @@ public class View1 {
 		//set up of stop button
 		stop = new Button("Stop");
 		stop.setLayoutX(25);
-		stop.setLayoutY(200);
+		stop.setLayoutY(250);
 //		stop.setOnAction(actionButton);
 		ui.getChildren().add(stop);
 		//set up start button
 		start = new Button("Start");
 		start.setLayoutX(100);
-		start.setLayoutY(200);
+		start.setLayoutY(250);
 //		start.setOnAction(actionButton);
 		ui.getChildren().add(start);
 		
+		nameField = new TextField();
+		nameField.setLayoutX(15);
+		nameField.setLayoutY(190);
+		ui.getChildren().add(nameField);
 		
 		//set up textfield
-		textField = new TextField("Your Answer");
+		textField = new TextField();
 		textField.setLayoutX(15);
-		textField.setLayoutY(300);
+		textField.setLayoutY(325);
 		//not editable
-		textField.setEditable(false);
+		textField.setVisible(false);
 		//key event for text field, when enter is pressed
 		//the value is processed
 //		textField.setOnKeyPressed(keyEvent);
 		ui.getChildren().add(textField);
 		
+		label = new Label("Enter Name:... press Enter");
+		label.setLayoutX(15);
+		label.setLayoutY(170);
+		ui.getChildren().add(label);
+		
+		label = new Label("Answer: ");
+		label.setLayoutX(15);
+		label.setLayoutY(305);
+		ui.getChildren().add(label);
 		
 		btnGroup = new ToggleGroup();
 		//group
@@ -154,33 +170,39 @@ public class View1 {
 		game.getChildren().add(canvas);
 		gc = canvas.getGraphicsContext2D();
 		
-		
 		rootTab1.getChildren().add(ui);
 		rootTab1.getChildren().add(game);
-
 	}
-	
+	/**
+	 * @return the nameField
+	 */
+	public TextField getNameField() {
+		return nameField;
+	}
+	/**
+	 * @param nameField the nameField to set
+	 */
+	public void setNameFieldText(String name) {
+		this.nameField.setText(name);
+	}
 	/**
 	 * @return the btnRandom
 	 */
 	public RadioButton getBtnRandom() {
 		return btnRandom;
 	}
-
 	/**
 	 * @return the btnHard
 	 */
 	public RadioButton getBtnHard() {
 		return btnHard;
 	}
-
 	/**
 	 * @return the btnTough
 	 */
 	public RadioButton getBtnTough() {
 		return btnTough;
 	}
-
 	/**
 	 * @return the btnVeryEasy
 	 */
@@ -202,6 +224,7 @@ public class View1 {
 	public void setOnActionButton(EventHandler<ActionEvent> actionButton, 
 			EventHandler<KeyEvent> keyEvent)
 	{
+		nameField.setOnKeyPressed(keyEvent);
 		textField.setOnKeyPressed(keyEvent);
 		btnVeryEasy.setOnAction(actionButton);
 		btnEasy.setOnAction(actionButton);

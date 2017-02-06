@@ -1,3 +1,6 @@
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javafx.scene.control.Label;
 /**
  * Keeps track of score
@@ -9,6 +12,50 @@ public class Score {
 	private int score = 0;
 	private int streak = 0;
 	private int streakGauge = 0;
+	SQLite _dbHandle = SQLite.getInstace();
+	
+		
+	/**
+	 * return top ten scores
+	 * @return
+	 */
+	public String getTop10Scores()
+	{
+		String sql = "SELECT * FROM scores order by score desc, "
+				+ "streak desc limit 10";
+		String allScore = "Pos   Name   Score    Streak\n";
+		try {
+			ResultSet resultSet =_dbHandle.statement.executeQuery(sql);
+			int count = 0;
+			while (resultSet.next()) {
+				count++;
+//						int id = resultSet.getInt("ID");
+				String name = resultSet.getString("NAME");
+				int score = resultSet.getInt("score");
+				int streak = resultSet.getInt("streak");
+		
+				allScore += count + "      " + name + "       " + score + "      " + streak + "\n";
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return allScore;
+	}
+	/**
+	 * insert into database
+	 */
+	public void insertScore(String name, int score, int streak )
+	{
+		try {
+		String sql = "INSERT INTO scores (NAME, SCORE, STREAK) " +
+				"VALUES('" + name + "'," + score + "," + streak + ")";
+			_dbHandle.statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * @return the score
 	 */

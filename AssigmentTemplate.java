@@ -23,7 +23,6 @@ public class AssigmentTemplate extends Application
 	{
 		launch(args);
 	}
-	
 	//main screen
 	Scene scene;
 	TabPane root;
@@ -53,6 +52,8 @@ public class AssigmentTemplate extends Application
 	//will be stored in this variables
 	double leftNumber;
 	double rightNumber;
+	//player
+	String name = "Annoni";
 	
 	//and compares it with the user input
 	//when ENTER is pressed
@@ -61,10 +62,20 @@ public class AssigmentTemplate extends Application
 		@Override
 		public void handle(KeyEvent event) 
 		{
-
 			double result = 0;
-			if (event.getCode() == KeyCode.ENTER) 
+			if (event.getCode() == KeyCode.ENTER && event.getSource() == mainTab1.getNameField()) {
+				
+				String userName = mainTab1.getNameField().getText().trim().substring(0, 6);
+				if (userName.length() != 0)
+					name = userName;
+				mainTab1.setNameFieldText(name);
+			}
+			else if (event.getCode() == KeyCode.ENTER) 
 			{
+				String userName = mainTab1.getNameField().getText().trim().substring(0, 6);
+				if (userName.length() != 0)
+					name = userName;
+				mainTab1.setNameFieldText(name);
 				//compute operation 
 				result = operate.compute(leftNumber, rightNumber);
 
@@ -115,9 +126,17 @@ public class AssigmentTemplate extends Application
 					mainTab2.getLabelStreak().setText("Your Streak: " + scoreClass.getStreakGauge());
 					if (collectionOfNumbers.isEmpty()) 
 					{
+						mainTab1.getGc().setFill(Color.BLACK);
+						mainTab1.getGc().fillRect(0, 0, mainTab1.getCanvas().getWidth(), mainTab1.getCanvas().getHeight());
+						scoreClass.insertScore(name, scoreClass.getScore(), scoreClass.getStreakGauge());
+
+						String allScore = scoreClass.getTop10Scores();
+						mainTab1.getGc().strokeText( allScore, 10, 50);
+
 						timer2.cancel();
 						//hide textfield on game termination
 						mainTab1.getTextField().setEditable(false);
+						mainTab1.getNameField().setEditable(false);
 					}
 				}
 				else
@@ -161,7 +180,10 @@ public class AssigmentTemplate extends Application
 					task.cancel();
 				}
 
-				mainTab1.getTextField().setEditable(false);
+				mainTab1.getTextField().setVisible(false);
+				mainTab1.getNameField().setEditable(true);
+				name = "Annonimous";
+				mainTab1.getNameField().clear();
 			}
 
 			if (event.getSource() == mainTab1.getBtnRandom()) 
@@ -193,6 +215,7 @@ public class AssigmentTemplate extends Application
 			if (event.getSource() ==  mainTab1.getStart()) 
 			{
 				//set image to start image
+				mainTab1.getNameField().setText(name);
 				mathGuy.setImage(0);
 				mainTab2.getGcp1().drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 				mainTab2.getGcp2().drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
@@ -202,7 +225,9 @@ public class AssigmentTemplate extends Application
 					difficultyLvl.setLevel(0);
 				}
 				//can type in textfield
+				mainTab1.getTextField().setVisible(true);
 				mainTab1.getTextField().setEditable(true);;
+				mainTab1.getNameField().setEditable(false);
 				mainTab1.getTextField().clear();
 
 				//set level to easy when you start
@@ -304,7 +329,7 @@ public class AssigmentTemplate extends Application
 			mainTab1.getGc().strokeText(operate.getOPERATOR(), locationOperator, singleNumber2.getRectangle().getY());
 
 			mainTab1.getGc().strokeText(left + "", singleNumber.getRectangle().getX(), singleNumber.getRectangle().getY());
-			mainTab1.getGc().strokeText(right +"", singleNumber2.getRectangle().getX() + 50, singleNumber2.getRectangle().getY());
+			mainTab1.getGc().strokeText(right +" ", singleNumber2.getRectangle().getX() + 50, singleNumber2.getRectangle().getY());
 			singleNumber.move();
 			singleNumber2.move();
 
@@ -324,9 +349,17 @@ public class AssigmentTemplate extends Application
 			}
 			//If collection is empty, exit game
 			if (collectionOfNumbers.isEmpty()) {
+				
+				mainTab1.getGc().setFill(Color.BLACK);
+				mainTab1.getGc().fillRect(0, 0, mainTab1.getCanvas().getWidth(), mainTab1.getCanvas().getHeight());
+				scoreClass.insertScore(name, scoreClass.getScore(), scoreClass.getStreakGauge());
+
+				String allScore = scoreClass.getTop10Scores();
+				mainTab1.getGc().strokeText( allScore, 10, 50);
 				timer2.cancel();
 				//prevent from entering text
 				mainTab1.getTextField().setEditable(false);
+				mainTab1.getNameField().setEditable(false);
 			}
 			counter++;
 		}
