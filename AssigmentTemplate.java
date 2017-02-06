@@ -65,14 +65,18 @@ public class AssigmentTemplate extends Application
 			double result = 0;
 			if (event.getCode() == KeyCode.ENTER && event.getSource() == mainTab1.getNameField()) {
 				
-				String userName = mainTab1.getNameField().getText().trim().substring(0, 6);
+				String userName = mainTab1.getNameField().getText().trim();
+				if (userName.length() >= 6) 
+					userName = mainTab1.getNameField().getText().trim().substring(0, 6);
 				if (userName.length() != 0)
 					name = userName;
 				mainTab1.setNameFieldText(name);
 			}
 			else if (event.getCode() == KeyCode.ENTER) 
 			{
-				String userName = mainTab1.getNameField().getText().trim().substring(0, 6);
+				String userName = mainTab1.getNameField().getText().trim();
+				if (userName.length() >= 6) 
+					userName = mainTab1.getNameField().getText().trim().substring(0, 6);
 				if (userName.length() != 0)
 					name = userName;
 				mainTab1.setNameFieldText(name);
