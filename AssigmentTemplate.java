@@ -62,7 +62,6 @@ public class AssigmentTemplate extends Application
 		@Override
 		public void handle(KeyEvent event) 
 		{
-			double result = 0;
 			if (event.getCode() == KeyCode.ENTER && event.getSource() == mainTab1.getNameField()) {
 				
 				String userName = mainTab1.getNameField().getText().trim();
@@ -81,17 +80,14 @@ public class AssigmentTemplate extends Application
 					name = userName;
 				mainTab1.setNameFieldText(name);
 				//compute operation 
-				result = operate.compute(leftNumber, rightNumber);
+				double result = operate.compute(leftNumber, rightNumber);
 
+				//get userinput from textfield
 				String numberInput = mainTab1.getTextField().getText();
-				double valueInput = 0;
-				try 
-				{
-					valueInput = Double.parseDouble(numberInput);
-				} 
-				catch (Exception e) {}
-				
-				if (valueInput == result) 
+				//check numeric value of user input
+				double userInput = operate.userInput(numberInput);
+
+				if (userInput == result) 
 				{
 					mainTab1.getGc().setStroke(Color.YELLOW);
 					mainTab1.getGc().strokeText("Correct", 400, 100);

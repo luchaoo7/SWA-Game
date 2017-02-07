@@ -32,6 +32,25 @@ public class Operator
 	}
 	
 	/**
+	 * check if user input is a number
+	 * and return it
+	 * @param userInput
+	 * @return
+	 */
+	public double userInput(String userInput)
+	{
+		double valueInput = 0;
+		try 
+		{
+			valueInput = Double.parseDouble(userInput);
+		} 
+		catch (Exception e) {}
+		
+		return valueInput;
+
+	}
+	
+	/**
 	 * compute result
 	 * @param leftNum
 	 * @param rightNum
