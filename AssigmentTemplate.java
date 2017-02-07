@@ -112,13 +112,13 @@ public class AssigmentTemplate extends Application
 						scoreClass.setStreakGauge(scoreClass.getStreak());
 					}
 					//Generate a random operation
-					if (difficultyLvl.getClickedLevel() == 2) {
-						
+					if (difficultyLvl.getClickedLevel() == 2) 
 						difficultyLvl.setLevel(rand.nextInt(4));
-					}
 					
 					//remove operations answered correctly
 					operate.removeNumbers(collectionOfNumbers);
+					//if arraylist is empty
+					endGame();
 					// to have 8 seconds for the next
 					//operation
 					counter = 0;
@@ -128,20 +128,7 @@ public class AssigmentTemplate extends Application
 					//if it is, exit
 					mainTab2.getLabelScore().setText("Your Score: " + scoreClass.getScore());
 					mainTab2.getLabelStreak().setText("Your Streak: " + scoreClass.getStreakGauge());
-					if (collectionOfNumbers.isEmpty()) 
-					{
-						mainTab1.getGc().setFill(Color.BLACK);
-						mainTab1.getGc().fillRect(0, 0, mainTab1.getCanvas().getWidth(), mainTab1.getCanvas().getHeight());
-						scoreClass.insertScore(name, scoreClass.getScore(), scoreClass.getStreakGauge());
-
-						String allScore = scoreClass.getTop10Scores();
-						mainTab1.getGc().strokeText( allScore, 10, 50);
-
-						timer2.cancel();
-						//hide textfield on game termination
-						mainTab1.getTextField().setEditable(false);
-						mainTab1.getNameField().setEditable(false);
-					}
+					
 				}
 				else
 				{
@@ -156,6 +143,23 @@ public class AssigmentTemplate extends Application
 		}
 	};
 	
+	private void endGame()
+	{
+		//If collection is empty, exit game
+		if (collectionOfNumbers.isEmpty()) {
+			
+			mainTab1.getGc().setFill(Color.BLACK);
+			mainTab1.getGc().fillRect(0, 0, mainTab1.getCanvas().getWidth(), mainTab1.getCanvas().getHeight());
+			scoreClass.insertScore(name, scoreClass.getScore(), scoreClass.getStreakGauge());
+
+			String allScore = scoreClass.getTop10Scores();
+			mainTab1.getGc().strokeText( allScore, 10, 50);
+			timer2.cancel();
+			//prevent from entering text
+			mainTab1.getTextField().setEditable(false);
+			mainTab1.getNameField().setEditable(false);
+		}
+	}
 	//eventHandler to action the stop and start button
 	EventHandler<ActionEvent> actionButton = new EventHandler<ActionEvent>() 
 	{
@@ -340,10 +344,12 @@ public class AssigmentTemplate extends Application
 			mainTab1.getGc().setFont(new Font(40));
 			mainTab1.getGc().strokeText(counter + "", 500, 50);
 			//Every 7 seconds delete index 1 and 0
+			counter++;
 			if (counter  == 7) 
 			{
 				scoreClass.setStreakZero();
 				operate.removeNumbers(collectionOfNumbers);
+				endGame();
 
 				if (difficultyLvl.getClickedLevel() == 2) {
 					
@@ -351,21 +357,6 @@ public class AssigmentTemplate extends Application
 				}
 				counter = 0;
 			}
-			//If collection is empty, exit game
-			if (collectionOfNumbers.isEmpty()) {
-				
-				mainTab1.getGc().setFill(Color.BLACK);
-				mainTab1.getGc().fillRect(0, 0, mainTab1.getCanvas().getWidth(), mainTab1.getCanvas().getHeight());
-				scoreClass.insertScore(name, scoreClass.getScore(), scoreClass.getStreakGauge());
-
-				String allScore = scoreClass.getTop10Scores();
-				mainTab1.getGc().strokeText( allScore, 10, 50);
-				timer2.cancel();
-				//prevent from entering text
-				mainTab1.getTextField().setEditable(false);
-				mainTab1.getNameField().setEditable(false);
-			}
-			counter++;
 		}
 	};
 	

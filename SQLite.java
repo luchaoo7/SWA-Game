@@ -10,10 +10,14 @@ public class SQLite {
 	{
 		String DRIVER_CLASS = "org.sqlite.JDBC";
 		String url = "jdbc:sqlite:players.db";
+		String sql = "CREATE TABLE if not exists scores(ID INTEGER PRIMARY KEY ASC,"
+			+ "NAME TEXT NOT NULL,SCORE INT NOT NULL,STREAK INT NOT NULL)";
+
 		try {
 			Class.forName(DRIVER_CLASS);
 			Connection connection = DriverManager.getConnection(url);
 			statement = connection.createStatement();
+			statement.executeUpdate(sql);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
