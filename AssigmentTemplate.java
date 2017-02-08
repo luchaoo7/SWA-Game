@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 
 public class AssigmentTemplate extends Application
 {
-
 	public static void main(String[] args) 
 	{
 		launch(args);
@@ -47,7 +46,7 @@ public class AssigmentTemplate extends Application
 	Random rand = new Random();
 	
 	//counter to determine when to delete numbers
-	int counter = 0;
+	int counter = 7;
 	//the value of each side of the operation
 	//will be stored in this variables
 	double leftNumber;
@@ -62,23 +61,8 @@ public class AssigmentTemplate extends Application
 		@Override
 		public void handle(KeyEvent event) 
 		{
-			if (event.getCode() == KeyCode.ENTER && event.getSource() == mainTab1.getNameField()) {
-				
-				String userName = mainTab1.getNameField().getText().trim();
-				if (userName.length() >= 6) 
-					userName = mainTab1.getNameField().getText().trim().substring(0, 6);
-				if (userName.length() != 0)
-					name = userName;
-				mainTab1.setNameFieldText(name);
-			}
-			else if (event.getCode() == KeyCode.ENTER) 
+			if (event.getCode() == KeyCode.ENTER) 
 			{
-				String userName = mainTab1.getNameField().getText().trim();
-				if (userName.length() >= 6) 
-					userName = mainTab1.getNameField().getText().trim().substring(0, 6);
-				if (userName.length() != 0)
-					name = userName;
-				mainTab1.setNameFieldText(name);
 				//compute operation 
 				double result = operate.compute(leftNumber, rightNumber);
 
@@ -104,9 +88,7 @@ public class AssigmentTemplate extends Application
 					mathGuy.setImage(scoreClass.getStreak());
 					mainTab2.getGcp2().drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 					if (scoreClass.getStreak() > scoreClass.getStreakGauge()) 
-					{
 						scoreClass.setStreakGauge(scoreClass.getStreak());
-					}
 					//Generate a random operation
 					if (difficultyLvl.getClickedLevel() == 2) 
 						difficultyLvl.setLevel(rand.nextInt(4));
@@ -117,14 +99,13 @@ public class AssigmentTemplate extends Application
 					endGame();
 					// to have 8 seconds for the next
 					//operation
-					counter = 0;
+					counter = 7;
 					//clear text field
 					mainTab1.getTextField().clear();
 					//check if collection is empty
 					//if it is, exit
 					mainTab2.getLabelScore().setText("Your Score: " + scoreClass.getScore());
 					mainTab2.getLabelStreak().setText("Your Streak: " + scoreClass.getStreakGauge());
-					
 				}
 				else
 				{
@@ -164,29 +145,20 @@ public class AssigmentTemplate extends Application
 		{
 			//setting the scenes depending on buttons clicked
 			if (event.getSource() == mainTab1.getCoverInstruction()) 
-			{
 				tab1.setContent(mainTab1.getInstructPane());
-			}
-			if (event.getSource() == mainTab1.getInstructionCover()) {
-
+			if (event.getSource() == mainTab1.getInstructionCover())
 				tab1.setContent(mainTab1.getCoverPane());
-			}
 			if (event.getSource() == mainTab1.getBtnEnterGame()|| 
 					event.getSource() == mainTab1.getCoverEnterGame()) 
-			{
 				tab1.setContent(mainTab1.getRootTab1());
-			}
-
 			if (event.getSource() == mainTab1.getStop()) 
 			{
 				if (task != null)
-				{
 					task.cancel();
-				}
 
 				mainTab1.getTextField().setVisible(false);
 				mainTab1.getNameField().setEditable(true);
-				name = "Annonimous";
+				name = "Annoni";
 				mainTab1.getNameField().clear();
 			}
 
@@ -218,6 +190,14 @@ public class AssigmentTemplate extends Application
 			}
 			if (event.getSource() ==  mainTab1.getStart()) 
 			{
+				//regulating name entry
+				String userName = mainTab1.getNameField().getText().trim();
+				if (userName.length() >= 6) 
+					userName = mainTab1.getNameField().getText().trim().substring(0, 6);
+				if (userName.length() != 0)
+					name = userName;
+				mainTab1.setNameFieldText(name);
+
 				//set image to start image
 				mainTab1.getNameField().setText(name);
 				mathGuy.setImage(0);
@@ -225,9 +205,7 @@ public class AssigmentTemplate extends Application
 				mainTab2.getGcp2().drawImage(mathGuy.getImage(), mathGuy.getRectangle().getX(), mathGuy.getRectangle().getY());
 				//set button difficulty visible
 				if (difficultyLvl.getClickedLevel() == 0)
-				{
 					difficultyLvl.setLevel(0);
-				}
 				//can type in textfield
 				mainTab1.getTextField().setVisible(true);
 				mainTab1.getTextField().setEditable(true);;
@@ -236,20 +214,16 @@ public class AssigmentTemplate extends Application
 
 				//set level to easy when you start
 				//set time to answer question back to 0
-				counter = 0;
+				counter = 7;
 				//focus text field when starting
 				mainTab1.getTextField().requestFocus();;
 
 				//clear textfield message once programme start
 				if (mainTab1.getTextField().getText().equalsIgnoreCase("Your Answer")) 
-				{
 					mainTab1.getTextField().clear();
-				}
 				//cancel task if running and start again
 				if (task != null)
-				{
 					task.cancel();
-				}
 				collectionOfNumbers.clear();
 				timer2 = new Timer();
 				task = new TimerTask() {
@@ -277,9 +251,8 @@ public class AssigmentTemplate extends Application
 			int randomNumber = rand.nextInt(15) + 1;
 			//reset location the numbers to start at
 			int xlocation = x % 6;
-			if (xlocation == 0) {
+			if (xlocation == 0) 
 				xlocation = 6;
-			}
 			//System.out.println(randomNumber);
 			collectionOfNumbers.add(numberMaker.createNumber(randomNumber, 50 * xlocation, 50));
 		}
@@ -295,9 +268,7 @@ public class AssigmentTemplate extends Application
 			//check if random button has been pressed
 			//generate a random operation each time
 			if (difficultyLvl.getClickedLevel() == 2 && difficultyLvl.getLevel() == 4) 
-			{
 				difficultyLvl.setLevel(rand.nextInt(4));
-			}
 				//generate a random number which identifies an operator
 			operate = new Operator(difficultyLvl.getLevel());
 			//background colour
@@ -320,11 +291,6 @@ public class AssigmentTemplate extends Application
 				rightNumber = singleNumber2.getNumber();
 			}
 
-			//convert the number to string
-			//so it can be drawn
-			int left = (int) leftNumber;
-			int right = (int) rightNumber;
-
 			//to place the operator in the middle of the two numbers 
 			double locationOperator = (singleNumber.getRectangle().getX() + singleNumber2.getRectangle().getX() + 50) / 2 + 15;
 			//set the text to white
@@ -332,30 +298,28 @@ public class AssigmentTemplate extends Application
 			mainTab1.getGc().setStroke(Color.WHITE);
 			mainTab1.getGc().strokeText(operate.getOPERATOR(), locationOperator, singleNumber2.getRectangle().getY());
 
-			mainTab1.getGc().strokeText(left + "", singleNumber.getRectangle().getX(), singleNumber.getRectangle().getY());
-			mainTab1.getGc().strokeText(right +" ", singleNumber2.getRectangle().getX() + 50, singleNumber2.getRectangle().getY());
+			//Draw numbers
+			mainTab1.getGc().strokeText((int)leftNumber + "", singleNumber.getRectangle().getX(), singleNumber.getRectangle().getY());
+			mainTab1.getGc().strokeText((int)rightNumber +" ", singleNumber2.getRectangle().getX() + 50, singleNumber2.getRectangle().getY());
 			singleNumber.move();
 			singleNumber2.move();
 
 			mainTab1.getGc().setFont(new Font(40));
 			mainTab1.getGc().strokeText(counter + "", 500, 50);
 			//Every 7 seconds delete index 1 and 0
-			counter++;
-			if (counter  == 7) 
+			counter--;
+			if (counter  == 0) 
 			{
 				scoreClass.setStreakZero();
 				operate.removeNumbers(collectionOfNumbers);
 				endGame();
 
-				if (difficultyLvl.getClickedLevel() == 2) {
-					
+				if (difficultyLvl.getClickedLevel() == 2)
 					difficultyLvl.setLevel(rand.nextInt(4));
-				}
-				counter = 0;
+				counter = 7;
 			}
 		}
 	};
-	
 	@Override
 	public void start(Stage stage) throws Exception 
 	{

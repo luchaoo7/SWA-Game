@@ -18,6 +18,9 @@ public class SmallNumber extends ParentNumber
 		setRectangle(80);
 	}
 
+	/**
+	 * set the value of number 
+	 */
 	@Override
 	protected void setNumber() 
 	{

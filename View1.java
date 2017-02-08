@@ -103,19 +103,19 @@ public class View1 {
 		//set up of stop button
 		stop = new Button("Stop");
 		stop.setLayoutX(25);
-		stop.setLayoutY(250);
+		stop.setLayoutY(265);
 //		stop.setOnAction(actionButton);
 		ui.getChildren().add(stop);
 		//set up start button
 		start = new Button("Start");
 		start.setLayoutX(100);
-		start.setLayoutY(250);
+		start.setLayoutY(265);
 //		start.setOnAction(actionButton);
 		ui.getChildren().add(start);
 		
 		nameField = new TextField();
 		nameField.setLayoutX(15);
-		nameField.setLayoutY(190);
+		nameField.setLayoutY(220);
 		ui.getChildren().add(nameField);
 		
 		//set up textfield
@@ -131,12 +131,17 @@ public class View1 {
 		
 		label = new Label("Enter Name:... press Enter");
 		label.setLayoutX(15);
-		label.setLayoutY(170);
+		label.setLayoutY(200);
 		ui.getChildren().add(label);
 		
 		label = new Label("Answer: ");
 		label.setLayoutX(15);
 		label.setLayoutY(305);
+		ui.getChildren().add(label);
+
+		label = new Label("Level: ");
+		label.setLayoutX(10);
+		label.setLayoutY(20);
 		ui.getChildren().add(label);
 		
 		btnGroup = new ToggleGroup();
@@ -144,23 +149,23 @@ public class View1 {
 		btnVeryEasy = new RadioButton("V Easy");
 		btnVeryEasy.setToggleGroup(btnGroup);
 		btnVeryEasy.setLayoutX(10);
-		btnVeryEasy.setLayoutY(10);
+		btnVeryEasy.setLayoutY(40);
 		btnEasy = new RadioButton("Easy");
 		btnEasy.setToggleGroup(btnGroup);
 		btnEasy.setLayoutX(10);
-		btnEasy.setLayoutY(40);
+		btnEasy.setLayoutY(70);
 		btnHard = new RadioButton("Hard");
 		btnHard.setToggleGroup(btnGroup);
 		btnHard.setLayoutX(10);
-		btnHard.setLayoutY(70);
+		btnHard.setLayoutY(100);
 		btnTough = new RadioButton("Tough");
 		btnTough.setToggleGroup(btnGroup);
 		btnTough.setLayoutX(10);
-		btnTough.setLayoutY(100);
+		btnTough.setLayoutY(130);
 		btnRandom = new RadioButton("Random");
 		btnRandom.setToggleGroup(btnGroup);
 		btnRandom.setLayoutX(10);
-		btnRandom.setLayoutY(130);
+		btnRandom.setLayoutY(160);
 		ui.getChildren().addAll(btnVeryEasy, btnEasy, btnTough, btnHard, btnRandom);
 		
 		game = new Pane();

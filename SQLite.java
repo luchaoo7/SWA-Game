@@ -27,10 +27,9 @@ public class SQLite {
 	public static SQLite getInstace()
 	{
 
-		if (_dbInstace == null) {
-			
+		if (_dbInstace == null)
 			_dbInstace = new SQLite();
-		}
+
 		return _dbInstace;
 	}
 	

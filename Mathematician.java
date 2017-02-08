@@ -26,9 +26,9 @@ public class Mathematician{
 	public static Mathematician getInstace()
 	{
 		imageFile = "alan_turing.jpg";
-		if (instace == null) {
+		if (instace == null)
 			instace = new Mathematician(imageFile);
-		}
+
 		return instace;
 	}
 	/**
